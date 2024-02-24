@@ -1,0 +1,34 @@
+pre:0:IscMISmoknEdges1
+param:Strength Y:0.623457
+param:Strength X:0.829438
+param:Blend:0.301654
+param:Move Blend:0.829180
+param:Dir Blend:0.838932
+pre:1:Chromium
+param:Tint Green:0.272434
+param:Edge1:0.663845
+param:Edge2:0.777687
+param:Tint Red:0.665131
+param:Tint Blue:0.072344
+pre:2:Auto Invert
+post:0:Glow
+param:Outer Radius:0.860154
+param:Ceiling:0.643312
+param:Floor:0.398269
+param:Inner Radius:0.008419
+param:Passes:0.101568
+param:Aspect Ratio:0.619951
+post:1:None
+post:2:None
+ffgl:0:Shift RGB
+param:Distance:0.999128
+param:B:0.500672
+param:R:0.500020
+param:Mode:0.000250
+param:G:0.499532
+ffgl:1:None
+ffgl:2:Colorize
+param:Hue:0.055
+param:Saturation:1.000000
+param:Contrast:0.5
+param:Brightness:0.5

@@ -1,0 +1,22 @@
+pre:0:Solarize
+param:Ceiling:0.644669
+param:End:0.370406
+param:Floor:0.463302
+param:Start:0.096067
+param:Limit:0.347344
+param:Threshold:0.940253
+pre:1:None
+pre:2:None
+post:0:Auto Invert
+post:1:None
+post:2:None
+ffgl:0:Threshhold
+param:Hue 2:0.000000
+param:Hue 1:0.000000
+param:Brightness 1:1.000000
+param:Brightness 2:0.000000
+param:Saturation 1:0.000000
+param:Saturation 2:0.000000
+param:Threshhold:0.500000
+ffgl:1:None
+ffgl:2:None

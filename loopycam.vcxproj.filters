@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="addons">
+      <UniqueIdentifier>{3ce0234f-f93c-4a73-8e6f-d93a6a6a2ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc">
+      <UniqueIdentifier>{3980338c-8dab-4826-826e-1d7b97000637}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\src">
+      <UniqueIdentifier>{1bef6d32-c724-49ff-a03e-9e128882a3cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\spout2">
+      <UniqueIdentifier>{80831a1c-17b9-40a0-8085-8a31e8a643a6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\FFGLExtensions.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FFGLFBO.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FFGLPluginInstance.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FFPlugin.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\http_stuff.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\looper.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\loopycam.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\loopyosc.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\ip\win32\NetworkingUtils.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nsosc.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nsoscit.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nsutil.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\osc\OscOutboundPacketStream.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\osc\OscPrintReceivedElements.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\osc\OscReceivedElements.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\osc\OscTypes.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="TCP_Socket\Socket.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WinDebugMessage.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WinPluginInstance.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WinTimer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\FFPlugin.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\looper.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\loopycam.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsutil.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vframe.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FFGLPluginInstance.h" />
+    <ClInclude Include="src\loopyosc.h" />
+    <ClInclude Include="src\nsosc.h" />
+    <ClInclude Include="src\nsoscit.h" />
+    <ClInclude Include="src\ofxMSAShape3D.h" />
+    <ClInclude Include="TCP_Socket\Socket.h" />
+    <ClInclude Include="src\Timer.h" />
+  </ItemGroup>
+</Project>

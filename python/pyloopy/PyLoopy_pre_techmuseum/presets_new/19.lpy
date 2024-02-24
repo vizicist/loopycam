@@ -1,0 +1,27 @@
+pre:0:None
+pre:1:TimeSlice
+param:Style:0.789892
+param:SineSlur Amplitu:0.428705
+param:Custom Playback :0.496914
+param:Stutter Amplitud:0.321789
+param:SineSlur Period:0.880600
+param:Slice Size:0.621050
+param:Horizontal:0.000000
+pre:2:None
+post:0:Glow
+param:Outer Radius:0.024265
+param:Ceiling:0.472750
+param:Floor:0.048815
+param:Inner Radius:0.081764
+param:Passes:0.208771
+param:Aspect Ratio:0.501657
+post:1:None
+post:2:None
+ffgl:0:Shift RGB
+param:Distance:0.999128
+param:B:0.500672
+param:R:0.500020
+param:Mode:0.000250
+param:G:0.499532
+ffgl:1:None
+ffgl:2:None

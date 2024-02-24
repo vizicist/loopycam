@@ -1,0 +1,22 @@
+pre:0:Edge_Enhance
+param:Enhance:0.265132
+param:Horizontal:0.105177
+param:Vertical:0.340886
+pre:1:None
+pre:2:None
+post:0:Kaleidascope
+param:Divisions:0.370206
+param:Source Angle Pro:0.738601
+param:Reflection Line :0.990116
+param:Output Angle:0.344470
+param:Source Angle:0.481161
+param:Source Centre Y:0.696755
+param:Source Centre X:0.828625
+param:Output Centre Y:0.585808
+param:Output Centre X:0.841021
+post:1:None
+post:2:None
+ffgl:0:Bendoscope
+param:Divisions:0.718976
+ffgl:1:None
+ffgl:2:None

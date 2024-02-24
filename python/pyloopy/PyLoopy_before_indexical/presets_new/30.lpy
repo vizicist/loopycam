@@ -1,0 +1,23 @@
+pre:0:Wave
+param:Speed:0.288389
+param:Friction:0.744076
+pre:1:Chromium
+param:Tint Green:0.243176
+param:Edge1:0.831779
+param:Edge2:0.894454
+param:Tint Red:0.844661
+param:Tint Blue:0.914132
+pre:2:TimeSlice
+param:Style:0.886608
+param:SineSlur Amplitu:0.465789
+param:Custom Playback :0.159787
+param:Stutter Amplitud:0.691378
+param:SineSlur Period:0.844769
+param:Slice Size:0.261647
+param:Horizontal:0.799869
+post:0:Auto Invert
+post:1:None
+post:2:None
+ffgl:0:None
+ffgl:1:None
+ffgl:2:None

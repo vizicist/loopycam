@@ -1,0 +1,23 @@
+pre:0:Solarize
+param:Ceiling:0.961567
+param:End:0.316940
+param:Floor:0.750427
+param:Start:0.527501
+param:Limit:0.270166
+param:Threshold:0.760911
+pre:1:None
+pre:2:None
+post:0:IscMISmoknEdges1
+param:Strength Y:0.249607
+param:Strength X:0.692207
+param:Blend:0.381893
+param:Move Blend:0.353666
+param:Dir Blend:0.247360
+post:1:Edge_Enhance
+param:Enhance:0.755253
+param:Horizontal:0.532229
+param:Vertical:0.798800
+post:2:None
+ffgl:0:FFGLMirror
+ffgl:1:None
+ffgl:2:None

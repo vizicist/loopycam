@@ -1,0 +1,22 @@
+pre:0:Vectorize
+param:Difference Thres:0.898747
+param:Pre-Filter Size:0.286555
+param:Monochrome:0.992263
+param:Resolution:0.412388
+param:Colour Count:0.566828
+param:Palette Persiste:0.487391
+pre:1:None
+pre:2:None
+post:0:SpiralBlur
+param:Layer Count:0.756236
+param:Scale:0.978776
+param:Angle:0.150022
+param:Origin X:0.089543
+param:Origin Y:0.984678
+post:1:None
+post:2:None
+ffgl:0:Twisted
+param:Radius:0.719904
+param:Twirl:0.615237
+ffgl:1:None
+ffgl:2:None

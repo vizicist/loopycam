@@ -1,0 +1,20 @@
+pre:0:None
+pre:1:None
+pre:2:BackLight
+param:Spike Scale:0.686213
+param:Spike Ceiling:0.175771
+param:Spike Floor:0.397130
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:Point Grid
+param:Space:0.735645
+param:Resolution:0.493597
+param:Size:0.377670
+param:Rotate Y:0.216996
+param:Rotate X:0.377094
+param:Rotate Z:0.338913
+ffgl:1:Twisted
+param:Radius:0.743520
+param:Twirl:0.724892
+ffgl:2:None

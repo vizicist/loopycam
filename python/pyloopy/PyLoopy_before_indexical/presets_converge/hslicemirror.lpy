@@ -1,0 +1,18 @@
+pre:0:None
+pre:1:Frame_Echo
+param:Decay:0.665711
+param:Echo:0.554543
+pre:2:None
+post:0:TimeSlice
+param:Style:0.736366
+param:SineSlur Amplitu:0.985050
+param:Custom Playback :0.419846
+param:Stutter Amplitud:0.439904
+param:SineSlur Period:0.714778
+param:Slice Size:0.471940
+param:Horizontal:0.842534
+post:1:None
+post:2:None
+ffgl:0:FFGLMirror
+ffgl:1:None
+ffgl:2:None

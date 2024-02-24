@@ -1,0 +1,11 @@
+ls -l C:\Windows\System32\winmm.dll
+ls -l C:\Windows\System32\opengl32.dll
+ls -l C:\Windows\System32\kernel32.dll
+ls -l C:\Windows\System32\user32.dll
+ls -l C:\Windows\System32\gdi32.dll
+ls -l C:\Windows\System32\ws2_32.dll
+ls -l C:\local\loopycam\bin\cv210d.dll
+ls -l C:\local\loopycam\bin\cxcore210d.dll
+ls -l C:\local\loopycam\bin\highgui210d.dll
+ls -l C:\Windows\System32\msvcr120d.dll
+ls -l C:\Windows\System32\msvcp120d.dll

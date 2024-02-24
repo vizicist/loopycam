@@ -1,0 +1,24 @@
+pre:0:Frame_Echo
+param:Decay:0.000000
+param:Echo:0.050000
+pre:1:Glow
+param:Outer Radius:0.055118
+param:Ceiling:0.125490
+param:Floor:0.000000
+param:Inner Radius:0.015748
+param:Passes:0.000000
+param:Aspect Ratio:0.500000
+pre:2:None
+post:0:Auto Invert
+post:1:Edge_Enhance
+param:Enhance:0.400000
+param:Horizontal:0.030000
+param:Vertical:0.030000
+post:2:None
+ffgl:0:Flip
+param:Horizontal:1.000000
+param:Vertical:0.000000
+ffgl:1:Twisted
+param:Radius:0.250000
+param:Twirl:0.600000
+ffgl:2:None

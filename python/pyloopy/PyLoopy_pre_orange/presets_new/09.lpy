@@ -1,0 +1,13 @@
+pre:0:None
+pre:1:None
+pre:2:None
+post:0:Frame_Echo
+param:Decay:0.808946
+param:Echo:0.182632
+post:1:None
+post:2:None
+ffgl:0:FFGLMirror
+ffgl:1:Twisted
+param:Radius:0.120987
+param:Twirl:0.634265
+ffgl:2:None

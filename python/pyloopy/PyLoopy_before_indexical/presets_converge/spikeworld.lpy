@@ -1,0 +1,26 @@
+pre:0:Slide
+param:Mirror:0.067892
+param:Proportion:0.477692
+param:Speed 2:0.749594
+param:Mirror Flip:0.003618
+param:Speed 1:0.700349
+param:Horizontal:0.527588
+pre:1:None
+pre:2:None
+post:0:RadialBlur
+param:Quality:0.533896
+param:Layer Scale:0.011533
+post:1:None
+post:2:None
+ffgl:0:Stingy Sphere
+param:Extrusion:0.934102
+param:Sphere size:0.530425
+param:Invert:0.196486
+param:Zoom:0.549383
+param:Wired:0.950234
+param:Rotate Y:0.929399
+param:Resolution:0.323987
+param:Rotate X:0.799215
+param:Rotate Z:0.831997
+ffgl:1:None
+ffgl:2:None

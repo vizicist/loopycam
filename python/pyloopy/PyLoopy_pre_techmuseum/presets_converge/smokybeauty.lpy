@@ -1,0 +1,17 @@
+pre:0:Wave
+param:Speed:0.972318
+param:Friction:0.873253
+pre:1:None
+pre:2:None
+post:0:IscMISmoknEdges1
+param:Strength Y:0.872348
+param:Strength X:0.322708
+param:Blend:0.533363
+param:Move Blend:0.479399
+param:Dir Blend:0.766362
+post:1:None
+post:2:None
+ffgl:0:Suckr
+param:Suck:0.358030
+ffgl:1:None
+ffgl:2:None

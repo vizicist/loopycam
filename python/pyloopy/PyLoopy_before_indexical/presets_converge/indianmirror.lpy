@@ -1,0 +1,16 @@
+pre:0:Edge_Enhance
+param:Enhance:0.196256
+param:Horizontal:0.158390
+param:Vertical:0.568914
+pre:1:None
+pre:2:None
+post:0:Tile
+param:Cell Width:0.366728
+param:Angle:0.026303
+param:Skew Angle:0.571583
+param:Cell Height:0.264929
+post:1:None
+post:2:None
+ffgl:0:FFGLMirror
+ffgl:1:None
+ffgl:2:None

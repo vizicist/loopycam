@@ -1,0 +1,22 @@
+pre:0:Posterize
+param:Levels:0.032109
+pre:1:None
+pre:2:None
+post:0:GaussianBlur
+param:Passes:0.723694
+param:Do Odd But Cool:0.656969
+param:UnSharpMask Amou:0.203150
+param:Radius:0.421973
+param:Fake It:0.094084
+param:Edge Factor:0.625304
+param:Aspect Ratio:0.900574
+param:Do UnSharpMask:0.628528
+post:1:None
+post:2:None
+ffgl:0:Shift Glitch
+param:Horizontal:0.208526
+param:Frequency:0.247299
+param:Vertical:0.343671
+param:Size:0.214760
+ffgl:1:None
+ffgl:2:None

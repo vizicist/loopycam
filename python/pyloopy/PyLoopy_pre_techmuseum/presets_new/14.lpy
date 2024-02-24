@@ -1,0 +1,19 @@
+pre:0:None
+pre:1:None
+pre:2:MetaImage
+param:Cheap And Nasty:0.270652
+param:Do Distance Base:0.022762
+param:Size:0.999100
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:None
+ffgl:1:Shift RGB
+param:Distance:0.913952
+param:B:0.452733
+param:R:0.896824
+param:Mode:0.688518
+param:G:0.481995
+ffgl:2:Twisted
+param:Radius:0.467272
+param:Twirl:0.340317

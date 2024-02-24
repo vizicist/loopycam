@@ -1,0 +1,29 @@
+Microsoft (R) COFF/PE Dumper Version 14.00.24247.2
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file loopycam_debug.exe
+
+File Type: EXECUTABLE IMAGE
+
+  Image has the following dependencies:
+
+    WINMM.dll
+    OPENGL32.dll
+    KERNEL32.dll
+    USER32.dll
+    GDI32.dll
+    WS2_32.dll
+    cv210d.dll
+    cxcore210d.dll
+    highgui210d.dll
+    MSVCR120D.dll
+    MSVCP120D.dll
+
+  Summary
+
+        1000 .data
+        7000 .rdata
+        2000 .reloc
+        1000 .rsrc
+       1E000 .text

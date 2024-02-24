@@ -1,0 +1,13 @@
+pre:0:None
+pre:1:Wave
+param:Speed:0.817385
+param:Friction:0.431924
+pre:2:None
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:Bright.Contrast
+param:Contrast:0.841950
+param:Brightness:0.240795
+ffgl:1:None
+ffgl:2:None

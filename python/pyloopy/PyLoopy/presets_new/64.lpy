@@ -1,0 +1,15 @@
+pre:0:Wave
+param:Speed:0.281495
+param:Friction:0.760138
+pre:1:None
+pre:2:None
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:RGBA Switch
+param:A:1.000000
+param:B:1.000000
+param:R:1.000000
+param:G:1.000000
+ffgl:1:None
+ffgl:2:None

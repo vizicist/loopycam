@@ -1,0 +1,23 @@
+pre:0:Refraction
+param:Cell Width:0.907481
+param:Allow Magnificat:0.767535
+param:Cell Height:0.085887
+param:Refraction:0.162634
+pre:1:None
+pre:2:None
+post:0:TimeSlice
+param:Style:0.087017
+param:SineSlur Amplitu:0.150154
+param:Custom Playback :0.993020
+param:Stutter Amplitud:0.044439
+param:SineSlur Period:0.760172
+param:Slice Size:0.194871
+param:Horizontal:0.181216
+post:1:None
+post:2:None
+ffgl:0:Pixel High Pass
+param:B:0.870628
+param:R:0.382345
+param:G:0.529853
+ffgl:1:None
+ffgl:2:None

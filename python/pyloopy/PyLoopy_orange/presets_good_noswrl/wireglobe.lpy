@@ -1,0 +1,32 @@
+pre:0:Auto Invert
+pre:1:MetaImage
+param:Cheap And Nasty:0.731355
+param:Do Distance Base:0.795393
+param:Size:0.188013
+pre:2:Posterize
+param:Levels:0.137458
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:Cube Tiles
+param:Resolution:0.800839
+param:Randomize:0.121471
+param:Zoom:0.821474
+param:Amount:0.581952
+param:Rotate Y:0.801482
+param:Rotate X:0.019222
+param:Rotate Z:0.638358
+ffgl:1:Add Subtract
+param:B:0.460008
+param:R:0.854235
+param:G:0.031478
+ffgl:2:Stingy Sphere
+param:Extrusion:0.420596
+param:Sphere size:0.930807
+param:Invert:0.376458
+param:Zoom:0.568520
+param:Wired:0.783338
+param:Rotate Y:0.279860
+param:Resolution:0.708309
+param:Rotate X:0.640883
+param:Rotate Z:0.225290

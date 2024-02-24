@@ -1,0 +1,21 @@
+pre:0:TimeSlice
+param:Style:0.928363
+param:SineSlur Amplitu:0.861893
+param:Custom Playback :0.522710
+param:Stutter Amplitud:0.232420
+param:SineSlur Period:0.647832
+param:Slice Size:0.959825
+param:Horizontal:0.645953
+pre:1:None
+pre:2:None
+post:0:Wave
+param:Speed:0.789366
+param:Friction:0.706664
+post:1:None
+post:2:None
+ffgl:0:Invert RGB
+param:B:0.500956
+param:R:0.954012
+param:G:0.484947
+ffgl:1:None
+ffgl:2:None

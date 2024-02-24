@@ -1,0 +1,22 @@
+pre:0:None
+pre:1:None
+pre:2:Kaleidascope
+param:Divisions:0.337779
+param:Source Angle Pro:0.384771
+param:Reflection Line :0.512478
+param:Output Angle:0.074367
+param:Source Angle:0.405819
+param:Source Centre Y:0.735030
+param:Source Centre X:0.627579
+param:Output Centre Y:0.693784
+param:Output Centre X:0.564869
+post:0:Frame_Echo
+param:Decay:0.321229
+param:Echo:0.122713
+post:1:None
+post:2:None
+ffgl:0:Twisted
+param:Radius:0.019211
+param:Twirl:0.839254
+ffgl:1:None
+ffgl:2:None

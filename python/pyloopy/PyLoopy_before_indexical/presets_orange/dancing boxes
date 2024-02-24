@@ -1,0 +1,35 @@
+pre:0:Rect Field
+param:Count:0.252831
+param:Mode:0.162899
+param:Variation:0.819450
+param:Size:0.918611
+pre:1:TimeBlur
+param:Time:0.139785
+pre:2:Tile
+param:Cell Width:0.160000
+param:Angle:0.000000
+param:Skew Angle:0.000000
+param:Cell Height:0.120000
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:Pixel High Pass
+param:B:0.000000
+param:R:0.000000
+param:G:0.000000
+ffgl:1:Pixels in Space
+param:Grid Type:0.500000
+param:Scale:0.000000
+param:Extrusion:0.250000
+param:Rotate Y:0.600000
+param:Pixel Cage:0.450000
+param:Zoom:0.600000
+param:Rotate X:0.400000
+param:Rotate:0.000000
+param:Pixel Shape:0.000000
+param:Resolution:0.400000
+param:Invert:0.000000
+ffgl:2:Invert RGB
+param:B:1.000000
+param:R:1.000000
+param:G:1.000000

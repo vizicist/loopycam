@@ -1,0 +1,13 @@
+pre:0:None
+pre:1:TimeBlur
+param:Time:0.140286
+pre:2:None
+post:0:Edge_Enhance
+param:Enhance:0.644614
+param:Horizontal:0.237897
+param:Vertical:0.342294
+post:1:Auto Invert
+post:2:None
+ffgl:0:FFGLMirror
+ffgl:1:None
+ffgl:2:None

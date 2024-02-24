@@ -1,0 +1,23 @@
+pre:0:Refraction
+param:Cell Width:0.059055
+param:Allow Magnificat:1.000000
+param:Cell Height:0.059055
+param:Refraction:0.124453
+pre:1:TimeBlur
+param:Time:0.139785
+pre:2:PanSpinZoom
+param:Rotation:0.000000
+param:Scale:0.200000
+param:Origin X:0.500000
+param:Origin Y:0.500000
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:None
+ffgl:1:Suckr
+param:Suck:0.500000
+ffgl:2:Colorize
+param:Hue:0.04
+param:Saturation:1.000000
+param:Contrast:0.5
+param:Brightness:0.5

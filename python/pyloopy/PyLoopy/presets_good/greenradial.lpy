@@ -1,0 +1,14 @@
+pre:0:RadialBlur
+param:Quality:0.344534
+param:Layer Scale:0.604407
+pre:1:None
+pre:2:None
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:Pixel High Pass
+param:B:0.651306
+param:R:0.805559
+param:G:0.093649
+ffgl:1:None
+ffgl:2:None

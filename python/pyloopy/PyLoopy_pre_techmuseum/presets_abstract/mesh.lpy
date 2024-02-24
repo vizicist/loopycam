@@ -1,0 +1,32 @@
+pre:0:None
+pre:1:None
+pre:2:None
+post:0:None
+post:1:Rect Field
+param:Count:0.701962
+param:Mode:0.440766
+param:Variation:0.975292
+param:Size:0.939357
+post:2:HalfTone
+param:Angle:0.327995
+param:Style:0.160721
+param:Dot Size:0.697973
+param:Smoothing:0.482071
+ffgl:0:Twisted
+param:Radius:0.426296
+param:Twirl:0.677802
+ffgl:1:RGBA Switch
+param:A:0.270935
+param:B:0.195421
+param:R:0.169851
+param:G:0.293005
+ffgl:2:Stingy Sphere
+param:Extrusion:0.941597
+param:Sphere size:0.705570
+param:Invert:0.774367
+param:Zoom:0.614761
+param:Wired:0.104083
+param:Rotate Y:0.850049
+param:Resolution:0.602340
+param:Rotate X:0.587426
+param:Rotate Z:0.946618

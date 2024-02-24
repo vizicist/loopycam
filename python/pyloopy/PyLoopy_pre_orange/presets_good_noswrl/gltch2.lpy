@@ -1,0 +1,31 @@
+pre:0:DirectionalBlur
+param:Angle:0.000000
+param:Radius:0.064516
+pre:1:GaussianBlur
+param:Passes:0.598633
+param:Do Odd But Cool:0.727797
+param:UnSharpMask Amou:0.353314
+param:Radius:0.958821
+param:Fake It:0.656776
+param:Edge Factor:0.029155
+param:Aspect Ratio:0.713204
+param:Do UnSharpMask:0.225454
+pre:2:Slide
+param:Mirror:0.071104
+param:Proportion:0.678421
+param:Speed 2:0.042873
+param:Mirror Flip:0.052878
+param:Speed 1:0.784464
+param:Horizontal:0.158107
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:Hue rotate
+param:Hue Rotate:0.000000
+param:Sat. Scale:0.500000
+ffgl:1:Shift Glitch
+param:Horizontal:0.500000
+param:Frequency:1.000000
+param:Vertical:0.000000
+param:Size:0.500000
+ffgl:2:None

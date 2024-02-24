@@ -1,0 +1,26 @@
+pre:0:None
+pre:1:BackLight
+param:Spike Scale:0.249214
+param:Spike Ceiling:0.044477
+param:Spike Floor:0.997310
+pre:2:None
+post:0:Chromium
+param:Tint Green:0.842714
+param:Edge1:0.395367
+param:Edge2:0.093072
+param:Tint Red:0.855180
+param:Tint Blue:0.970903
+post:1:None
+post:2:None
+ffgl:0:Stingy Sphere
+param:Extrusion:0.112584
+param:Sphere size:0.897155
+param:Invert:0.518036
+param:Zoom:0.765068
+param:Wired:0.550131
+param:Rotate Y:0.729486
+param:Resolution:0.757007
+param:Rotate X:0.800772
+param:Rotate Z:0.847900
+ffgl:1:None
+ffgl:2:None

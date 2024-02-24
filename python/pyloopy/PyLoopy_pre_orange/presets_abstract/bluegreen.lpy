@@ -1,0 +1,32 @@
+pre:0:Frame_Echo
+param:Decay:0.862312
+param:Echo:0.046476
+pre:1:TimeSlice
+param:Style:0.907869
+param:SineSlur Amplitu:0.434939
+param:Custom Playback :0.937367
+param:Stutter Amplitud:0.085700
+param:SineSlur Period:0.238227
+param:Slice Size:0.929836
+param:Horizontal:0.943027
+pre:2:SpiralBlur
+param:Layer Count:0.233333
+param:Scale:0.333333
+param:Angle:0.027778
+param:Origin X:0.500000
+param:Origin Y:0.500000
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:Blur
+param:Quality:0.150000
+param:Blur X Distance:0.050000
+param:Blur Y Distance:0.050000
+param:Gaussian:0.200000
+ffgl:1:None
+ffgl:2:Recolour
+param:Cycle Phase:0.000000
+param:Palette:0.000000
+param:Cycle Speed:0.500000
+param:Ceiling:1.000000
+param:Floor:0.000000

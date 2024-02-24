@@ -1,0 +1,19 @@
+pre:0:None
+pre:1:None
+pre:2:None
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:Bendoscope
+param:Divisions:0.278353
+ffgl:1:Stingy Sphere
+param:Extrusion:0.796648
+param:Sphere size:0.085532
+param:Invert:0.359634
+param:Zoom:0.784729
+param:Wired:0.920059
+param:Rotate Y:0.973924
+param:Resolution:0.360006
+param:Rotate X:0.544752
+param:Rotate Z:0.875363
+ffgl:2:None

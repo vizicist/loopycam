@@ -1,0 +1,39 @@
+pre:0:Glow
+param:Outer Radius:0.055118
+param:Ceiling:0.125490
+param:Floor:0.000000
+param:Inner Radius:0.015748
+param:Passes:0.000000
+param:Aspect Ratio:0.500000
+pre:1:MetaImage
+param:Cheap And Nasty:0.000000
+param:Do Distance Base:0.000000
+param:Size:0.200000
+pre:2:Wave
+param:Speed:0.336007
+param:Friction:0.225099
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:Cube Tiles
+param:Resolution:0.300000
+param:Randomize:0.000000
+param:Zoom:0.750000
+param:Amount:0.500000
+param:Rotate Y:0.600000
+param:Rotate X:0.600000
+param:Rotate Z:0.500000
+ffgl:1:Suckr
+param:Suck:0.500000
+ffgl:2:Pixels in Space
+param:Grid Type:0.500000
+param:Scale:0.000000
+param:Extrusion:0.250000
+param:Rotate Y:0.600000
+param:Pixel Cage:0.450000
+param:Zoom:0.600000
+param:Rotate X:0.400000
+param:Rotate:0.000000
+param:Pixel Shape:0.000000
+param:Resolution:0.400000
+param:Invert:0.000000

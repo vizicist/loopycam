@@ -1,0 +1,11 @@
+where     WINMM.dll
+where     OPENGL32.dll
+where     KERNEL32.dll
+where     USER32.dll
+where     GDI32.dll
+where     WS2_32.dll
+where     cv210d.dll
+where     cxcore210d.dll
+where     highgui210d.dll
+where     MSVCR120D.dll
+where     MSVCP120D.dll

@@ -1,0 +1,29 @@
+pre:0:DirectionalBlur
+param:Angle:0.593803
+param:Radius:0.674046
+pre:1:IscMISmoknEdges1
+param:Strength Y:0.624814
+param:Strength X:0.045279
+param:Blend:0.286710
+param:Move Blend:0.314818
+param:Dir Blend:0.513951
+pre:2:Chromium
+param:Tint Green:0.314870
+param:Edge1:0.267054
+param:Edge2:0.637729
+param:Tint Red:0.616195
+param:Tint Blue:0.242594
+post:0:Auto Invert
+post:1:None
+post:2:None
+ffgl:0:Fragment
+param:Distance:0.585807
+param:CompositeOpacity:0.549127
+param:FragRotationZ:0.109883
+param:FragRotationY:0.249778
+param:FragRotationX:0.252947
+param:Fragments:0.683520
+param:FragScale:0.767432
+param:Rotation:0.074914
+ffgl:1:None
+ffgl:2:None

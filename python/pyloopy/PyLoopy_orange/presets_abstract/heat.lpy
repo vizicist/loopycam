@@ -1,0 +1,17 @@
+pre:0:SpiralBlur
+param:Layer Count:0.878908
+param:Scale:0.847770
+param:Angle:0.333616
+param:Origin X:0.219315
+param:Origin Y:0.797859
+pre:1:None
+pre:2:None
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:Twisted
+param:Radius:0.659565
+param:Twirl:0.373480
+ffgl:1:FFGLHeat
+param:Heat:0.896614
+ffgl:2:None

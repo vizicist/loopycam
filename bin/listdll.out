@@ -1,0 +1,33 @@
+
+C:\local\loopycam\bin>ls -l C:\Windows\System32\winmm.dll 
+-rwxr-xr-x 2 space 197610 216408 Jan  8 15:43 C:\Windows\System32\winmm.dll
+
+C:\local\loopycam\bin>ls -l C:\Windows\System32\opengl32.dll 
+-rwxr-xr-x 2 space 197610 933888 Jan  8 15:44 C:\Windows\System32\opengl32.dll
+
+C:\local\loopycam\bin>ls -l C:\Windows\System32\kernel32.dll 
+-rwxr-xr-x 2 space 197610 815464 Feb 21 15:14 C:\Windows\System32\kernel32.dll
+
+C:\local\loopycam\bin>ls -l C:\Windows\System32\user32.dll 
+-rwxr-xr-x 2 space 197610 1782312 Jan  8 15:43 C:\Windows\System32\user32.dll
+
+C:\local\loopycam\bin>ls -l C:\Windows\System32\gdi32.dll 
+-rwxr-xr-x 2 space 197610 179224 Feb 21 15:14 C:\Windows\System32\gdi32.dll
+
+C:\local\loopycam\bin>ls -l C:\Windows\System32\ws2_32.dll 
+-rwxr-xr-x 2 space 197610 476592 May  6  2022 C:\Windows\System32\ws2_32.dll
+
+C:\local\loopycam\bin>ls -l C:\local\loopycam\bin\cv210d.dll 
+-rwxr-xr-x 1 space 197610 3890688 Apr  5  2010 C:\local\loopycam\bin\cv210d.dll
+
+C:\local\loopycam\bin>ls -l C:\local\loopycam\bin\cxcore210d.dll 
+-rwxr-xr-x 1 space 197610 3819520 Apr  5  2010 C:\local\loopycam\bin\cxcore210d.dll
+
+C:\local\loopycam\bin>ls -l C:\local\loopycam\bin\highgui210d.dll 
+-rwxr-xr-x 1 space 197610 1630720 Apr  5  2010 C:\local\loopycam\bin\highgui210d.dll
+
+C:\local\loopycam\bin>ls -l C:\Windows\System32\msvcr120d.dll 
+-rwxr-xr-x 1 space 197610 2150568 Oct  5  2013 C:\Windows\System32\msvcr120d.dll
+
+C:\local\loopycam\bin>ls -l C:\Windows\System32\msvcp120d.dll 
+-rwxr-xr-x 1 space 197610 1101480 Oct  5  2013 C:\Windows\System32\msvcp120d.dll

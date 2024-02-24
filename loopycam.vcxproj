@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+    <RootNamespace>oscReceiveExample</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\local\freeframeGL_1_5;C:\local\OpenCV2.1\include\opencv;C:\local\Cinder\blocks\bonjour\Include</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\local\Cinder\blocks\bonjour\Include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>TCP_Socket;OpenCV2.1\include\opencv;freeframeGL_1_5\Source\FFGLHost;freeframeGL_1_5\Include;C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include\mfc;oscpack;bonjour\include;spout2\spoutsdk\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>spout.lib;winmm.lib;OpenGL32.lib;GLu32.lib;kernel32.lib;setupapi.lib;glut32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;GLee.lib;glu32.lib;Ws2_32.lib;cv210.lib;cxcore210.lib;cvaux210.lib;highgui210.lib;dnssd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>OpenCV2.1\lib;glee\lib\vs2008;bonjour\lib\win32;glut;spout2\SpoutSDK\Source\VS2012\Binaries\Win32;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>atlthunk.lib; LIBC.lib; LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName)_debugInfo.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <Profile>true</Profile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy Debug\loopycam.exe bin\loopycam.exe</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>C:\local\loopycam\TCP_Socket;C:\local\OpenCV2.1\include\opencv;C:\local\freeframeGL_1_5\Source\FFGLHost;C:\local\freeframeGL_1_5\Include;C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include\mfc;C:\local\FreeFrameSDK1_0\Include;C:\local\loopycam\oscpack;C:\Program Files\Bonjour SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;OpenGL32.lib;GLu32.lib;kernel32.lib;setupapi.lib;glut32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;GLee.lib;glu32.lib;Ws2_32.lib;cv210d.lib;cxcore210d.lib;cvaux210d.lib;highgui210d.lib;dnssd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>c:\Program Files\Bonjour SDK\Lib\Win32;c:\local\OpenCV2.1\lib;c:\local\glee\lib\vs2008;c:\local\glut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>atlthunk.lib; LIBC.lib; LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\FFGLExtensions.cpp" />
+    <ClCompile Include="src\FFGLFBO.cpp" />
+    <ClCompile Include="src\FFGLPluginInstance.cpp" />
+    <ClCompile Include="src\FFPlugin.cpp" />
+    <ClCompile Include="src\http_stuff.cpp" />
+    <ClCompile Include="src\looper.cpp" />
+    <ClCompile Include="src\loopycam.cpp" />
+    <ClCompile Include="src\loopyosc.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="oscpack\ip\win32\NetworkingUtils.cpp" />
+    <ClCompile Include="src\nsosc.cpp" />
+    <ClCompile Include="src\nsoscit.cpp" />
+    <ClCompile Include="src\nsutil.cpp" />
+    <ClCompile Include="oscpack\osc\OscOutboundPacketStream.cpp" />
+    <ClCompile Include="oscpack\osc\OscPrintReceivedElements.cpp" />
+    <ClCompile Include="oscpack\osc\OscReceivedElements.cpp" />
+    <ClCompile Include="oscpack\osc\OscTypes.cpp" />
+    <ClCompile Include="TCP_Socket\Socket.cpp" />
+    <ClCompile Include="src\WinDebugMessage.cpp" />
+    <ClCompile Include="src\WinPluginInstance.cpp" />
+    <ClCompile Include="src\WinTimer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\FFPlugin.h" />
+    <ClInclude Include="src\looper.h" />
+    <ClInclude Include="src\loopycam.h" />
+    <ClInclude Include="src\nsutil.h" />
+    <ClInclude Include="src\vframe.h" />
+    <ClInclude Include="src\FFGLPluginInstance.h" />
+    <ClInclude Include="src\loopyosc.h" />
+    <ClInclude Include="src\nsosc.h" />
+    <ClInclude Include="src\nsoscit.h" />
+    <ClInclude Include="src\ofxMSAShape3D.h" />
+    <ClInclude Include="TCP_Socket\Socket.h" />
+    <ClInclude Include="src\Timer.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

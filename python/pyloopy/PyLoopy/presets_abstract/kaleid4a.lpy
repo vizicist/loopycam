@@ -1,0 +1,18 @@
+pre:0:Kaleidascope
+param:Divisions:0.049370
+param:Source Angle Pro:0.090909
+param:Reflection Line :0.500000
+param:Output Angle:0.000000
+param:Source Angle:0.000000
+param:Source Centre Y:0.500000
+param:Source Centre X:0.500000
+param:Output Centre Y:0.500000
+param:Output Centre X:0.500000
+pre:1:None
+pre:2:None
+post:0:None
+post:1:None
+post:2:None
+ffgl:0:None
+ffgl:1:None
+ffgl:2:None

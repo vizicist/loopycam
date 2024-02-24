@@ -1,0 +1,24 @@
+pre:0:None
+pre:1:Kaleidascope
+param:Divisions:0.337544
+param:Source Angle Pro:0.383322
+param:Reflection Line :0.514773
+param:Output Angle:0.077448
+param:Source Angle:0.407219
+param:Source Centre Y:0.731818
+param:Source Centre X:0.629431
+param:Output Centre Y:0.692046
+param:Output Centre X:0.562269
+pre:2:None
+post:0:RadialBlur
+param:Quality:1.000000
+param:Layer Scale:0.300000
+post:1:None
+post:2:None
+ffgl:0:Blur
+param:Quality:0.150000
+param:Blur X Distance:0.050000
+param:Blur Y Distance:0.050000
+param:Gaussian:0.200000
+ffgl:1:None
+ffgl:2:None
