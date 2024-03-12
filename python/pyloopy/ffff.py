@@ -135,7 +135,7 @@ class Ffff(Thread):
 			ff = self.ffplugins[nm]
 		else:
 			if create:
-				print("CREATTING ffplugins for nm=", nm)
+				# print("CREATTING ffplugins for nm=", nm)
 				ff = FFplugin(nm, len(self.ffplugins))
 				self.ffplugins[nm] = ff
 			else:
@@ -166,7 +166,7 @@ class Ffff(Thread):
 		replyprefix = "/.reply"
 		a = msg[0]
 		args = msg[2:]
-		print("FFFFCALLBACK!!!! a=", a, " args=", args)
+		# print("FFFFCALLBACK!!!! a=", a, " args=", args)
 		if a.startswith(ffprefix):
 			nm = a[len(ffprefix):]
 			# print "nm=",nm
@@ -233,7 +233,7 @@ class Ffff(Thread):
 				self.ui.set_postffgl(num, nm)
 		elif a.startswith(replyprefix):
 			if args[0] == "/.register":
-				print "REGISTERED!!"
+				# print "REGISTERED!!"
 				self.is_registered = True;
 				self.time_registered = time.time()
 			if args[0] == "/.list" and args[1] == "/ffff/ff":
@@ -247,7 +247,7 @@ class Ffff(Thread):
 				for n in range(2, len(args)):
 					nm = args[n]
 					if nm == "Trails" or nm == "Flip":
-						print "IGNORING plugin in .list: ", nm
+						# print "IGNORING plugin in .list: ", nm
 						continue
 					# When FFFF tells us about a plugin, we send back
 					# a request to list its parameters

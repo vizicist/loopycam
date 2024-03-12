@@ -3,3 +3,5 @@
 *.obj
 *.tlog
 *.log
+data/nsdebug.txt
+*.pyc
