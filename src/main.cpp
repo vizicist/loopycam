@@ -143,6 +143,8 @@ void bonjour_check(void) {
 }
 #endif
 
+char DataDir[MAX_PATH];
+
 //========================================================================
 int main(int argc, char **argv ) {
 
@@ -151,18 +153,31 @@ int main(int argc, char **argv ) {
 	int		argv_w = 800;
 	int		argv_h = 600;
 
-	char str[9];
+	char buff[MAX_PATH];
 	size_t requiredSize;
 
-	// Get the value of the LIB environment variable.
-	int ret = getenv_s(&requiredSize, str, 8, "LOOPYCAM_INDEX");
-	if (ret == 0 && requiredSize > 0) {
-		int camindex;
-		int i = sscanf(str,"%d",&camindex);
-		if ( i == 1 ) {
-			extern int camera_index;
-			camera_index = camindex;
-		}
+	int ret = getenv_s(&requiredSize, DataDir, sizeof(DataDir), "LOOPYCAM_DATADIR");
+	if (ret != 0 || requiredSize <= 0) {
+        NS_debug("LOOPYCAM_DATADIR needs to be set!\n");
+        exit(1);
+	}
+    if (SetCurrentDirectory(DataDir) == FALSE) {
+        NS_debug("Unable to change directory to LOOPYCAM_DATADIR! (%s)\n",DataDir);
+        exit(1);
+    }
+
+	ret = getenv_s(&requiredSize, buff, sizeof(buff), "LOOPYCAM_INDEX");
+    if (ret != 0 || requiredSize <= 0) {
+        NS_debug("LOOPYCAM_INDEX needs to be set!\n");
+        exit(1);
+    }
+
+	int camindex;
+	int i = sscanf(buff,"%d",&camindex);
+	if ( i == 1 ) {
+		extern int camera_index;
+		camera_index = camindex;
+		NS_debug("LOOPYCAM_INDEX is %d\n", camera_index);
 	}
 
 	for ( int n=1; n<argc; n++ ) {
@@ -179,6 +194,7 @@ int main(int argc, char **argv ) {
 			n++;
 		}
 	}
+	NS_debug("argv_* values are %d,%d,%d,%d\n", argv_x, argv_y, argv_w, argv_h);
 
     NetworkInitializer networkInitializer_;
 

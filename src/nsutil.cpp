@@ -14,7 +14,6 @@ using namespace std;
 void
 NS_debug(char *fmt, ...)
 {
-#if 0
     va_list args;
     char msg[10000];
 
@@ -33,7 +32,6 @@ NS_debug(char *fmt, ...)
     f.close();
 
     va_end(args);
-#endif
 }
 
 int

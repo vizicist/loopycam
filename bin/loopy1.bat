@@ -9,5 +9,5 @@ echo PATH is %PATH%
 
 cd %USERPROFILE%\github\loopycam\bin
 copy loopystart1.bat loopystart.bat
-cd %USERPROFILE%\github\loopycam\python\pyloopy\PyLoopy
+cd %USERPROFILE%\github\loopycam\python\pyloopy
 c:\python26\python.exe pyloopy.py

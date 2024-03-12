@@ -1,0 +1,230 @@
+NOW LISTENING on port 4444
+CAMERA CV says width=1920 height=1080
+InstantiateGL of AVFFGL3dPixels.dll worked!
+InstantiateGL of AVFFGLAddSubtract.dll worked!
+InstantiateGL of AVFFGLBrightnessContrast.dll worked!
+InstantiateGL of AVFFGLColorize.dll worked!
+InstantiateGL of AVFFGLCubeTiles.dll worked!
+InstantiateGL of AVFFGLFlip.dll worked!
+InstantiateGL of AVFFGLInvertRGB.dll worked!
+InstantiateGL of AVFFGLPixelHighPass.dll worked!
+InstantiateGL of AVFFGLPointGrid.dll worked!
+InstantiateGL of AVFFGLShiftRGB.dll worked!
+InstantiateGL of AVFFGLStingySphere.dll worked!
+InstantiateGL of AVFFGLThreshhold.dll worked!
+InstantiateGL of AVFFGLTrails.dll worked!
+InstantiateGL of FFGLBarshift.dll worked!
+InstantiateGL of FFGLBlur.dll worked!
+InstantiateGL of FFGLDistortion.dll worked!
+InstantiateGL of FFGLHeat.dll worked!
+InstantiateGL of FFGLHeat_debug.dll worked!
+InstantiateGL of FFGLHueRotate.dll worked!
+InstantiateGL of FFGLKaleidoscope.dll worked!
+InstantiateGL of FFGLLorez.dll worked!
+InstantiateGL of FFGLLumaDisplace.dll worked!
+InstantiateGL of FFGLMirror.dll worked!
+InstantiateGL of FFGLMirror_debug.dll worked!
+InstantiateGL of FFGLPosterize.dll worked!
+InstantiateGL of FFGLRGBASwitch.dll worked!
+InstantiateGL of FFGLSqueeze.dll worked!
+InstantiateGL of FFGLTile.dll worked!
+InstantiateGL of FFGLTile_debug.dll worked!
+InstantiateGL of FFGLTwirl.dll worked!
+InstantiateGL of SyzGL_Colourise.dll worked!
+InstantiateGL of SyzGL_Fragment.dll worked!
+InstantiateGL of SyzGL_Goo.dll worked!
+InstantiateGL of SyzGL_Iterate.dll worked!
+InstantiateGL of SyzGL_Kaleidoscope.dll worked!
+InstantiateGL of SyzGL_RadialBlur.dll worked!
+InstantiateGL of SyzGL_Ripples.dll worked!
+InstantiateGL of SyzGL_Tunnel.dll worked!
+InstantiateGL of SyzGL_VideoWall.dll worked!
+Float Parameter n=0 s=Strength type=10 default=0.510000
+Float Parameter n=1 s=FineTune type=10 default=0.550000
+Float Parameter n=2 s=Invert type=10 default=1.000000
+Successfully loaded Path=plugins/ffplugins/IscMIDisplace1.dll
+LOADED! plugins/ffplugins/IscMIDisplace1.dll
+Float Parameter n=0 s=Blend type=10 default=0.210000
+Float Parameter n=1 s=Strength X type=10 default=0.200000
+Float Parameter n=2 s=Strength Y type=10 default=0.200000
+Float Parameter n=3 s=Dir Blend type=10 default=0.500000
+Float Parameter n=4 s=Move Blend type=10 default=0.400000
+Successfully loaded Path=plugins/ffplugins/IscMISmoknEdges1.dll
+LOADED! plugins/ffplugins/IscMISmoknEdges1.dll
+Successfully loaded Path=plugins/ffplugins/iua_AutoInvert.dll
+LOADED! plugins/ffplugins/iua_AutoInvert.dll
+Float Parameter n=0 s=Horizontal type=-1 default=0.030000
+Float Parameter n=1 s=Vertical type=-1 default=0.030000
+Float Parameter n=2 s=Enhance type=-1 default=0.400000
+Successfully loaded Path=plugins/ffplugins/iua_Edge_Glow.dll
+LOADED! plugins/ffplugins/iua_Edge_Glow.dll
+Float Parameter n=0 s=Echo type=-1 default=0.050000
+Float Parameter n=1 s=Decay type=-1 default=0.000000
+Successfully loaded Path=plugins/ffplugins/iua_frame_echo.dll
+LOADED! plugins/ffplugins/iua_frame_echo.dll
+Float Parameter n=0 s=Count type=-1 default=0.100000
+Float Parameter n=1 s=Size type=-1 default=0.500000
+Float Parameter n=2 s=Variation type=-1 default=0.050000
+Float Parameter n=3 s=Mode type=-1 default=0.000000
+Successfully loaded Path=plugins/ffplugins/iua_RectField.dll
+LOADED! plugins/ffplugins/iua_RectField.dll
+Float Parameter n=0 s=Spike Scale type=10 default=0.498039
+Float Parameter n=1 s=Spike Floor type=10 default=0.000000
+Float Parameter n=2 s=Spike Ceiling type=10 default=1.000000
+Successfully loaded Path=plugins/ffplugins/PeteBackLight.dll
+LOADED! plugins/ffplugins/PeteBackLight.dll
+Float Parameter n=0 s=Edge1 type=10 default=0.000000
+Float Parameter n=1 s=Edge2 type=10 default=0.501961
+Float Parameter n=2 s=Tint Red type=2 default=0.027451
+Float Parameter n=3 s=Tint Green type=3 default=0.086275
+Float Parameter n=4 s=Tint Blue type=4 default=0.117647
+Successfully loaded Path=plugins/ffplugins/PeteChromium.dll
+LOADED! plugins/ffplugins/PeteChromium.dll
+Float Parameter n=0 s=Radius type=10 default=0.064516
+Float Parameter n=1 s=Angle type=10 default=0.000000
+Successfully loaded Path=plugins/ffplugins/PeteDirectionalBlur.dll
+LOADED! plugins/ffplugins/PeteDirectionalBlur.dll
+Float Parameter n=0 s=Distortion type=10 default=0.040000
+Float Parameter n=1 s=Max Radius type=10 default=1.000000
+Float Parameter n=2 s=Centre X type=5 default=0.500000
+Float Parameter n=3 s=Centre Y type=6 default=0.500000
+Successfully loaded Path=plugins/ffplugins/PeteFishEye.dll
+LOADED! plugins/ffplugins/PeteFishEye.dll
+Float Parameter n=0 s=Radius type=10 default=0.064516
+Float Parameter n=1 s=Edge Factor type=10 default=0.020000
+Float Parameter n=2 s=Fake It type=0 default=1.000000
+Float Parameter n=3 s=Passes type=10 default=0.400000
+Float Parameter n=4 s=Do UnSharpMask type=0 default=0.000000
+Float Parameter n=5 s=Aspect Ratio type=10 default=0.500000
+Float Parameter n=6 s=UnSharpMask Amou type=10 default=0.250000
+Float Parameter n=7 s=Do Odd But Cool type=0 default=0.000000
+Successfully loaded Path=plugins/ffplugins/PeteGaussianBlur.dll
+LOADED! plugins/ffplugins/PeteGaussianBlur.dll
+Float Parameter n=0 s=Inner Radius type=10 default=0.015748
+Float Parameter n=1 s=Outer Radius type=10 default=0.055118
+Float Parameter n=2 s=Passes type=10 default=0.000000
+Float Parameter n=3 s=Floor type=10 default=0.000000
+Float Parameter n=4 s=Ceiling type=10 default=0.125490
+Float Parameter n=5 s=Aspect Ratio type=10 default=0.500000
+Successfully loaded Path=plugins/ffplugins/PeteGlow.dll
+LOADED! plugins/ffplugins/PeteGlow.dll
+Float Parameter n=0 s=Dot Size type=10 default=0.233333
+Float Parameter n=1 s=Style type=10 default=0.000000
+Float Parameter n=2 s=Angle type=10 default=0.000000
+Float Parameter n=3 s=Smoothing type=10 default=0.501961
+Successfully loaded Path=plugins/ffplugins/PeteHalfTone.dll
+LOADED! plugins/ffplugins/PeteHalfTone.dll
+Float Parameter n=0 s=Divisions type=10 default=0.109375
+Float Parameter n=1 s=Output Angle type=10 default=0.000000
+Float Parameter n=2 s=Source Angle type=10 default=0.000000
+Float Parameter n=3 s=Source Centre X type=5 default=0.500000
+Float Parameter n=4 s=Source Centre Y type=6 default=0.500000
+Float Parameter n=5 s=Output Centre X type=5 default=0.500000
+Float Parameter n=6 s=Output Centre Y type=6 default=0.500000
+Float Parameter n=7 s=Reflection Line  type=10 default=0.500000
+Float Parameter n=8 s=Source Angle Pro type=10 default=0.090909
+Successfully loaded Path=plugins/ffplugins/PeteKaleidascope.dll
+LOADED! plugins/ffplugins/PeteKaleidascope.dll
+Float Parameter n=0 s=Size type=10 default=0.200000
+Float Parameter n=1 s=Do Distance Base type=0 default=0.000000
+Float Parameter n=2 s=Cheap And Nasty type=0 default=0.000000
+Successfully loaded Path=plugins/ffplugins/PeteMetaImage.dll
+LOADED! plugins/ffplugins/PeteMetaImage.dll
+Float Parameter n=0 s=Origin X type=5 default=0.500000
+Float Parameter n=1 s=Origin Y type=6 default=0.500000
+Float Parameter n=2 s=Rotation type=10 default=0.000000
+Float Parameter n=3 s=Scale type=10 default=0.200000
+Successfully loaded Path=plugins/ffplugins/PetePanSpinZoom.dll
+LOADED! plugins/ffplugins/PetePanSpinZoom.dll
+Float Parameter n=0 s=Levels type=10 default=0.233333
+Successfully loaded Path=plugins/ffplugins/PetePosterize.dll
+LOADED! plugins/ffplugins/PetePosterize.dll
+Float Parameter n=0 s=Layer Scale type=10 default=0.300000
+Float Parameter n=1 s=Quality type=10 default=1.000000
+Successfully loaded Path=plugins/ffplugins/PeteRadialBlur.dll
+LOADED! plugins/ffplugins/PeteRadialBlur.dll
+Float Parameter n=0 s=Enable Clear type=0 default=0.000000
+Float Parameter n=1 s=Enable Rectangle type=0 default=1.000000
+Float Parameter n=2 s=Rate type=10 default=0.187500
+Float Parameter n=3 s=Width type=10 default=1.000000
+Float Parameter n=4 s=Height type=10 default=1.000000
+Float Parameter n=5 s=X Delta type=10 default=0.250000
+Float Parameter n=6 s=Y Delta type=10 default=0.250000
+Float Parameter n=7 s=Persistence type=10 default=0.950000
+Successfully loaded Path=plugins/ffplugins/PeteRectDistort.dll
+LOADED! plugins/ffplugins/PeteRectDistort.dll
+Float Parameter n=0 s=Refraction type=10 default=0.124453
+Float Parameter n=1 s=Cell Width type=10 default=0.059055
+Float Parameter n=2 s=Cell Height type=10 default=0.059055
+Float Parameter n=3 s=Allow Magnificat type=0 default=1.000000
+Successfully loaded Path=plugins/ffplugins/PeteRefraction.dll
+LOADED! plugins/ffplugins/PeteRefraction.dll
+Float Parameter n=0 s=Horizontal type=0 default=1.000000
+Float Parameter n=1 s=Mirror type=0 default=0.000000
+Float Parameter n=2 s=Mirror Flip type=0 default=0.000000
+Float Parameter n=3 s=Proportion type=10 default=0.314158
+Float Parameter n=4 s=Speed 1 type=10 default=0.531250
+Float Parameter n=5 s=Speed 2 type=10 default=0.484375
+Successfully loaded Path=plugins/ffplugins/PeteSlide.dll
+LOADED! plugins/ffplugins/PeteSlide.dll
+Float Parameter n=0 s=Threshold type=10 default=0.501961
+Float Parameter n=1 s=Start type=10 default=0.000000
+Float Parameter n=2 s=End type=10 default=1.000000
+Float Parameter n=3 s=Limit type=0 default=0.000000
+Float Parameter n=4 s=Floor type=10 default=0.000000
+Float Parameter n=5 s=Ceiling type=10 default=1.000000
+Successfully loaded Path=plugins/ffplugins/PeteSolarize.dll
+LOADED! plugins/ffplugins/PeteSolarize.dll
+Float Parameter n=0 s=Angle type=10 default=0.027778
+Float Parameter n=1 s=Scale type=10 default=0.333333
+Float Parameter n=2 s=Layer Count type=10 default=0.233333
+Float Parameter n=3 s=Origin X type=5 default=0.500000
+Float Parameter n=4 s=Origin Y type=6 default=0.500000
+Successfully loaded Path=plugins/ffplugins/PeteSpiralBlur.dll
+LOADED! plugins/ffplugins/PeteSpiralBlur.dll
+Float Parameter n=0 s=Angle type=10 default=0.000000
+Float Parameter n=1 s=Skew Angle type=10 default=0.000000
+Float Parameter n=2 s=Cell Width type=10 default=0.160000
+Float Parameter n=3 s=Cell Height type=10 default=0.120000
+Successfully loaded Path=plugins/ffplugins/PeteTile.dll
+LOADED! plugins/ffplugins/PeteTile.dll
+Float Parameter n=0 s=Time type=10 default=0.139785
+Successfully loaded Path=plugins/ffplugins/PeteTimeBlur.dll
+LOADED! plugins/ffplugins/PeteTimeBlur.dll
+Float Parameter n=0 s=SineSlur Period type=10 default=0.100000
+Float Parameter n=1 s=SineSlur Amplitu type=10 default=0.500000
+Float Parameter n=2 s=Stutter Amplitud type=10 default=1.000000
+Float Parameter n=3 s=Custom Playback  type=10 default=0.000000
+Float Parameter n=4 s=Horizontal type=0 default=1.000000
+Float Parameter n=5 s=Slice Size type=10 default=0.010101
+Float Parameter n=6 s=Style type=10 default=0.000000
+Successfully loaded Path=plugins/ffplugins/PeteTimeSlice.dll
+LOADED! plugins/ffplugins/PeteTimeSlice.dll
+Float Parameter n=0 s=Pre-Filter Size type=10 default=0.063492
+Float Parameter n=1 s=Resolution type=10 default=0.055118
+Float Parameter n=2 s=Monochrome type=0 default=0.000000
+Float Parameter n=3 s=Colour Count type=10 default=0.011811
+Float Parameter n=4 s=Palette Persiste type=10 default=0.990000
+Float Parameter n=5 s=Difference Thres type=10 default=0.500000
+Successfully loaded Path=plugins/ffplugins/PeteVectorize.dll
+LOADED! plugins/ffplugins/PeteVectorize.dll
+Float Parameter n=0 s=Friction type=10 default=0.950000
+Float Parameter n=1 s=Speed type=10 default=0.200000
+Successfully loaded Path=plugins/ffplugins/PeteWave.dll
+LOADED! plugins/ffplugins/PeteWave.dll
+After scanplugins, nffplugins=28
+After scanplugins 1, nffglplugins=39
+Looper frame size = 640,480
+Frames = 0
+Frames = 11
+Frames = 10
+Frames = 9
+Frames = 10
+Frames = 9
+Frames = 10
+NOW LISTENING on port 4444
+Unable to initialize capture from camera index=4
+NOW LISTENING on port 4444
+Unable to initialize capture from camera index=4
+NOW LISTENING on port 4444
+LOOPYCAM_DATADIR needs to be set!

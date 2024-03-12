@@ -22,10 +22,10 @@ FFGLPluginInstance *post2plugins[NPOST2PLUGINS];
 
 FFGLPluginInstance* post2trails;
 FFGLPluginInstance* post2flip;
-// int flipv = 1;
+// int flipv = 1;ff
 // int fliph = 1;
 
-int camera_index = 0;
+int camera_index = 4;
 
 void scanffglplugins2();
 void scanffglplugins1();
@@ -105,7 +105,14 @@ void non_of_init(int x, int y, int w, int h) {
     camWidth = (int)fwidth;
     camHeight = (int)fheight;
 
-    NS_debug("CAMERA CV says width=%d height=%d\n",camWidth,camHeight);
+    char curdir[MAX_PATH];
+    int r = GetCurrentDirectory(MAX_PATH, curdir);
+    if ( r == 0 ) {
+        NS_debug("Unable to get current directory!\n");
+		exit(1);
+    }
+
+    NS_debug("CAMERA CV says width=%d height=%d curdir=%s\n",camWidth,camHeight,curdir);
 
     FFGLinit(x,y,w,h);
     FFGLinit2();
@@ -257,18 +264,17 @@ void scanplugins()
 {
     WIN32_FIND_DATA ffd;
     LARGE_INTEGER filesize;
-    char ws[MAX_PATH];
+    // char ws[MAX_PATH];
 
     HANDLE hFind = INVALID_HANDLE_VALUE;
     DWORD dwError=0;
     int nfound = 0;
     LPCTSTR path;
 
-    path = "ffplugins";
     nffplugins = 0;
 
-    sprintf(ws,"%s\\*",path);
-    hFind = FindFirstFile(ws, &ffd);
+    path = "ffplugins\\*";
+    hFind = FindFirstFile(path, &ffd);
 
     if (INVALID_HANDLE_VALUE == hFind)
     {
@@ -308,12 +314,11 @@ void scanffglplugins1()
     int nfound = 0;
     LPCTSTR path;
 
-    path = "ffglplugins";
     nffglplugins = 0;
 
-    sprintf(ws,"%s\\*",path);
+    path = "ffglplugins\\*";
 
-    hFind = FindFirstFile(ws, &ffd);
+    hFind = FindFirstFile(path, &ffd);
 
     if (INVALID_HANDLE_VALUE == hFind)
     {

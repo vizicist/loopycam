@@ -12440,3 +12440,25 @@ oscit_ffgl_set_string ff=Shift RGB val=G=0.506650 nm=G floatval=0.506650
 oscit_set path=(null)
 oscit_ffgl_set_string ff=Colorize val=Contrast=0.237461 nm=Contrast floatval=0.237461
 oscit_set path=(null)
+LOOPYCAM_PRESETSDIR needs to be set!
+LOOPYCAM_PRESETSDIR needs to be set!
+LOOPYCAM_PRESETSDIR needs to be set!
+LOOPYCAM_PRESETSDIR needs to be set!
+LOOPYCAM_PRESETSDIR needs to be set!
+LOOPYCAM_PRESETSDIR needs to be set!
+LOOPYCAM_PRESETSDIR needs to be set!
+NOW LISTENING on port 4444
+CAMERA CV says width=1920 height=1080
+After scanplugins, nffplugins=0
+After scanplugins 1, nffglplugins=0
+LOOPYCAM_PRESETSDIR needs to be set!
+NOW LISTENING on port 4444
+CAMERA CV says width=1920 height=1080
+After scanplugins, nffplugins=0
+After scanplugins 1, nffglplugins=0
+NOW LISTENING on port 4444
+Unable to initialize capture from camera index=4
+NOW LISTENING on port 4444
+CAMERA CV says width=1920 height=1080 curdir=C:\Users\nosuc\github\loopycam\bin
+After scanplugins, nffplugins=0
+After scanplugins 1, nffglplugins=0
