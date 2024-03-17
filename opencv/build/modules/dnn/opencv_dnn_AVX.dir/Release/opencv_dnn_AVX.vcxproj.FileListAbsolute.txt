@@ -1,0 +1,1 @@
+C:\Users\nosuc\github\loopycam\opencv\build\modules\dnn\opencv_dnn_AVX.dir\Release\opencv_dnn_AVX.lib

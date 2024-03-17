@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\x64\Release\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_core490.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_flann490.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_imgproc490.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_features2d490.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_calib3d490.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_dnn490.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_imgcodecs490.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_videoio490.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_highgui490.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\x64\Release\opencv_highgui_plugins</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_objdetect490.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\x64\Release\opencv_videoio_plugins</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\nosuc\github\loopycam\opencv\build\bin\Release\opencv_test_objdetect.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

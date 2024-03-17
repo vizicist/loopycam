@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgcodecs\CMakeFiles\opencv_imgcodecs.dir\cmake_pch.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\loadsave.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\utils.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_avif.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_base.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_bmp.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_exr.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_gdal.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_gdcm.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_hdr.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_jpeg.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_jpeg2000.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_jpeg2000_openjpeg.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_pam.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_pfm.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_png.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_pxm.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_spng.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_sunras.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_tiff.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_webp.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\bitstrm.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\rgbe.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\exif.cpp">
+      <Filter>Src\grfmts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgcodecs\opencv_imgcodecs_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\include\opencv2\imgcodecs.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\include\opencv2\imgcodecs\imgcodecs.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\include\opencv2\imgcodecs\imgcodecs_c.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\include\opencv2\imgcodecs\ios.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\include\opencv2\imgcodecs\legacy\constants_c.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\include\opencv2\imgcodecs\macosx.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\precomp.hpp">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\utils.hpp">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_avif.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_base.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_bmp.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_exr.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_gdal.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_gdcm.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_hdr.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_jpeg.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_jpeg2000.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_jpeg2000_openjpeg.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_pam.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_pfm.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_png.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_pxm.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_spng.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_sunras.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_tiff.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmt_webp.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\grfmts.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\bitstrm.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\rgbe.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\src\exif.hpp">
+      <Filter>Src\grfmts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\build\cvconfig.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\build\opencv2\opencv_modules.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgcodecs\CMakeFiles\opencv_imgcodecs.dir\Debug\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgcodecs\CMakeFiles\opencv_imgcodecs.dir\Release\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgcodecs\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgcodecs\vs_version.rc">
+      <Filter>Src</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{0157A8C1-2ADF-3A52-9B34-41B7DFCF2C29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompile Header File">
+      <UniqueIdentifier>{448DE714-27CA-35EA-97CE-2485A35DB421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{105A4E49-AF5A-3CD1-90D8-0266F79A9DB0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{F5618896-DD8C-34E5-A003-2FD964CF0291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\grfmts">
+      <UniqueIdentifier>{9552FF10-D9BF-3DEC-9045-55B095804F74}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

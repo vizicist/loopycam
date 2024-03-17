@@ -1,0 +1,1 @@
+C:\Users\nosuc\github\loopycam\opencv\build\modules\calib3d\opencv_calib3d_AVX2.dir\Release\opencv_calib3d_AVX2.lib

@@ -1,0 +1,1 @@
+C:\Users\nosuc\github\loopycam\opencv\build\modules\features2d\opencv_features2d_SSE4_1.dir\Release\opencv_features2d_SSE4_1.lib

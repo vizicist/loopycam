@@ -1,0 +1,1 @@
+C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_core_AVX.dir\Release\opencv_core_AVX.lib

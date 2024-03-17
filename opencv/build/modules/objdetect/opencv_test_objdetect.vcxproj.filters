@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\objdetect\CMakeFiles\opencv_test_objdetect.dir\cmake_pch.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\opencl\test_hogdetector.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_aruco_utils.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_arucodetection.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_barcode.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_boarddetection.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_cascadeandhog.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_charucodetection.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_face.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_main.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_qrcode.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_qrcode_encode.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_aruco_utils.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_precomp.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\test\test_qr_utils.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\objdetect\CMakeFiles\opencv_test_objdetect.dir\Debug\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\objdetect\CMakeFiles\opencv_test_objdetect.dir\Release\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\nosuc\github\loopycam\opencv\modules\objdetect\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{0157A8C1-2ADF-3A52-9B34-41B7DFCF2C29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompile Header File">
+      <UniqueIdentifier>{448DE714-27CA-35EA-97CE-2485A35DB421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{105A4E49-AF5A-3CD1-90D8-0266F79A9DB0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{F5618896-DD8C-34E5-A003-2FD964CF0291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\opencl">
+      <UniqueIdentifier>{E93C7E5A-3A42-3BD3-A8F3-E9E335B73C2F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

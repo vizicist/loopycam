@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\dnn\CMakeFiles\opencv_perf_dnn.dir\cmake_pch.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_caffe.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_common.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_convolution.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_convolution1d.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_convolution3d.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_einsum.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_gemm.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_layer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_main.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_net.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_recurrent.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\test\test_common.hpp">
+      <Filter>test_common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\test\test_common.impl.hpp">
+      <Filter>test_common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\perf\perf_precomp.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\dnn\CMakeFiles\opencv_perf_dnn.dir\Debug\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\dnn\CMakeFiles\opencv_perf_dnn.dir\Release\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\nosuc\github\loopycam\opencv\modules\dnn\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{0157A8C1-2ADF-3A52-9B34-41B7DFCF2C29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompile Header File">
+      <UniqueIdentifier>{448DE714-27CA-35EA-97CE-2485A35DB421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{105A4E49-AF5A-3CD1-90D8-0266F79A9DB0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{F5618896-DD8C-34E5-A003-2FD964CF0291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test_common">
+      <UniqueIdentifier>{98C712C0-4E0F-3CA6-AA52-1D3EB196580C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

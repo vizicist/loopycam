@@ -1,0 +1,1 @@
+C:\Users\nosuc\github\loopycam\opencv\build\modules\features2d\opencv_features2d_AVX512_SKX.dir\Release\opencv_features2d_AVX512_SKX.lib

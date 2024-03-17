@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgproc\CMakeFiles\opencv_perf_imgproc.dir\cmake_pch.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_3vs4.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_accumulate.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_blend.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_color.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_filters.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_gftt.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_houghlines.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_imgproc.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_imgwarp.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_matchTemplate.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_moments.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\opencl\perf_pyramid.cpp">
+      <Filter>Src\opencl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_accumulate.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_bilateral.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_blur.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_canny.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_contours.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_corners.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_cvt_color.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_distanceTransform.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_filter2d.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_floodfill.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_goodFeaturesToTrack.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_histogram.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_houghcircles.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_houghlines.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_integral.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_intelligent_scissors.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_main.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_matchTemplate.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_moments.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_morph.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_phasecorr.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_pyramids.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_remap.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_resize.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_sepfilters.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_spatialgradient.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_threshold.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_warp.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\perf\perf_precomp.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgproc\CMakeFiles\opencv_perf_imgproc.dir\Debug\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgproc\CMakeFiles\opencv_perf_imgproc.dir\Release\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\nosuc\github\loopycam\opencv\modules\imgproc\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{0157A8C1-2ADF-3A52-9B34-41B7DFCF2C29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompile Header File">
+      <UniqueIdentifier>{448DE714-27CA-35EA-97CE-2485A35DB421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{105A4E49-AF5A-3CD1-90D8-0266F79A9DB0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{F5618896-DD8C-34E5-A003-2FD964CF0291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\opencl">
+      <UniqueIdentifier>{E93C7E5A-3A42-3BD3-A8F3-E9E335B73C2F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

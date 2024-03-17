@@ -5,4 +5,5 @@
 *.log
 data/nsdebug.txt
 *.pyc
+*.pch
 data/nsdebug.txt

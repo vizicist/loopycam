@@ -1,0 +1,494 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9F82E09D-D65D-3C74-ACD9-06CA52EB73DA}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\nosuc\github\loopycam\opencv\build\3rdparty\ippicv\ippicv_win\icv\include;C:\Users\nosuc\github\loopycam\opencv\build\3rdparty\ippicv\ippicv_win\iw\include;C:\Users\nosuc\github\loopycam\opencv\build;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\nosuc\github\loopycam\opencv\build\3rdparty\ippicv\ippicv_win\icv\include;C:\Users\nosuc\github\loopycam\opencv\build\3rdparty\ippicv\ippicv_win\iw\include;C:\Users\nosuc\github\loopycam\opencv\build;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\nosuc\github\loopycam\opencv\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/nosuc/github/loopycam/opencv/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/nosuc/github/loopycam/opencv -BC:/Users/nosuc/github/loopycam/opencv/build --check-stamp-file C:/Users/nosuc/github/loopycam/opencv/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeFindFrameworks.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeFindJavaCommon.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CPack.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CPackComponent.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.28\Modules\FindBLAS.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindJNI.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindJava.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindLAPACK.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindOpenMP.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindPythonInterp.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindPythonLibs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\SelectLibraryConfigurations.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\TestBigEndian.cmake;C:\Program Files\CMake\share\cmake-3.28\Templates\CPackConfig.cmake.in;C:\Users\nosuc\github\loopycam\opencv\3rdparty\ffmpeg\ffmpeg.cmake;C:\Users\nosuc\github\loopycam\opencv\3rdparty\ippicv\ippicv.cmake;C:\Users\nosuc\github\loopycam\opencv\build\3rdparty\ffmpeg\ffmpeg_version.cmake;C:\Users\nosuc\github\loopycam\opencv\build\CMakeFiles\3.28.3\CMakeCCompiler.cmake;C:\Users\nosuc\github\loopycam\opencv\build\CMakeFiles\3.28.3\CMakeCXXCompiler.cmake;C:\Users\nosuc\github\loopycam\opencv\build\CMakeFiles\3.28.3\CMakeRCCompiler.cmake;C:\Users\nosuc\github\loopycam\opencv\build\CMakeFiles\3.28.3\CMakeSystem.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVCRTLinkage.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVCompilerOptimizations.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVCompilerOptions.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectApacheAnt.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectCXXCompiler.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectDirectML.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectDirectX.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectFlatbuffers.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectOpenCL.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectPython.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectTrace.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectVTK.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDownload.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVExtraTargets.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindFrameworks.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindIPP.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindIPPIW.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindLAPACK.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindLibsGUI.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindLibsGrfmt.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindLibsPerf.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindLibsVideo.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindMKL.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindOpenBLAS.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindOpenEXR.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindProtobuf.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVGenABI.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVGenAndroidMK.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVGenConfig.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVGenHeaders.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVGenSetupVars.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVInstallLayout.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVMinDepVersions.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVModule.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVPCHSupport.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVPackaging.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVUtils.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVVersion.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_avx2.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_avx512.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_fp16.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_popcnt.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_sse3.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_sse41.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_sse42.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_ssse3.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\directml.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\directx.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\opencl.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\win32uitest.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\platforms\OpenCV-Windows.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\OpenCVConfig-version.cmake.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\OpenCVConfig.cmake.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\OpenCVConfig.root-WIN32.cmake.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\cmake_uninstall.cmake.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\custom_hal.hpp.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\cv_cpu_config.h.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\cvconfig.h.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\opencv_modules.hpp.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\setup_vars_win32.cmd.in;C:\Users\nosuc\github\loopycam\opencv\cmake\vars\EnableModeVars.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\core\include\opencv2\core\version.hpp;C:\Users\nosuc\github\loopycam\opencv\modules\dnn\cmake\init.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\gapi\cmake\DownloadADE.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\gapi\cmake\init.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\highgui\cmake\detect_win32ui.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\highgui\cmake\init.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_dc1394.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_dshow.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_ffmpeg.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_gstreamer.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_msmf.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_obsensor.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\init.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\nosuc\github\loopycam\opencv\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/nosuc/github/loopycam/opencv/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/nosuc/github/loopycam/opencv -BC:/Users/nosuc/github/loopycam/opencv/build --check-stamp-file C:/Users/nosuc/github/loopycam/opencv/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeFindFrameworks.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeFindJavaCommon.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CPack.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CPackComponent.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.28\Modules\FindBLAS.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindJNI.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindJava.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindLAPACK.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindOpenMP.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindPythonInterp.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindPythonLibs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\SelectLibraryConfigurations.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\TestBigEndian.cmake;C:\Program Files\CMake\share\cmake-3.28\Templates\CPackConfig.cmake.in;C:\Users\nosuc\github\loopycam\opencv\3rdparty\ffmpeg\ffmpeg.cmake;C:\Users\nosuc\github\loopycam\opencv\3rdparty\ippicv\ippicv.cmake;C:\Users\nosuc\github\loopycam\opencv\build\3rdparty\ffmpeg\ffmpeg_version.cmake;C:\Users\nosuc\github\loopycam\opencv\build\CMakeFiles\3.28.3\CMakeCCompiler.cmake;C:\Users\nosuc\github\loopycam\opencv\build\CMakeFiles\3.28.3\CMakeCXXCompiler.cmake;C:\Users\nosuc\github\loopycam\opencv\build\CMakeFiles\3.28.3\CMakeRCCompiler.cmake;C:\Users\nosuc\github\loopycam\opencv\build\CMakeFiles\3.28.3\CMakeSystem.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVCRTLinkage.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVCompilerOptimizations.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVCompilerOptions.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectApacheAnt.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectCXXCompiler.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectDirectML.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectDirectX.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectFlatbuffers.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectOpenCL.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectPython.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectTrace.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDetectVTK.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVDownload.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVExtraTargets.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindFrameworks.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindIPP.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindIPPIW.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindLAPACK.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindLibsGUI.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindLibsGrfmt.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindLibsPerf.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindLibsVideo.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindMKL.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindOpenBLAS.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindOpenEXR.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVFindProtobuf.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVGenABI.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVGenAndroidMK.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVGenConfig.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVGenHeaders.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVGenSetupVars.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVInstallLayout.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVMinDepVersions.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVModule.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVPCHSupport.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVPackaging.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVUtils.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\OpenCVVersion.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_avx2.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_avx512.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_fp16.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_popcnt.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_sse3.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_sse41.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_sse42.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\cpu_ssse3.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\directml.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\directx.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\opencl.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\checks\win32uitest.cpp;C:\Users\nosuc\github\loopycam\opencv\cmake\platforms\OpenCV-Windows.cmake;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\OpenCVConfig-version.cmake.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\OpenCVConfig.cmake.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\OpenCVConfig.root-WIN32.cmake.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\cmake_uninstall.cmake.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\custom_hal.hpp.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\cv_cpu_config.h.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\cvconfig.h.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\opencv_modules.hpp.in;C:\Users\nosuc\github\loopycam\opencv\cmake\templates\setup_vars_win32.cmd.in;C:\Users\nosuc\github\loopycam\opencv\cmake\vars\EnableModeVars.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\core\include\opencv2\core\version.hpp;C:\Users\nosuc\github\loopycam\opencv\modules\dnn\cmake\init.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\gapi\cmake\DownloadADE.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\gapi\cmake\init.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\highgui\cmake\detect_win32ui.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\highgui\cmake\init.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_dc1394.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_dshow.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_ffmpeg.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_gstreamer.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_msmf.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\detect_obsensor.cmake;C:\Users\nosuc\github\loopycam\opencv\modules\videoio\cmake\init.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\nosuc\github\loopycam\opencv\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\ZERO_CHECK.vcxproj">
+      <Project>{EE78DF5B-D85C-35F7-8815-2539D6B2EC01}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\3rdparty\libjpeg-turbo\jsimd.vcxproj">
+      <Project>{513F1221-6148-38CD-BCFC-F6CD11C7DCB4}</Project>
+      <Name>jsimd</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\3rdparty\openjpeg\openjp2\libopenjp2.vcxproj">
+      <Project>{C78B230B-0C6E-35E1-AC3E-601DCBFC7DBC}</Project>
+      <Name>libopenjp2</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\apps\annotation\opencv_annotation.vcxproj">
+      <Project>{DAED2E87-2D61-34B9-8EB2-FFAE62082754}</Project>
+      <Name>opencv_annotation</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\calib3d\opencv_calib3d.vcxproj">
+      <Project>{C17D69E3-91C4-3E76-9054-21394FAF02D3}</Project>
+      <Name>opencv_calib3d</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\calib3d\opencv_calib3d_AVX2.vcxproj">
+      <Project>{A51171FD-2B3D-3127-B201-5C108F828F04}</Project>
+      <Name>opencv_calib3d_AVX2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_core.vcxproj">
+      <Project>{B8E65DBE-BDAD-3C67-8A3D-7B0F3258D352}</Project>
+      <Name>opencv_core</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_core_AVX.vcxproj">
+      <Project>{D89D1B1C-ED48-3CAA-BFD2-9D6A4FA0D363}</Project>
+      <Name>opencv_core_AVX</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_core_AVX2.vcxproj">
+      <Project>{4D3533D3-BB2F-391C-821C-1FB2A3B2EC94}</Project>
+      <Name>opencv_core_AVX2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_core_AVX512_SKX.vcxproj">
+      <Project>{EE6EC3BF-E6B0-3442-8D09-CCEEEDD023C1}</Project>
+      <Name>opencv_core_AVX512_SKX</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_core_SSE4_1.vcxproj">
+      <Project>{B919C88D-1EE6-39AC-B418-8F2CCDEBF634}</Project>
+      <Name>opencv_core_SSE4_1</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_core_SSE4_2.vcxproj">
+      <Project>{50A558F3-C1CC-3F6A-9041-B9BB19115707}</Project>
+      <Name>opencv_core_SSE4_2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\dnn\opencv_dnn.vcxproj">
+      <Project>{445294D7-FC96-35E9-B218-317A0FAE03F3}</Project>
+      <Name>opencv_dnn</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\dnn\opencv_dnn_AVX.vcxproj">
+      <Project>{994B32AD-4501-31E2-AA74-A181978D10E2}</Project>
+      <Name>opencv_dnn_AVX</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\dnn\opencv_dnn_AVX2.vcxproj">
+      <Project>{565932AD-A34B-3893-8902-55017CC9A364}</Project>
+      <Name>opencv_dnn_AVX2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\dnn\opencv_dnn_AVX512_SKX.vcxproj">
+      <Project>{F69F2D4E-78C0-3FB2-9B09-822DB5A18537}</Project>
+      <Name>opencv_dnn_AVX512_SKX</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\opencv_dnn_plugins.vcxproj">
+      <Project>{71F291ED-B0DD-34E7-A2B0-0849E2BBC3FC}</Project>
+      <Name>opencv_dnn_plugins</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\features2d\opencv_features2d.vcxproj">
+      <Project>{3926FD15-214B-3C95-BE99-5EE8E415C843}</Project>
+      <Name>opencv_features2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\features2d\opencv_features2d_AVX2.vcxproj">
+      <Project>{C9C43628-580D-383B-A4ED-39A6E7915564}</Project>
+      <Name>opencv_features2d_AVX2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\features2d\opencv_features2d_AVX512_SKX.vcxproj">
+      <Project>{99BB8C94-98F4-3767-B70D-A74F841CCF17}</Project>
+      <Name>opencv_features2d_AVX512_SKX</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\features2d\opencv_features2d_SSE4_1.vcxproj">
+      <Project>{906043A5-3E18-390B-8689-18BFCA2E6285}</Project>
+      <Name>opencv_features2d_SSE4_1</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\flann\opencv_flann.vcxproj">
+      <Project>{0292DF6E-2618-3725-BA39-9BE43570A65C}</Project>
+      <Name>opencv_flann</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\gapi\opencv_gapi.vcxproj">
+      <Project>{9F8D1080-BC27-3617-8AA5-7F7B98AFA61A}</Project>
+      <Name>opencv_gapi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\gapi\opencv_gapi_AVX2.vcxproj">
+      <Project>{65E300C6-7405-31A6-AB0E-CB3EC6F4CE69}</Project>
+      <Name>opencv_gapi_AVX2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\gapi\opencv_gapi_SSE4_1.vcxproj">
+      <Project>{52E50B30-C1E1-30FF-9037-9AD9BDDAB7D3}</Project>
+      <Name>opencv_gapi_SSE4_1</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\highgui\opencv_highgui.vcxproj">
+      <Project>{9AD4DE26-6E17-33E9-8F8C-081518CFC996}</Project>
+      <Name>opencv_highgui</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\opencv_highgui_plugins.vcxproj">
+      <Project>{C112D93C-EF03-35D3-A8B3-6F3B33F76209}</Project>
+      <Name>opencv_highgui_plugins</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgcodecs\opencv_imgcodecs.vcxproj">
+      <Project>{BC1AD684-1490-36ED-9434-FF7F05F846DE}</Project>
+      <Name>opencv_imgcodecs</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgproc\opencv_imgproc.vcxproj">
+      <Project>{47AB5C44-9806-31D7-93FC-9753697CC937}</Project>
+      <Name>opencv_imgproc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgproc\opencv_imgproc_AVX.vcxproj">
+      <Project>{84929118-F01A-3AD3-82E3-074C7D328B75}</Project>
+      <Name>opencv_imgproc_AVX</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgproc\opencv_imgproc_AVX2.vcxproj">
+      <Project>{CB7FB841-7AC9-36DC-AD7D-169577A09243}</Project>
+      <Name>opencv_imgproc_AVX2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgproc\opencv_imgproc_AVX512_SKX.vcxproj">
+      <Project>{C33AF6B6-A760-3A25-8F3A-83317FEFD949}</Project>
+      <Name>opencv_imgproc_AVX512_SKX</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgproc\opencv_imgproc_SSE4_1.vcxproj">
+      <Project>{117AC91C-2FE9-3EEA-83AA-3758F93E6BAC}</Project>
+      <Name>opencv_imgproc_SSE4_1</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\apps\interactive-calibration\opencv_interactive-calibration.vcxproj">
+      <Project>{FEDD5333-950E-3034-83D1-0DC157F4B2B1}</Project>
+      <Name>opencv_interactive-calibration</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\ml\opencv_ml.vcxproj">
+      <Project>{AABCC772-CCC0-3BE5-9A6D-3378A5765AD7}</Project>
+      <Name>opencv_ml</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\apps\model-diagnostics\opencv_model_diagnostics.vcxproj">
+      <Project>{25119A63-82CE-32BD-AC40-EB5AE0B98C66}</Project>
+      <Name>opencv_model_diagnostics</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\objdetect\opencv_objdetect.vcxproj">
+      <Project>{0592C296-37BB-3921-A163-19BD2708A00B}</Project>
+      <Name>opencv_objdetect</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\calib3d\opencv_perf_calib3d.vcxproj">
+      <Project>{0A7CE0AA-0BC8-3F11-A831-F066408328D4}</Project>
+      <Name>opencv_perf_calib3d</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_perf_core.vcxproj">
+      <Project>{7449D922-DA79-3691-893E-1E1C436F781C}</Project>
+      <Name>opencv_perf_core</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\dnn\opencv_perf_dnn.vcxproj">
+      <Project>{3A652D31-2933-3930-B07F-074065551E6D}</Project>
+      <Name>opencv_perf_dnn</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\features2d\opencv_perf_features2d.vcxproj">
+      <Project>{6C9AE883-9320-3C8C-ACBF-1A17B6DC1D23}</Project>
+      <Name>opencv_perf_features2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\gapi\opencv_perf_gapi.vcxproj">
+      <Project>{E82529F2-4C2F-3A6E-9D75-E4DB720473EC}</Project>
+      <Name>opencv_perf_gapi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgcodecs\opencv_perf_imgcodecs.vcxproj">
+      <Project>{D1135C62-2D63-3232-AC10-3D29D9815442}</Project>
+      <Name>opencv_perf_imgcodecs</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgproc\opencv_perf_imgproc.vcxproj">
+      <Project>{7FE14208-EE5E-389F-8271-AC71F753362E}</Project>
+      <Name>opencv_perf_imgproc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\objdetect\opencv_perf_objdetect.vcxproj">
+      <Project>{CB1B23D9-FBCD-3AF4-B4A0-5B8FBD498306}</Project>
+      <Name>opencv_perf_objdetect</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\photo\opencv_perf_photo.vcxproj">
+      <Project>{0C797C4C-CAE4-3B70-AF5B-B425831D348A}</Project>
+      <Name>opencv_perf_photo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\stitching\opencv_perf_stitching.vcxproj">
+      <Project>{320B9EEC-00BC-3664-8369-96C9F88A82AB}</Project>
+      <Name>opencv_perf_stitching</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\video\opencv_perf_video.vcxproj">
+      <Project>{9148928A-C5C4-3F71-846E-3B81F2EFB340}</Project>
+      <Name>opencv_perf_video</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\videoio\opencv_perf_videoio.vcxproj">
+      <Project>{AE16D910-16C3-3C7F-9E6F-55506098E079}</Project>
+      <Name>opencv_perf_videoio</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\photo\opencv_photo.vcxproj">
+      <Project>{C3E30917-FF8D-3F28-A5B7-210A0714B5F5}</Project>
+      <Name>opencv_photo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\stitching\opencv_stitching.vcxproj">
+      <Project>{2DA3DA19-F253-32CE-B5F5-6C1B869A9572}</Project>
+      <Name>opencv_stitching</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\calib3d\opencv_test_calib3d.vcxproj">
+      <Project>{EBA129B6-7BC6-3E5A-BB19-EE2F9AC75124}</Project>
+      <Name>opencv_test_calib3d</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_test_core.vcxproj">
+      <Project>{33EB2D9B-F6BD-3E90-BC56-10CC24C93A1B}</Project>
+      <Name>opencv_test_core</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_test_core_AVX.vcxproj">
+      <Project>{937AD50C-061E-34F1-AE16-4622BB74DADD}</Project>
+      <Name>opencv_test_core_AVX</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_test_core_AVX2.vcxproj">
+      <Project>{94F40052-73CD-3654-8867-31478908E17B}</Project>
+      <Name>opencv_test_core_AVX2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_test_core_AVX512_SKX.vcxproj">
+      <Project>{F1A84310-3D16-3A06-90A7-75FE09C2E38B}</Project>
+      <Name>opencv_test_core_AVX512_SKX</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_test_core_FP16.vcxproj">
+      <Project>{4189BE20-1E38-3CAC-BAA0-87E1FB2AAF06}</Project>
+      <Name>opencv_test_core_FP16</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_test_core_SSE2.vcxproj">
+      <Project>{E0C8E55B-5D46-3E21-82F7-E5900B015CD5}</Project>
+      <Name>opencv_test_core_SSE2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_test_core_SSE3.vcxproj">
+      <Project>{4A8A6A59-E519-3996-8A5A-7DFE06BB86D7}</Project>
+      <Name>opencv_test_core_SSE3</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_test_core_SSE4_1.vcxproj">
+      <Project>{A20EF106-7F9D-3BE9-B0B4-AC0564E07F99}</Project>
+      <Name>opencv_test_core_SSE4_1</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\core\opencv_test_core_SSE4_2.vcxproj">
+      <Project>{25A5D3A2-0005-301D-A34F-28905F01AC04}</Project>
+      <Name>opencv_test_core_SSE4_2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\dnn\opencv_test_dnn.vcxproj">
+      <Project>{7D25E451-42D0-3ED4-88FB-9620E0BB515B}</Project>
+      <Name>opencv_test_dnn</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\features2d\opencv_test_features2d.vcxproj">
+      <Project>{935CC67D-6CE8-3349-9946-CDA28CDBD9BA}</Project>
+      <Name>opencv_test_features2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\flann\opencv_test_flann.vcxproj">
+      <Project>{2715EAF7-F27D-3996-A564-71D9B5C5CB87}</Project>
+      <Name>opencv_test_flann</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\gapi\opencv_test_gapi.vcxproj">
+      <Project>{13888699-59A9-3539-B54D-534794C4945F}</Project>
+      <Name>opencv_test_gapi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\highgui\opencv_test_highgui.vcxproj">
+      <Project>{82DF9567-2240-32EC-B2DB-E90764A4D42E}</Project>
+      <Name>opencv_test_highgui</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgcodecs\opencv_test_imgcodecs.vcxproj">
+      <Project>{6F8C7388-995B-37A1-9FFE-AE04C241EEBF}</Project>
+      <Name>opencv_test_imgcodecs</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\imgproc\opencv_test_imgproc.vcxproj">
+      <Project>{BD79904D-EC4C-3F1B-936A-3F3C04714A33}</Project>
+      <Name>opencv_test_imgproc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\ml\opencv_test_ml.vcxproj">
+      <Project>{684D85BF-DB94-3121-B3C6-9E84CA0F81B2}</Project>
+      <Name>opencv_test_ml</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\objdetect\opencv_test_objdetect.vcxproj">
+      <Project>{97CB6641-798D-3041-93EB-439998E2492B}</Project>
+      <Name>opencv_test_objdetect</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\photo\opencv_test_photo.vcxproj">
+      <Project>{84B42D4F-4ADC-3F1A-A8FD-88141C5A82A9}</Project>
+      <Name>opencv_test_photo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\stitching\opencv_test_stitching.vcxproj">
+      <Project>{DEA6BF13-92F8-3FF6-91B3-D554A0D62BA5}</Project>
+      <Name>opencv_test_stitching</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\video\opencv_test_video.vcxproj">
+      <Project>{D079C7D5-AA60-3826-A900-E2C87A666ED0}</Project>
+      <Name>opencv_test_video</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\videoio\opencv_test_videoio.vcxproj">
+      <Project>{D9B91253-E642-307C-A3F4-F117C332C633}</Project>
+      <Name>opencv_test_videoio</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\ts\opencv_ts.vcxproj">
+      <Project>{400F3875-FBC6-3069-B746-2BD641DED07A}</Project>
+      <Name>opencv_ts</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\apps\version\opencv_version.vcxproj">
+      <Project>{BDEFD28A-FF97-38A8-B131-244FFE3D3B43}</Project>
+      <Name>opencv_version</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\apps\version\opencv_version_win32.vcxproj">
+      <Project>{2D0A6C1A-E648-3E65-895C-34132291D1E4}</Project>
+      <Name>opencv_version_win32</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\video\opencv_video.vcxproj">
+      <Project>{54B27ACA-782C-36AD-B5B9-5A1B8B4FC298}</Project>
+      <Name>opencv_video</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\videoio\opencv_videoio.vcxproj">
+      <Project>{1A0E8B10-F651-3CD9-8BAA-7BA1CB546D0D}</Project>
+      <Name>opencv_videoio</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\modules\.firstpass\videoio\opencv_videoio_plugins.vcxproj">
+      <Project>{FF211AC9-3BF0-37C6-88E9-777316B39F0F}</Project>
+      <Name>opencv_videoio_plugins</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\nosuc\github\loopycam\opencv\build\apps\visualisation\opencv_visualisation.vcxproj">
+      <Project>{E81AFF72-5425-3E97-9CDA-DF8F59C904C7}</Project>
+      <Name>opencv_visualisation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
