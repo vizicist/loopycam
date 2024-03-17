@@ -1,5 +1,0 @@
-# CMake generation dependency list for this directory.
-C:/Users/nosuc/github/loopycam/opencv/cmake/templates/dllmain.cpp.in
-C:/Users/nosuc/github/loopycam/opencv/cmake/templates/vs_version.rc.in
-C:/Users/nosuc/github/loopycam/opencv/modules/videoio/CMakeLists.txt
-C:/Users/nosuc/github/loopycam/opencv/modules/videoio/cmake/plugin.cmake

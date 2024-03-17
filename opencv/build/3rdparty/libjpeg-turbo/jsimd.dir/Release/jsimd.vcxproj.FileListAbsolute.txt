@@ -1,1 +1,0 @@
-C:\Users\nosuc\github\loopycam\opencv\build\3rdparty\libjpeg-turbo\jsimd.dir\Release\jsimd.lib

@@ -307,7 +307,7 @@ void scanffglplugins1()
 {
     WIN32_FIND_DATA ffd;
     LARGE_INTEGER filesize;
-    char ws[MAX_PATH];
+    // char ws[MAX_PATH];
 
     HANDLE hFind = INVALID_HANDLE_VALUE;
     DWORD dwError=0;
