@@ -1,16 +1,7 @@
-c:
-
-c:/windows/system32/taskkill /f /im loopycam.exe
-
-set PATH=%USERPROFILE%\github\loopycam\bin;%PATH%
-
-cd %USERPROFILE%\github\loopycam\bin
-
-rem defaults if environment variables not set
-if ".%LOOPY_ARGS%" == "." (set LOOPY_ARGS=0,0,800,600)
-if ".%1" == ".2" (set LOOPY_ARGS=1920,0,1920,1080)
-
-if .%LOOPYCAM_DATADIR% == . (set LOOPYCAM_DATADIR=%USERPROFILE%\github\loopycam\data)
-if ".%LOOPYCAM_CAMERA%" == "." (set "LOOPYCAM_CAMERA=Orbbec Gemini 335 RGB Camera")
-
-sh.exe -c "./loopycam.exe -w %LOOPY_ARGS% &"
+@echo off
+setlocal
+call "%~dp0..\loopykill.bat"
+if not defined LOOPY_ARGS set "LOOPY_ARGS=0,0,800,600"
+if "%~1"=="2" set "LOOPY_ARGS=1920,0,1920,1080"
+call "%~dp0..\loopystart.bat"
+endlocal

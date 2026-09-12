@@ -1,1 +1,2 @@
-c:/windows/system32/taskkill /f /im loopycam.exe
+@echo off
+call "%~dp0..\loopykill.bat"

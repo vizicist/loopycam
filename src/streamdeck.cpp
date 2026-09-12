@@ -706,7 +706,7 @@ bool connect_device()
 
 void set_page(int delta)
 {
-    page = (page + (delta > 0 ? 1 : MODE_COUNT - 1)) % MODE_COUNT;
+    page = (page + (delta > 0 ? MODE_COUNT - 1 : 1)) % MODE_COUNT;
     render_keys();
     render_touchscreen(true);
 }
