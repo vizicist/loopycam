@@ -14,6 +14,17 @@ indices. Select a camera with either `--camera "camera name"` (or `-c`) or the
 case and may be shortened to an unambiguous substring. A numeric value selects
 that DirectShow index.
 
+Camera capture defaults to 1280x720. Use `--resolution WIDTHxHEIGHT` (or `-r`)
+to request another resolution, for example:
+
+```bat
+loopycam.exe --resolution 640x480
+```
+
+The camera driver may select its closest supported mode when the exact requested
+resolution is unavailable; LoopyCam reports the delivered resolution in the web
+interface and on the Stream Deck strip.
+
 ## Stream Deck + control
 
 `loopycam.exe` opens a directly connected Stream Deck + through the Windows HID
@@ -31,7 +42,8 @@ names from the touch strip. Pressing a lower-row mode selects it until another
 lower-row mode is pressed. Rotating the second dial triggers `/` or `*`, and
 rotating the third triggers `-` or `+`. Tapping one of the four touch-strip quarters triggers
 the corresponding action key. The touch strip mirrors the four-line Pertelian
-LCD display. Preset selection, loading, saving, preset-set cycling, and random
+LCD display and reports the camera's delivered resolution and frame rate plus
+its negotiated USB link speed. Preset selection, loading, saving, preset-set cycling, and random
 preset loading use the existing `presets_*` directories directly. The browser
 control panel also follows the mode selected on the Stream Deck.
 
@@ -46,7 +58,8 @@ populated from the DLLs LoopyCam discovers at startup, and the parameter pane
 edits the selected plugin's live values. The right panel reports current mode,
 loop and window state and provides recording, overlay, blackout, live input,
 loop selection, and window layout controls. Trails, borders, XOR, smoothing,
-and interpolation are also available.
+and interpolation are also available. The Live Control panel reports the
+camera's delivered resolution and frame rate and its negotiated USB link speed.
 
 The console at the bottom accepts `help` for its command list. It can inspect
 state and plugin catalogs and control loops, windows, recording, overlays,

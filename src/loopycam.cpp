@@ -11,6 +11,15 @@ LoopyOsc* LoopycamOsc;
 #include "Timer.h"
 #include "ofxMSAShape3D.h"
 #include <process.h>
+#include <setupapi.h>
+#include <cfgmgr32.h>
+#include <devpkey.h>
+#include <usbioctl.h>
+#include <usbiodef.h>
+#include <videoInput.h>
+#include <vector>
+
+#pragma comment(lib, "Cfgmgr32.lib")
 
 int nffplugins;
 CFFPlugin *ffplugins[MAXPLUGINS];
@@ -28,6 +37,7 @@ FFGLPluginInstance* post2flip;
 // int fliph = 1;
 
 int camera_index = 0;
+std::string camera_name;
 
 void scanffglplugins2();
 void scanffglplugins1();
@@ -35,7 +45,10 @@ int do_ffgl_plugin(FFGLPluginInstance* plugin1, int lastone);
 
 #include "cv.h"
 #include "highgui.h"
-CvCapture* capture;
+static videoInput cameraCapture;
+static int cameraDeviceIndex = -1;
+static bool cameraDeviceStarted = false;
+static std::vector<unsigned char> cameraPixelBuffer;
 
 static const int CAMERA_FRAME_BUFFER_COUNT = 3;
 static HANDLE cameraThread = NULL;
@@ -47,6 +60,11 @@ static int cameraLatestFrame = -1;
 static int cameraReadingFrame = -1;
 static LONG cameraLatestSequence = 0;
 static LONG cameraRenderedSequence = 0;
+static volatile LONG cameraFpsTenths = 0;
+static std::string cameraUsbLink = "Unavailable";
+static double cameraUsbMbps = 0.0;
+static const GUID LOOPYCAM_USB_HUB_INTERFACE =
+    { 0xf18a0e88, 0xc30c, 0x11d0, { 0x88, 0x15, 0x00, 0xa0, 0xc9, 0x06, 0xbe, 0xd8 } };
 
 static IplImage* cameraInputImage = NULL;
 static IplImage* processingImage = NULL;
@@ -102,51 +120,246 @@ float mouseX = 0.5;
 float mouseY = 0.5;
 int mouseB = 0;
 
+static bool contains_ignore_case(const char* value, const char* search)
+{
+    if (value == NULL || search == NULL || search[0] == 0)
+        return false;
+    const size_t searchLength = strlen(search);
+    for (const char* position = value; *position != 0; ++position)
+        if (_strnicmp(position, search, searchLength) == 0)
+            return true;
+    return false;
+}
+
+static bool device_instance_id(DEVINST device, char* id, ULONG length)
+{
+    return CM_Get_Device_IDA(device, id, length, 0) == CR_SUCCESS;
+}
+
+static bool find_camera_device(DEVINST* cameraDevice)
+{
+    if (camera_name.empty())
+        return false;
+
+    HDEVINFO devices = SetupDiGetClassDevsA(NULL, NULL, NULL,
+                                            DIGCF_PRESENT | DIGCF_ALLCLASSES);
+    if (devices == INVALID_HANDLE_VALUE)
+        return false;
+
+    bool found = false;
+    for (DWORD index = 0; ; ++index) {
+        SP_DEVINFO_DATA device = { 0 };
+        device.cbSize = sizeof(device);
+        if (!SetupDiEnumDeviceInfo(devices, index, &device))
+            break;
+
+        char friendlyName[512] = { 0 };
+        DWORD propertyType = 0;
+        if (!SetupDiGetDeviceRegistryPropertyA(devices, &device, SPDRP_FRIENDLYNAME,
+                                               &propertyType,
+                                               reinterpret_cast<PBYTE>(friendlyName),
+                                               sizeof(friendlyName), NULL)) {
+            SetupDiGetDeviceRegistryPropertyA(devices, &device, SPDRP_DEVICEDESC,
+                                              &propertyType,
+                                              reinterpret_cast<PBYTE>(friendlyName),
+                                              sizeof(friendlyName), NULL);
+        }
+
+        if (_stricmp(friendlyName, camera_name.c_str()) == 0 ||
+                contains_ignore_case(friendlyName, camera_name.c_str())) {
+            *cameraDevice = device.DevInst;
+            found = true;
+            break;
+        }
+    }
+
+    SetupDiDestroyDeviceInfoList(devices);
+    return found;
+}
+
+static bool find_physical_usb_device(DEVINST cameraDevice, DEVINST* usbDevice)
+{
+    DEVINST current = cameraDevice;
+    for (int depth = 0; depth < 8; ++depth) {
+        char id[MAX_DEVICE_ID_LEN] = { 0 };
+        if (!device_instance_id(current, id, MAX_DEVICE_ID_LEN))
+            return false;
+        if (_strnicmp(id, "USB\\VID_", 8) == 0 && strstr(id, "&MI_") == NULL) {
+            *usbDevice = current;
+            return true;
+        }
+        DEVINST parent = 0;
+        if (CM_Get_Parent(&parent, current, 0) != CR_SUCCESS)
+            return false;
+        current = parent;
+    }
+    return false;
+}
+
+static bool open_hub(DEVINST hubDevice, HANDLE* hubHandle)
+{
+    char wantedId[MAX_DEVICE_ID_LEN] = { 0 };
+    if (!device_instance_id(hubDevice, wantedId, MAX_DEVICE_ID_LEN))
+        return false;
+
+    HDEVINFO hubs = SetupDiGetClassDevsA(&LOOPYCAM_USB_HUB_INTERFACE, NULL, NULL,
+                                         DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
+    if (hubs == INVALID_HANDLE_VALUE)
+        return false;
+
+    bool found = false;
+    for (DWORD index = 0; ; ++index) {
+        SP_DEVICE_INTERFACE_DATA interfaceData = { 0 };
+        interfaceData.cbSize = sizeof(interfaceData);
+        if (!SetupDiEnumDeviceInterfaces(hubs, NULL, &LOOPYCAM_USB_HUB_INTERFACE,
+                                         index, &interfaceData))
+            break;
+
+        DWORD required = 0;
+        SetupDiGetDeviceInterfaceDetailA(hubs, &interfaceData, NULL, 0, &required, NULL);
+        if (required == 0)
+            continue;
+
+        std::vector<unsigned char> storage(required);
+        SP_DEVICE_INTERFACE_DETAIL_DATA_A* detail =
+            reinterpret_cast<SP_DEVICE_INTERFACE_DETAIL_DATA_A*>(&storage[0]);
+        detail->cbSize = sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA_A);
+        SP_DEVINFO_DATA device = { 0 };
+        device.cbSize = sizeof(device);
+        if (!SetupDiGetDeviceInterfaceDetailA(hubs, &interfaceData, detail, required,
+                                              NULL, &device))
+            continue;
+
+        char candidateId[MAX_DEVICE_ID_LEN] = { 0 };
+        if (!device_instance_id(device.DevInst, candidateId, MAX_DEVICE_ID_LEN) ||
+                _stricmp(candidateId, wantedId) != 0)
+            continue;
+
+        *hubHandle = CreateFileA(detail->DevicePath, GENERIC_READ | GENERIC_WRITE,
+                                 FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
+                                 0, NULL);
+        found = *hubHandle != INVALID_HANDLE_VALUE;
+        break;
+    }
+
+    SetupDiDestroyDeviceInfoList(hubs);
+    return found;
+}
+
+static void detect_camera_usb_link()
+{
+    DEVINST cameraDevice = 0;
+    DEVINST usbDevice = 0;
+    DEVINST hubDevice = 0;
+    if (!find_camera_device(&cameraDevice) ||
+            !find_physical_usb_device(cameraDevice, &usbDevice) ||
+            CM_Get_Parent(&hubDevice, usbDevice, 0) != CR_SUCCESS) {
+        NS_debug("Unable to identify USB connection for camera '%s'\n", camera_name.c_str());
+        return;
+    }
+
+    ULONG port = 0;
+    ULONG propertyType = 0;
+    ULONG propertyLength = sizeof(port);
+    if (CM_Get_DevNode_Registry_PropertyA(usbDevice, CM_DRP_ADDRESS, &propertyType,
+                                         &port, &propertyLength, 0) != CR_SUCCESS || port == 0) {
+        NS_debug("Unable to identify USB port for camera '%s'\n", camera_name.c_str());
+        return;
+    }
+
+    HANDLE hubHandle = INVALID_HANDLE_VALUE;
+    if (!open_hub(hubDevice, &hubHandle)) {
+        NS_debug("Unable to open the camera's USB hub\n");
+        return;
+    }
+
+    USB_NODE_CONNECTION_INFORMATION_EX connection = { 0 };
+    connection.ConnectionIndex = port;
+    DWORD returned = 0;
+    const bool haveConnection = DeviceIoControl(
+        hubHandle, IOCTL_USB_GET_NODE_CONNECTION_INFORMATION_EX,
+        &connection, sizeof(connection), &connection, sizeof(connection),
+        &returned, NULL) != FALSE;
+
+    USB_NODE_CONNECTION_INFORMATION_EX_V2 connectionV2 = { 0 };
+    connectionV2.ConnectionIndex = port;
+    connectionV2.Length = sizeof(connectionV2);
+    connectionV2.SupportedUsbProtocols.Usb300 = 1;
+    const bool haveConnectionV2 = DeviceIoControl(
+        hubHandle, IOCTL_USB_GET_NODE_CONNECTION_INFORMATION_EX_V2,
+        &connectionV2, sizeof(connectionV2), &connectionV2, sizeof(connectionV2),
+        &returned, NULL) != FALSE;
+    CloseHandle(hubHandle);
+
+    if (haveConnectionV2 && connectionV2.Flags.DeviceIsOperatingAtSuperSpeedPlusOrHigher) {
+        cameraUsbLink = "SuperSpeed+ (10+ Gb/s)";
+        cameraUsbMbps = 10000.0;
+    } else if (haveConnectionV2 && connectionV2.Flags.DeviceIsOperatingAtSuperSpeedOrHigher) {
+        cameraUsbLink = "SuperSpeed (5 Gb/s)";
+        cameraUsbMbps = 5000.0;
+    } else if (haveConnection) {
+        switch (connection.Speed) {
+        case UsbLowSpeed: cameraUsbLink = "Low Speed (1.5 Mb/s)"; cameraUsbMbps = 1.5; break;
+        case UsbFullSpeed: cameraUsbLink = "Full Speed (12 Mb/s)"; cameraUsbMbps = 12.0; break;
+        case UsbHighSpeed: cameraUsbLink = "High Speed (480 Mb/s)"; cameraUsbMbps = 480.0; break;
+        case UsbSuperSpeed: cameraUsbLink = "SuperSpeed (5 Gb/s)"; cameraUsbMbps = 5000.0; break;
+        default: break;
+        }
+    }
+
+    NS_debug("Camera USB link: %s\n", cameraUsbLink.c_str());
+}
+
 static unsigned __stdcall camera_capture_thread(void*)
 {
     bool reportedFailure = false;
+    DWORD fpsWindowStart = GetTickCount();
+    int fpsFrameCount = 0;
 
     while (InterlockedCompareExchange(&cameraStopRequested, 0, 0) == 0) {
-        IplImage* captured = cvQueryFrame(capture);
-        if (captured == NULL) {
+        const DWORD now = GetTickCount();
+		if (!cameraCapture.getPixels(cameraDeviceIndex, &cameraPixelBuffer[0], false, true)) {
             if (!reportedFailure) {
                 NS_debug("Camera capture returned no frame\n");
                 reportedFailure = true;
             }
             Sleep(10);
-            continue;
-        }
-        reportedFailure = false;
+        } else {
+            reportedFailure = false;
+            ++fpsFrameCount;
 
-        if (captured->width != camWidth || captured->height != camHeight ||
-                captured->depth != IPL_DEPTH_8U || captured->nChannels != 3) {
-            NS_debug("Camera frame format changed unexpectedly: %dx%d depth=%d channels=%d\n",
-                     captured->width, captured->height, captured->depth, captured->nChannels);
-            Sleep(10);
-            continue;
-        }
+            int writeFrame = -1;
+            EnterCriticalSection(&cameraFrameLock);
+            for (int n = 0; n < CAMERA_FRAME_BUFFER_COUNT; ++n) {
+                if (n != cameraLatestFrame && n != cameraReadingFrame) {
+                    writeFrame = n;
+                    break;
+                }
+            }
+            LeaveCriticalSection(&cameraFrameLock);
 
-        int writeFrame = -1;
-        EnterCriticalSection(&cameraFrameLock);
-        for (int n = 0; n < CAMERA_FRAME_BUFFER_COUNT; ++n) {
-            if (n != cameraLatestFrame && n != cameraReadingFrame) {
-                writeFrame = n;
-                break;
+            if (writeFrame >= 0) {
+				const int rowBytes = camWidth * 3;
+				for (int y = 0; y < camHeight; ++y) {
+					memcpy(cameraFrames[writeFrame]->imageData + y * cameraFrames[writeFrame]->widthStep,
+						&cameraPixelBuffer[y * rowBytes], rowBytes);
+				}
+
+                EnterCriticalSection(&cameraFrameLock);
+                cameraLatestFrame = writeFrame;
+                ++cameraLatestSequence;
+                LeaveCriticalSection(&cameraFrameLock);
             }
         }
-        LeaveCriticalSection(&cameraFrameLock);
 
-        if (writeFrame < 0) {
-            Sleep(1);
-            continue;
+        const DWORD elapsed = now - fpsWindowStart;
+        if (elapsed >= 1000) {
+            const LONG fpsTenths = static_cast<LONG>(
+                (static_cast<double>(fpsFrameCount) * 10000.0 / elapsed) + 0.5);
+            InterlockedExchange(&cameraFpsTenths, fpsTenths);
+            fpsFrameCount = 0;
+            fpsWindowStart = now;
         }
-
-        cvCopy(captured, cameraFrames[writeFrame]);
-
-        EnterCriticalSection(&cameraFrameLock);
-        cameraLatestFrame = writeFrame;
-        ++cameraLatestSequence;
-        LeaveCriticalSection(&cameraFrameLock);
     }
 
     return 0;
@@ -177,6 +390,7 @@ static bool start_camera_capture(IplImage* initialFrame)
     cameraLatestFrame = 0;
     cameraLatestSequence = 1;
     cameraRenderedSequence = 0;
+    InterlockedExchange(&cameraFpsTenths, 0);
     InterlockedExchange(&cameraStopRequested, 0);
 
     cameraThread = reinterpret_cast<HANDLE>(
@@ -189,6 +403,21 @@ static bool start_camera_capture(IplImage* initialFrame)
     NS_debug("Camera capture thread started with %d latest-frame buffers\n",
              CAMERA_FRAME_BUFFER_COUNT);
     return true;
+}
+
+double camera_fps()
+{
+    return static_cast<double>(InterlockedCompareExchange(&cameraFpsTenths, 0, 0)) / 10.0;
+}
+
+const char* camera_usb_link()
+{
+    return cameraUsbLink.c_str();
+}
+
+double camera_usb_mbps()
+{
+    return cameraUsbMbps;
 }
 
 static bool acquire_latest_camera_frame(IplImage** image, int* frameIndex, LONG* sequence)
@@ -241,8 +470,10 @@ static void shutdown_video_pipeline()
         cameraThread = NULL;
     }
 
-    if (capture != NULL)
-        cvReleaseCapture(&capture);
+    if (cameraDeviceStarted) {
+		cameraCapture.stopDevice(cameraDeviceIndex);
+		cameraDeviceStarted = false;
+	}
 
     for (int n = 0; n < CAMERA_FRAME_BUFFER_COUNT; ++n) {
         if (cameraFrames[n] != NULL)
@@ -261,35 +492,51 @@ static void shutdown_video_pipeline()
         cvReleaseImage(&outputImage);
 }
 
-void non_of_init(int x, int y, int w, int h) {
+void non_of_init(int x, int y, int w, int h, int cameraWidth, int cameraHeight) {
 
 	// int ncams = cvGetCamerasCount();
     // NS_debug("There are %d cameras!\n",ncams);
-    capture = cvCaptureFromCAM(camera_index);
-    if ( !capture ) {
-        NS_debug("Unable to initialize capture from camera index=%d\n",camera_index);
+    cameraDeviceIndex = camera_index;
+	cameraCapture.setRequestedMediaSubType(VI_MEDIASUBTYPE_MJPG);
+	if (!cameraCapture.setupDevice(cameraDeviceIndex, cameraWidth, cameraHeight)) {
+		NS_debug("Unable to initialize %dx%d capture from camera index=%d\n",
+			cameraWidth, cameraHeight, cameraDeviceIndex);
         exit(1);
     }
+	cameraDeviceStarted = true;
 
-#define CV_CAP_PROP_FRAME_WIDTH    3
-#define CV_CAP_PROP_FRAME_HEIGHT   4
+	camWidth = cameraCapture.getWidth(cameraDeviceIndex);
+	camHeight = cameraCapture.getHeight(cameraDeviceIndex);
+	if (camWidth != cameraWidth || camHeight != cameraHeight) {
+		NS_debug("Camera could not provide requested resolution %dx%d; using %dx%d\n",
+			cameraWidth, cameraHeight, camWidth, camHeight);
+	}
+	cameraPixelBuffer.resize(camWidth * camHeight * 3);
 
-    /* retrieve or set capture properties */
-    double fwidth = cvGetCaptureProperty( capture, CV_CAP_PROP_FRAME_WIDTH );
-    double fheight = cvGetCaptureProperty( capture, CV_CAP_PROP_FRAME_HEIGHT );
-
-    camWidth = (int)fwidth;
-    camHeight = (int)fheight;
-
-    IplImage* initialFrame = cvQueryFrame(capture);
-    if (initialFrame == NULL) {
+	IplImage* initialFrame = cvCreateImage(cvSize(camWidth, camHeight), IPL_DEPTH_8U, 3);
+	bool haveInitialFrame = false;
+	const DWORD firstFrameStart = GetTickCount();
+	while (!haveInitialFrame && GetTickCount() - firstFrameStart < 5000) {
+		haveInitialFrame = cameraCapture.getPixels(
+			cameraDeviceIndex, &cameraPixelBuffer[0], false, true);
+		if (!haveInitialFrame)
+			Sleep(10);
+	}
+	if (initialFrame == NULL || !haveInitialFrame) {
         NS_debug("Unable to retrieve the first camera frame\n");
         exit(1);
     }
+	const int initialRowBytes = camWidth * 3;
+	for (int y = 0; y < camHeight; ++y) {
+		memcpy(initialFrame->imageData + y * initialFrame->widthStep,
+			&cameraPixelBuffer[y * initialRowBytes], initialRowBytes);
+	}
     if (!start_camera_capture(initialFrame)) {
         NS_debug("Unable to initialize threaded camera capture\n");
         exit(1);
     }
+	cvReleaseImage(&initialFrame);
+    detect_camera_usb_link();
 
     char curdir[MAX_PATH];
     int r = GetCurrentDirectory(MAX_PATH, curdir);

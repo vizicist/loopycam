@@ -78,6 +78,30 @@ static bool parseCameraIndex(const char *value, int *cameraIndex)
 	return true;
 }
 
+static bool parseResolution(const char *value, int *width, int *height)
+{
+	char trailing = 0;
+	int parsedWidth = 0;
+	int parsedHeight = 0;
+	if (!value || (sscanf(value, "%dx%d%c", &parsedWidth, &parsedHeight, &trailing) != 2 &&
+			sscanf(value, "%dX%d%c", &parsedWidth, &parsedHeight, &trailing) != 2) ||
+			parsedWidth <= 0 || parsedHeight <= 0) {
+		return false;
+	}
+	*width = parsedWidth;
+	*height = parsedHeight;
+	return true;
+}
+
+static void printUsage(const char *program)
+{
+	printf("Usage: %s [options]\n", program);
+	printf("  -c, --camera NAME|INDEX       Select a DirectShow camera\n");
+	printf("  -r, --resolution WIDTHxHEIGHT Set camera resolution (default: 1280x720)\n");
+	printf("      --list-cameras            List available DirectShow cameras\n");
+	printf("  -w X,Y,WIDTH,HEIGHT           Set the output window geometry\n");
+}
+
 #define DO_BONJOUR 1
 #ifdef DO_BONJOUR
 #include "dns_sd.h"
@@ -217,6 +241,8 @@ int main(int argc, char **argv ) {
 	int		argv_y = 50;
 	int		argv_w = 800;
 	int		argv_h = 600;
+	int		argv_camera_width = 1280;
+	int		argv_camera_height = 720;
 	const char *argv_camera = NULL;
 	bool list_cameras = false;
 
@@ -224,10 +250,19 @@ int main(int argc, char **argv ) {
 	size_t requiredSize;
 
 	for ( int n=1; n<argc; n++ ) {
-		if ( strcmp(argv[n],"--list-cameras") == 0 ) {
+		if ( strcmp(argv[n],"--help") == 0 || strcmp(argv[n],"-h") == 0 ) {
+			printUsage(argv[0]);
+			return 0;
+		} else if ( strcmp(argv[n],"--list-cameras") == 0 ) {
 			list_cameras = true;
 		} else if ( (strcmp(argv[n],"-c") == 0 || strcmp(argv[n],"--camera") == 0) && (n+1)<argc ) {
 			argv_camera = argv[++n];
+		} else if ( strcmp(argv[n],"-r") == 0 || strcmp(argv[n],"--resolution") == 0 ) {
+			if ((n+1) >= argc || !parseResolution(argv[n+1], &argv_camera_width, &argv_camera_height)) {
+				fprintf(stderr, "Invalid resolution. Use WIDTHxHEIGHT, for example 1280x720.\n");
+				return 2;
+			}
+			++n;
 		} else if ( strcmp(argv[n],"-w") == 0 && (n+1)<argc ) {
 			int x, y, w, h;
 			int i = sscanf(argv[n+1],"%d,%d,%d,%d",&x,&y,&w,&h);
@@ -268,7 +303,7 @@ int main(int argc, char **argv ) {
 	if (cameraSelector) {
 		int selectedIndex;
 		if (parseCameraIndex(cameraSelector, &selectedIndex)) {
-			camera_index = CV_CAP_DSHOW + selectedIndex;
+			camera_index = selectedIndex;
 			NS_debug("Using DirectShow camera index %d\n", selectedIndex);
 		} else {
 			selectedIndex = listCameras(cameraSelector, false);
@@ -281,13 +316,19 @@ int main(int argc, char **argv ) {
 				listCameras(NULL, true);
 				exit(1);
 			}
-			camera_index = CV_CAP_DSHOW + selectedIndex;
+			camera_index = selectedIndex;
 			NS_debug("Using camera '%s' at DirectShow index %d\n", cameraSelector, selectedIndex);
 		}
 	} else {
 		NS_debug("No camera selected; using camera index %d\n", camera_index);
 	}
-	NS_debug("argv_* values are %d,%d,%d,%d\n", argv_x, argv_y, argv_w, argv_h);
+	int resolvedCameraIndex = camera_index;
+	videoInput::listDevices(false);
+	const char *resolvedCameraName = videoInput::getDeviceName(resolvedCameraIndex);
+	if (resolvedCameraName)
+		camera_name = resolvedCameraName;
+	NS_debug("Output window is %d,%d,%d,%d; requested camera resolution is %dx%d\n",
+		argv_x, argv_y, argv_w, argv_h, argv_camera_width, argv_camera_height);
 
     NetworkInitializer networkInitializer_;
 
@@ -322,7 +363,7 @@ int main(int argc, char **argv ) {
         NS_debug("Error in DNSServiceRegister, err=%ld\n",(long int) err);
     }
 
-    non_of_init(argv_x,argv_y,argv_w,argv_h);
+    non_of_init(argv_x, argv_y, argv_w, argv_h, argv_camera_width, argv_camera_height);
     streamdeck_init();
     non_of_loop();
 

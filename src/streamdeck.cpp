@@ -376,11 +376,14 @@ std::string option_value()
 
 void status_lines(std::string lines[4])
 {
+    std::ostringstream camera;
+    camera << "Camera " << camWidth << "x" << camHeight << " @ "
+           << std::fixed << std::setprecision(1) << camera_fps() << " fps";
+    lines[2] = camera.str();
+    lines[3] = std::string("USB ") + camera_usb_link();
     if (looper == NULL) {
         lines[0] = "LoopyCam";
         lines[1] = "Starting";
-        lines[2] = "";
-        lines[3] = "";
         return;
     }
     const std::string name = mode_name(mode);
@@ -388,55 +391,31 @@ void status_lines(std::string lines[4])
     std::ostringstream status;
     if (mode == "2") {
         status << "Live=" << (all_live() ? "On" : "Off") << " Trail=" << (looper->_trail ? "On" : "Off");
-        lines[2] = "/,* = Live,Trail";
-        lines[3] = "-,+ = Rec,Overlay";
     } else if (mode == "1") {
         status << "#Windows=" << looper->num_showing();
-        lines[2] = "/,* = Quad,Full";
-        lines[3] = "-,+ = Windows--,++";
     } else if (mode == "4") {
         status << "Trail=" << (looper->_trail ? looper->_trailamount : 0.0f) << " XOR=" << (looper->_enableXOR ? "On" : "Off");
-        lines[2] = "/,* = Trail,XOR";
-        lines[3] = "-,+ = Less,More";
     } else if (mode == "7") {
         status << "Pre=" << active_plugins(preplugins, NPREPLUGINS)
                << " Post=" << active_plugins(postplugins, NPOSTPLUGINS)
                << " Ffgl=" << active_ffgl_plugins();
-        lines[2] = "/,* = OnePre,Post";
-        lines[3] = "-,+ = OneFF,All";
     } else if (mode == "8") {
         status << option_value();
-        lines[2] = "/,* = Prev,Next";
-        lines[3] = "-,+ = Less,More";
     } else if (mode == "5") {
         status << "Smooth=" << (looper->_smooth ? "On" : "Off");
-        lines[2] = "/,* = Smooth,Freeze";
-        lines[3] = "-,+ = Reset,Reverse";
     } else if (mode == "6") {
         status << "Move=" << looper->_moveamount;
-        lines[2] = "/,* = Move Slow/Fast";
-        lines[3] = "-,+ = Play Slow/Fast";
     } else if (mode == "0") {
         status << current_preset_set() << "/" << current_preset_name();
-        lines[2] = "/,* = Params,Plugins";
-        lines[3] = "-,+ = Pos1,PosAll";
     } else if (mode == "9") {
         status << "Blackout=" << (looper->_blackout ? "On" : "Off")
                << " Presets=" << current_preset_set();
-        lines[2] = "/,* = Black,PresetSet";
-        lines[3] = "-,+ = Plugins,All";
     } else if (mode == ".") {
         status << "Loop positions";
-        lines[2] = "/,* = Save,Restore";
-        lines[3] = "-,+ = Rand,Start";
     } else if (mode == "3") {
         status << current_preset_set() << "/" << current_preset_name();
-        lines[2] = "/,* = Prev,Next";
-        lines[3] = "-,+ = Save,Load";
     } else {
         status << "Live=" << (all_live() ? "On" : "Off") << " XOR=" << (looper->_enableXOR ? "On" : "Off");
-        lines[2] = "/,* = Live,XOR";
-        lines[3] = "";
     }
     lines[1] = status.str();
 }

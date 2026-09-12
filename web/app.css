@@ -112,8 +112,10 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .controller-pane { background: var(--orange-dark); }
 .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; padding: 14px; background: #a98545; }
 .status-grid div { display: grid; gap: 5px; min-height: 72px; padding: 10px; border: 1px inset var(--edge-light); background: var(--orange); }
+.status-grid .wide-status { grid-column: 1 / -1; min-height: 58px; }
 .status-grid span { color: #73582d; font-size: 10px; text-transform: uppercase; }
 .status-grid strong { align-self: end; overflow: hidden; font: 600 22px/1 Consolas, monospace; white-space: nowrap; text-overflow: ellipsis; }
+.status-grid strong.camera-stat { font-size: 17px; }
 .deck-status { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 27px; padding: 4px; border-top: 1px solid #a98545; background: #edbd60; font: 9px Consolas, monospace; }
 .deck-status i { width: 7px; height: 7px; border-radius: 50%; background: #b82f27; box-shadow: 0 0 4px #b82f27; }
 .deck-status.online i { background: #3c9f3b; box-shadow: 0 0 4px #3c9f3b; }
@@ -186,6 +188,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   .status-grid div { gap: 2px; min-height: 49px; padding: 5px; }
   .status-grid span { font-size: 6px; }
   .status-grid strong { font-size: 13px; }
+  .status-grid strong.camera-stat { font-size: 11px; }
   .deck-status { min-height: 21px; font-size: 6px; }
   .performance-controls { gap: 3px; padding: 6px; }
   .performance-controls button { min-height: 57px; padding: 6px; }

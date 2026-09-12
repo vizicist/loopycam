@@ -352,6 +352,11 @@ std::string state_json()
     json << "{\"ready\":true"
          << ",\"streamDeck\":" << (streamdeck_connected() ? "true" : "false")
          << ",\"controlMode\":\"" << json_escape(streamdeck_mode_name()) << "\""
+         << ",\"camera\":{\"width\":" << camWidth
+         << ",\"height\":" << camHeight
+         << ",\"fps\":" << camera_fps()
+         << ",\"usbLink\":\"" << json_escape(camera_usb_link()) << "\""
+         << ",\"usbMbps\":" << camera_usb_mbps() << '}'
          << ",\"currentLoop\":" << looper->_currentLoop
          << ",\"windows\":" << looper->num_showing()
          << ",\"blackout\":" << (looper->_blackout ? "true" : "false")

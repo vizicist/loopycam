@@ -388,6 +388,11 @@ function render(snapshot) {
   document.querySelector('#active-loop-count').textContent = snapshot.loops.filter(loop => loop.playing > 0 || loop.recording > 0 || loop.frames > 0).length;
   document.querySelector('#window-count').textContent = snapshot.windows;
   document.querySelector('#window-output').textContent = snapshot.windows;
+  document.querySelector('#camera-resolution').textContent = snapshot.camera
+    ? `${snapshot.camera.width} × ${snapshot.camera.height}` : '—';
+  document.querySelector('#camera-fps').textContent = snapshot.camera
+    ? `${Number(snapshot.camera.fps).toFixed(1)} FPS` : '—';
+  document.querySelector('#camera-usb').textContent = snapshot.camera?.usbLink || 'Unavailable';
   const deckStatus = document.querySelector('#streamdeck-status');
   deckStatus.classList.toggle('online', Boolean(snapshot.streamDeck));
   deckStatus.classList.toggle('offline', !snapshot.streamDeck);
