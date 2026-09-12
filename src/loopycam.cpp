@@ -25,7 +25,7 @@ FFGLPluginInstance* post2flip;
 // int flipv = 1;ff
 // int fliph = 1;
 
-int camera_index = 4;
+int camera_index = 0;
 
 void scanffglplugins2();
 void scanffglplugins1();
