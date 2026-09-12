@@ -3,6 +3,7 @@
 #include "NSosc.h"
 
 #include "loopycam.h"
+#include "streamdeck.h"
 
 #include "loopyosc.h"
 
@@ -322,8 +323,10 @@ int main(int argc, char **argv ) {
     }
 
     non_of_init(argv_x,argv_y,argv_w,argv_h);
+    streamdeck_init();
     non_of_loop();
 
+    streamdeck_shutdown();
     LoopycamOsc->UnListen();
     exit(0);
 }

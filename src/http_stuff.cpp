@@ -1,6 +1,7 @@
 #include "Socket.h"
 #include "osc/OscReceivedElements.h"
 #include "loopycam.h"
+#include "streamdeck.h"
 
 #include <algorithm>
 #include <cctype>
@@ -114,6 +115,234 @@ bool json_boolean(const std::string& body, const char* key, bool* value)
     return false;
 }
 
+std::string json_escape(const std::string& value)
+{
+    std::ostringstream escaped;
+    for (std::string::const_iterator it = value.begin(); it != value.end(); ++it) {
+        const unsigned char c = static_cast<unsigned char>(*it);
+        if (c == '"')
+            escaped << "\\\"";
+        else if (c == '\\')
+            escaped << "\\\\";
+        else if (c == '\n')
+            escaped << "\\n";
+        else if (c == '\r')
+            escaped << "\\r";
+        else if (c == '\t')
+            escaped << "\\t";
+        else if (c >= 0x20)
+            escaped << *it;
+    }
+    return escaped.str();
+}
+
+void append_json_string(std::ostringstream& json, const std::string& value)
+{
+    json << '"' << json_escape(value) << '"';
+}
+
+void append_ff_plugin(std::ostringstream& json, CFFPlugin* plugin)
+{
+    json << "{\"name\":";
+    append_json_string(json, plugin == NULL ? "None" : plugin->name);
+    json << ",\"params\":[";
+    if (plugin != NULL) {
+        bool first = true;
+        for (int n = 0; n < plugin->m_numparams; n++) {
+            CFFParameterStruct* param = &plugin->m_params[n];
+            if (param->type == FF_TYPE_TEXT)
+                continue;
+            if (!first)
+                json << ',';
+            first = false;
+            json << "{\"name\":";
+            append_json_string(json, param->name);
+            json << ",\"value\":" << param->current_float_val
+                 << ",\"default\":" << param->default_float_val << '}';
+        }
+    }
+    json << "]}";
+}
+
+void append_ffgl_plugin(std::ostringstream& json, FFGLPluginInstance* plugin)
+{
+    json << "{\"name\":";
+    append_json_string(json, plugin == NULL ? "None" : plugin->name);
+    json << ",\"params\":[";
+    if (plugin != NULL) {
+        bool first = true;
+        for (int n = 0; n < plugin->m_numParameters; n++) {
+            FFGLParameterStruct* param = &plugin->m_params[n];
+            if (param->type == FF_TYPE_TEXT)
+                continue;
+            if (!first)
+                json << ',';
+            first = false;
+            json << "{\"name\":";
+            append_json_string(json, param->name);
+            json << ",\"value\":" << plugin->GetFloatParameter(n)
+                 << ",\"default\":" << param->default_float_val << '}';
+        }
+    }
+    json << "]}";
+}
+
+void append_plugin_state(std::ostringstream& json)
+{
+    json << ",\"plugins\":{\"available\":{\"freeframe\":[";
+    for (int n = 0; n < nffplugins; n++) {
+        if (n != 0)
+            json << ',';
+        append_json_string(json, ffplugins[n]->name);
+    }
+    json << "],\"ffgl\":[";
+    for (int n = 0; n < nffglplugins; n++) {
+        if (n != 0)
+            json << ',';
+        append_json_string(json, ffglplugins[n]->name);
+    }
+    json << "]},\"slots\":{\"pre\":[";
+    for (int n = 0; n < NPREPLUGINS; n++) {
+        if (n != 0)
+            json << ',';
+        append_ff_plugin(json, preplugins[n]);
+    }
+    json << "],\"post\":[";
+    for (int n = 0; n < NPOSTPLUGINS; n++) {
+        if (n != 0)
+            json << ',';
+        append_ff_plugin(json, postplugins[n]);
+    }
+    json << "],\"ffgl\":[";
+    for (int n = 0; n < NPOST2VISIBLEPLUGINS; n++) {
+        if (n != 0)
+            json << ',';
+        append_ffgl_plugin(json, post2plugins[n]);
+    }
+    json << "]}}";
+}
+
+bool plugin_type_and_slot(const std::string& body, std::string* type, int* slot,
+                          std::string* error)
+{
+    double slot_value;
+    if (!json_string(body, "type", type) || !json_number(body, "slot", &slot_value)) {
+        *error = "Plugin type and slot are required";
+        return false;
+    }
+    *slot = static_cast<int>(slot_value);
+    const int limit = *type == "pre" ? NPREPLUGINS
+                    : *type == "post" ? NPOSTPLUGINS
+                    : *type == "ffgl" ? NPOST2VISIBLEPLUGINS : 0;
+    if (limit == 0 || *slot < 0 || *slot >= limit) {
+        *error = "Invalid plugin type or slot";
+        return false;
+    }
+    return true;
+}
+
+bool set_plugin_slot(const std::string& type, int slot, const std::string& name,
+                     std::string* error)
+{
+    if (name == "None") {
+        if (type == "pre") preplugins[slot] = NULL;
+        else if (type == "post") postplugins[slot] = NULL;
+        else post2plugins[slot] = NULL;
+        return true;
+    }
+
+    if (type == "ffgl") {
+        FFGLPluginInstance* plugin = findffglplugin(name);
+        if (plugin == NULL) {
+            *error = "Unknown FFGL plugin";
+            return false;
+        }
+        post2plugins[slot] = plugin;
+    } else {
+        CFFPlugin* plugin = findffplugin(name);
+        if (plugin == NULL) {
+            *error = "Unknown FreeFrame plugin";
+            return false;
+        }
+        if (type == "pre") preplugins[slot] = plugin;
+        else postplugins[slot] = plugin;
+    }
+    return true;
+}
+
+bool set_plugin_parameter(const std::string& body, bool use_default, bool use_random,
+                          std::string* error)
+{
+    std::string type;
+    std::string name;
+    std::string parameter;
+    if (!json_string(body, "type", &type) || !json_string(body, "name", &name)) {
+        *error = "Plugin type and name are required";
+        return false;
+    }
+
+    double requested_value = 0.0;
+    if (!use_default && !use_random &&
+        (!json_string(body, "parameter", &parameter) || !json_number(body, "value", &requested_value))) {
+        *error = "Parameter name and value are required";
+        return false;
+    }
+
+    if (type == "ffgl") {
+        FFGLPluginInstance* plugin = findffglplugin(name);
+        if (plugin == NULL) {
+            *error = "Unknown FFGL plugin";
+            return false;
+        }
+        for (int n = 0; n < plugin->m_numParameters; n++) {
+            FFGLParameterStruct* param = &plugin->m_params[n];
+            if (param->type == FF_TYPE_TEXT)
+                continue;
+            if (!use_default && !use_random && param->name != parameter)
+                continue;
+            const float value = use_default ? param->default_float_val
+                              : use_random ? static_cast<float>(rand()) / RAND_MAX
+                              : static_cast<float>(std::max(0.0, std::min(1.0, requested_value)));
+            plugin->SetFloatParameter(n, value);
+            if (!use_default && !use_random)
+                return true;
+        }
+        if (!use_default && !use_random) {
+            *error = "Unknown FFGL parameter";
+            return false;
+        }
+        return true;
+    }
+
+    if (type != "pre" && type != "post") {
+        *error = "Invalid plugin type";
+        return false;
+    }
+    CFFPlugin* plugin = findffplugin(name);
+    if (plugin == NULL) {
+        *error = "Unknown FreeFrame plugin";
+        return false;
+    }
+    for (int n = 0; n < plugin->m_numparams; n++) {
+        CFFParameterStruct* param = &plugin->m_params[n];
+        if (param->type == FF_TYPE_TEXT)
+            continue;
+        if (!use_default && !use_random && param->name != parameter)
+            continue;
+        const float value = use_default ? param->default_float_val
+                          : use_random ? static_cast<float>(rand()) / RAND_MAX
+                          : static_cast<float>(std::max(0.0, std::min(1.0, requested_value)));
+        plugin->setparam(param->name, value);
+        if (!use_default && !use_random)
+            return true;
+    }
+    if (!use_default && !use_random) {
+        *error = "Unknown FreeFrame parameter";
+        return false;
+    }
+    return true;
+}
+
 std::string state_json()
 {
     if (looper == NULL)
@@ -121,6 +350,8 @@ std::string state_json()
 
     std::ostringstream json;
     json << "{\"ready\":true"
+         << ",\"streamDeck\":" << (streamdeck_connected() ? "true" : "false")
+         << ",\"controlMode\":\"" << json_escape(streamdeck_mode_name()) << "\""
          << ",\"currentLoop\":" << looper->_currentLoop
          << ",\"windows\":" << looper->num_showing()
          << ",\"blackout\":" << (looper->_blackout ? "true" : "false")
@@ -141,7 +372,9 @@ std::string state_json()
              << ",\"recording\":" << looper->_recording[n]
              << ",\"frames\":" << looper->_loop[n].nframes << '}';
     }
-    json << "]}";
+    json << ']';
+    append_plugin_state(json);
+    json << '}';
     return json.str();
 }
 
@@ -205,6 +438,34 @@ bool apply_action(const std::string& body, std::string* error)
         looper->setsmooth(enabled ? 1 : 0);
     } else if (action == "interpolate" && json_boolean(body, "value", &enabled)) {
         looper->setinterp(enabled ? 1 : 0);
+    } else if (action == "setPlugin") {
+        std::string type;
+        std::string name;
+        int slot;
+        if (!plugin_type_and_slot(body, &type, &slot, error) || !json_string(body, "name", &name)) {
+            if (error->empty()) *error = "Plugin name is required";
+            return false;
+        }
+        return set_plugin_slot(type, slot, name, error);
+    } else if (action == "randomPlugin") {
+        std::string type;
+        int slot;
+        if (!plugin_type_and_slot(body, &type, &slot, error))
+            return false;
+        if (type == "ffgl") {
+            if (nffglplugins == 0) { *error = "No FFGL plugins are available"; return false; }
+            post2plugins[slot] = ffglplugins[rand() % nffglplugins];
+        } else {
+            if (nffplugins == 0) { *error = "No FreeFrame plugins are available"; return false; }
+            if (type == "pre") preplugins[slot] = ffplugins[rand() % nffplugins];
+            else postplugins[slot] = ffplugins[rand() % nffplugins];
+        }
+    } else if (action == "setPluginParam") {
+        return set_plugin_parameter(body, false, false, error);
+    } else if (action == "randomPluginParams") {
+        return set_plugin_parameter(body, false, true, error);
+    } else if (action == "defaultPluginParams") {
+        return set_plugin_parameter(body, true, false, error);
     } else {
         *error = "Unknown action or invalid value";
         return false;

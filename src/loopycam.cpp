@@ -4,6 +4,7 @@
 #include "nsosc.h"
 #include "loopyosc.h"
 #include "loopycam.h"
+#include "streamdeck.h"
 
 LoopyOsc* LoopycamOsc;
 // #include "looper.h"
@@ -226,6 +227,7 @@ void loadffplugin(std::string dllnm)
 
         ffplugins[nffplugins] = ffplugin;
         ffplugin->m_instanceid = i;
+        ffplugin->LoadCurrentParams();
         // printf("INSTANTIATED!  dll=%s name=%s instanceid = %d\n",dll.c_str(),nm,i);
 
         plugMainUnion u = ffplugin->m_pff(FF_GETPARAMETER, (DWORD)0, (DWORD)ffplugin->m_instanceid);
@@ -364,6 +366,7 @@ void non_of_loop() {
     while ( 1 ) {
 	    LoopycamOsc->Check();
 	    http_check();
+	    streamdeck_check();
 #ifdef DO_BONJOUR
         bonjour_check();
 #endif

@@ -16,31 +16,43 @@ that DirectShow index.
 
 ## Stream Deck + control
 
-The Python panel starts `streamdeck_bridge.py` automatically and uses a directly
-connected Stream Deck + without requiring Elgato's desktop software. Install the
-Python 3 dependencies once with:
+`loopycam.exe` opens a directly connected Stream Deck + through the Windows HID
+API. Elgato's desktop software, Python, and a separate bridge process are not
+required. The device connects during startup and is checked every two seconds
+after a disconnect, so unplugging and reconnecting it does not require a
+LoopyCam restart.
 
-```
-py -3 -m pip install -r python/pyloopy/requirements-streamdeck.txt
-```
-
-The eight LCD keys expose four mode keys and the four action keys (`/`, `*`,
-`-`, and `+`). Rotate the left dial to switch among the three mode pages. Hold
-the left dial while pressing a mode key to make that mode sticky, matching the
-number-pad Enter behavior. Rotating the second dial triggers `/` or `*`, and
+The upper row of LCD keys contains the four action keys (`/`, `*`, `-`, and
+`+`). The first three keys on the lower row form a circular list of mode
+controls. The lower-right key is always a dedicated momentary Record key that
+matches the browser Record button. Each detent of the left or right dial shifts
+that list by one mode. The four upper keys display the active mode's action
+names from the touch strip. Hold the left dial while
+pressing a mode key to make that mode sticky, matching the number-pad Enter
+behavior. Rotating the second dial triggers `/` or `*`, and
 rotating the third triggers `-` or `+`. The right dial also switches pages; its
 push action is Num Lock. Tapping one of the four touch-strip quarters triggers
 the corresponding action key. The touch strip mirrors the four-line Pertelian
-LCD display.
+LCD display. Preset selection, loading, saving, preset-set cycling, and random
+preset loading use the existing `presets_*` directories directly. The browser
+control panel also follows the mode selected on the Stream Deck.
 
-Set `LOOPYCAM_STREAMDECK=0` to disable automatic bridge startup.
+Set `LOOPYCAM_STREAMDECK=0` to disable native Stream Deck support.
 
 ## Browser control
 
 While `loopycam.exe` is running, open [http://127.0.0.1:8888](http://127.0.0.1:8888)
-to use the browser control panel. The first browser version provides live loop
-status and direct controls for recording, overlays, blackout, live input,
-window layouts, trails, borders, XOR, smoothing, and interpolation.
+to use the browser control panel. It mirrors the three-column Python panel with
+all three pre-effect, post-effect, and FFGL plugin banks. Plugin menus are
+populated from the DLLs LoopyCam discovers at startup, and the parameter pane
+edits the selected plugin's live values. The right panel reports current mode,
+loop and window state and provides recording, overlay, blackout, live input,
+loop selection, and window layout controls. Trails, borders, XOR, smoothing,
+and interpolation are also available.
+
+The console at the bottom accepts `help` for its command list. It can inspect
+state and plugin catalogs and control loops, windows, recording, overlays,
+trails, plugin slots, and plugin parameters without leaving the page.
 
 The executable serves the files in `web` and handles browser actions directly
 on the C++ looper thread. Browser controls do not pass through OSC. The server

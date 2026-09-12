@@ -95,6 +95,8 @@ bool CFFPlugin::setparam(std::string pnm, float v)
                 return false;
             }
 
+            p->current_float_val = v;
+
             // u = m_pff(FF_GETPARAMETER, (DWORD)n, (DWORD)instanceid);
             // printf("GETPARAMETER n=%d v=%f\n",n,u.fvalue);
             return true;
