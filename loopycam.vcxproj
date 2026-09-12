@@ -56,7 +56,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>TCP_Socket;OpenCV2.1\include\opencv;freeframeGL_1_5\Source\FFGLHost;freeframeGL_1_5\Include;C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include\mfc;oscpack;bonjour\include;spout2\spoutsdk\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>TCP_Socket;OpenCV2.1\include\opencv;OpenCV2.1\3rdparty\include;freeframeGL_1_5\Source\FFGLHost;freeframeGL_1_5\Include;C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include\mfc;oscpack;bonjour\include;spout2\spoutsdk\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -65,8 +65,8 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>spout.lib;winmm.lib;OpenGL32.lib;GLu32.lib;kernel32.lib;setupapi.lib;glut32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;GLee.lib;glu32.lib;Ws2_32.lib;cv210.lib;cxcore210.lib;cvaux210.lib;highgui210.lib;dnssd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>OpenCV2.1\lib;glee\lib\vs2008;bonjour\lib\win32;glut;spout2\SpoutSDK\Source\VS2012\Binaries\Win32;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>spout.lib;videoInput.lib;strmiids.lib;legacy_stdio_definitions.lib;winmm.lib;OpenGL32.lib;GLu32.lib;kernel32.lib;setupapi.lib;glut32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;GLee.lib;glu32.lib;Ws2_32.lib;cv210.lib;cxcore210.lib;cvaux210.lib;highgui210.lib;dnssd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>OpenCV2.1\lib;OpenCV2.1\3rdparty\lib;glee\lib\vs2008;bonjour\lib\win32;glut;spout2\SpoutSDK\Source\VS2012\Binaries\Win32;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>atlthunk.lib; LIBC.lib; LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -84,7 +84,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>C:\local\loopycam\TCP_Socket;C:\local\OpenCV2.1\include\opencv;C:\local\freeframeGL_1_5\Source\FFGLHost;C:\local\freeframeGL_1_5\Include;C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include\mfc;C:\local\FreeFrameSDK1_0\Include;C:\local\loopycam\oscpack;C:\Program Files\Bonjour SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>TCP_Socket;OpenCV2.1\include\opencv;OpenCV2.1\3rdparty\include;freeframeGL_1_5\Source\FFGLHost;freeframeGL_1_5\Include;oscpack;bonjour\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -94,8 +94,8 @@
       </DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winmm.lib;OpenGL32.lib;GLu32.lib;kernel32.lib;setupapi.lib;glut32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;GLee.lib;glu32.lib;Ws2_32.lib;cv210d.lib;cxcore210d.lib;cvaux210d.lib;highgui210d.lib;dnssd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>c:\Program Files\Bonjour SDK\Lib\Win32;c:\local\OpenCV2.1\lib;c:\local\glee\lib\vs2008;c:\local\glut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>videoInput.lib;strmiids.lib;legacy_stdio_definitions.lib;winmm.lib;OpenGL32.lib;GLu32.lib;kernel32.lib;setupapi.lib;glut32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;GLee.lib;glu32.lib;Ws2_32.lib;cv210.lib;cxcore210.lib;cvaux210.lib;highgui210.lib;dnssd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>OpenCV2.1\lib;OpenCV2.1\3rdparty\lib;glee\lib\vs2008;bonjour\lib\win32;glut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>atlthunk.lib; LIBC.lib; LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>

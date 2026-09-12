@@ -8,11 +8,75 @@
 
 // #include "ofAppGlutWindow.h"
 #include "FFPlugin.h"
+#include "highgui.h"
+#include "videoInput.h"
 
 extern LoopyOsc* LoopycamOsc;
 #include "ip/NetworkingUtils.h"
 
 #include <errno.h>
+
+static bool containsIgnoreCase(const char *value, const char *search)
+{
+	if (!value || !search || !search[0]) {
+		return false;
+	}
+
+	size_t searchLength = strlen(search);
+	for (const char *p = value; *p; ++p) {
+		if (_strnicmp(p, search, searchLength) == 0) {
+			return true;
+		}
+	}
+	return false;
+}
+
+static int listCameras(const char *cameraName, bool printDevices)
+{
+	int cameraCount = videoInput::listDevices(true);
+	int partialMatch = -1;
+	bool partialMatchIsAmbiguous = false;
+
+	if (printDevices) {
+		printf("DirectShow cameras:\n");
+	}
+
+	for (int n = 0; n < cameraCount; ++n) {
+		const char *deviceName = videoInput::getDeviceName(n);
+		if (!deviceName) {
+			deviceName = "(unknown)";
+		}
+
+		if (printDevices) {
+			printf("  %d: %s\n", n, deviceName);
+		}
+
+		if (cameraName && _stricmp(deviceName, cameraName) == 0) {
+			return n;
+		}
+		if (cameraName && containsIgnoreCase(deviceName, cameraName)) {
+			if (partialMatch < 0) {
+				partialMatch = n;
+			} else {
+				partialMatchIsAmbiguous = true;
+			}
+		}
+	}
+
+	return partialMatchIsAmbiguous ? -2 : partialMatch;
+}
+
+static bool parseCameraIndex(const char *value, int *cameraIndex)
+{
+	char *end = NULL;
+	long index = strtol(value, &end, 10);
+	if (!value[0] || !end || *end != 0 || index < 0) {
+		return false;
+	}
+	*cameraIndex = (int)index;
+	return true;
+}
+
 #define DO_BONJOUR 1
 #ifdef DO_BONJOUR
 #include "dns_sd.h"
@@ -152,9 +216,34 @@ int main(int argc, char **argv ) {
 	int		argv_y = 50;
 	int		argv_w = 800;
 	int		argv_h = 600;
+	const char *argv_camera = NULL;
+	bool list_cameras = false;
 
 	char buff[MAX_PATH];
 	size_t requiredSize;
+
+	for ( int n=1; n<argc; n++ ) {
+		if ( strcmp(argv[n],"--list-cameras") == 0 ) {
+			list_cameras = true;
+		} else if ( (strcmp(argv[n],"-c") == 0 || strcmp(argv[n],"--camera") == 0) && (n+1)<argc ) {
+			argv_camera = argv[++n];
+		} else if ( strcmp(argv[n],"-w") == 0 && (n+1)<argc ) {
+			int x, y, w, h;
+			int i = sscanf(argv[n+1],"%d,%d,%d,%d",&x,&y,&w,&h);
+			if ( i == 4 ) {
+				argv_x = x;
+				argv_y = y;
+				argv_w = w;
+				argv_h = h;
+			}
+			n++;
+		}
+	}
+
+	if (list_cameras) {
+		listCameras(NULL, true);
+		return 0;
+	}
 
 	int ret = getenv_s(&requiredSize, DataDir, sizeof(DataDir), "LOOPYCAM_DATADIR");
 	if (ret != 0 || requiredSize <= 0) {
@@ -166,33 +255,36 @@ int main(int argc, char **argv ) {
         exit(1);
     }
 
-	ret = getenv_s(&requiredSize, buff, sizeof(buff), "LOOPYCAM_INDEX");
-    if (ret != 0 || requiredSize <= 0) {
-        NS_debug("LOOPYCAM_INDEX needs to be set!\n");
-        exit(1);
-    }
-
-	int camindex;
-	int i = sscanf(buff,"%d",&camindex);
-	if ( i == 1 ) {
-		extern int camera_index;
-		camera_index = camindex;
-		NS_debug("LOOPYCAM_INDEX is %d\n", camera_index);
+	extern int camera_index;
+	const char *cameraSelector = argv_camera;
+	if (!cameraSelector) {
+		ret = getenv_s(&requiredSize, buff, sizeof(buff), "LOOPYCAM_CAMERA");
+		if (ret == 0 && requiredSize > 0) {
+			cameraSelector = buff;
+		}
 	}
 
-	for ( int n=1; n<argc; n++ ) {
-		printf("ARG n=%d s=%s\n",n,argv[n]);
-		if ( strcmp(argv[n],"-w") == 0 && (n+1)<argc ) {
-			int x, y, w, h;
-			int i = sscanf(argv[n+1],"%d,%d,%d,%d",&x,&y,&w,&h);
-			if ( i == 4 ) {
-				argv_x = x;
-				argv_y = y;
-				argv_w = w;
-				argv_h = h;
+	if (cameraSelector) {
+		int selectedIndex;
+		if (parseCameraIndex(cameraSelector, &selectedIndex)) {
+			camera_index = CV_CAP_DSHOW + selectedIndex;
+			NS_debug("Using DirectShow camera index %d\n", selectedIndex);
+		} else {
+			selectedIndex = listCameras(cameraSelector, false);
+			if (selectedIndex < 0) {
+				if (selectedIndex == -2) {
+					NS_debug("Camera name '%s' matches more than one device. Available cameras:\n", cameraSelector);
+				} else {
+					NS_debug("Unable to find camera matching '%s'. Available cameras:\n", cameraSelector);
+				}
+				listCameras(NULL, true);
+				exit(1);
 			}
-			n++;
+			camera_index = CV_CAP_DSHOW + selectedIndex;
+			NS_debug("Using camera '%s' at DirectShow index %d\n", cameraSelector, selectedIndex);
 		}
+	} else {
+		NS_debug("No camera selected; using camera index %d\n", camera_index);
 	}
 	NS_debug("argv_* values are %d,%d,%d,%d\n", argv_x, argv_y, argv_w, argv_h);
 

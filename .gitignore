@@ -6,4 +6,5 @@
 data/nsdebug.txt
 *.pyc
 *.pch
+*.recipe
 data/nsdebug.txt
