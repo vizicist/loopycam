@@ -79,7 +79,6 @@ int loopyloop();
 
 void http_init(int port, int timeout);
 void http_check();
-void http_send(char *s);
 void http_sendto_slip(char *host, int port, const char *data, int size);
 
 #endif

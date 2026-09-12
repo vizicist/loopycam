@@ -34,3 +34,14 @@ the corresponding action key. The touch strip mirrors the four-line Pertelian
 LCD display.
 
 Set `LOOPYCAM_STREAMDECK=0` to disable automatic bridge startup.
+
+## Browser control
+
+While `loopycam.exe` is running, open [http://127.0.0.1:8888](http://127.0.0.1:8888)
+to use the browser control panel. The first browser version provides live loop
+status and direct controls for recording, overlays, blackout, live input,
+window layouts, trails, borders, XOR, smoothing, and interpolation.
+
+The executable serves the files in `web` and handles browser actions directly
+on the C++ looper thread. Browser controls do not pass through OSC. The server
+currently listens only on the local computer.

@@ -2,7 +2,7 @@
 NthEvent server and utilities
 
 This module provides an event server and client utilities for
-MIDI and iGesture devices.
+touch and OSC devices.
  
 Copyright (c) 2007, Tim Thompson
 All rights reserved.	
@@ -47,7 +47,6 @@ import sys
 import re
 import xml.dom.minidom as xmldom
 import string
-import pygame.pypm
 import os.path
 import nthprocess
 import os, pygame
@@ -60,19 +59,14 @@ from ctypes import *
 from time import sleep
 from Queue import Queue, Empty
 from xml.sax import saxutils
-from xml.dom import Node
 from traceback import format_exc 
 from dircache import listdir
 from pygame.locals import *
 from thread import *
 
 # from nosuch.fingerutil import *
-from nosuch.midiutil import *
-from nosuch.mididebug import *
-from nosuch.midifile import *
 from nthprocess import *
 from nosuch.oscutil import *
-from nthmidi import NthMidiHardware
 
 from ffff import *
 
@@ -92,24 +86,18 @@ class NthEventServer(Thread):
 
 	oneServer = None
 
-	def __init__(self, midihardware):
+	def __init__(self):
 
 		Thread.__init__(self)
 		self.setDaemon(True)
 
 		NthEventServer.oneServer = self
 
-		print "NthEventServr start midihardware=", midihardware
 		print "NthEventServer.oneServer = ", NthEventServer.oneServer
 		self.dispenser = PushedEventDispenser()
 
-		self.midihardware = midihardware
-
 		self.throttle = 0.005
 		self.throttle = 0.0
-
-		self.inputs = {}
-		self.outputs = {}
 
 		self.cv = threading.Condition()
 		self.events = {}
@@ -119,22 +107,15 @@ class NthEventServer(Thread):
 
 		self.start()
 		self.too_old_seconds = 30.0
-		self.event_inputs = {}
-		self.forward_inputs = {}
-		self.forward_finger = None
-
 		self.tm0 = time.time()
 		self.osc_count = 0
 
 		self.ui = None
 
 	@staticmethod
-	def server(midihardware=None):
+	def server():
 		if NthEventServer.oneServer == None:
-			if midihardware == None:
-				print "Hey, no midi hardware??  Using MidiDebugHardware"
-				midihardware = MidiDebugHardware
-			NthEventServer.oneServer = NthEventServer(midihardware)
+			NthEventServer.oneServer = NthEventServer()
 		return NthEventServer.oneServer
 
 	@staticmethod
@@ -154,9 +135,6 @@ class NthEventServer(Thread):
 
 	def broadcast_event(self, ev):
 		self.cv.acquire()
-		# The events we're getting (e.g. from pyportmidi)
-		# have a .time value that is more accurate/correct
-		# than we could do here.
 		self.events[self.nextevent] = ev
 		self.nextevent += 1
 
@@ -223,9 +201,6 @@ class NthEventServer(Thread):
 				# due to trying to remove same one twice
 				pass
 
-	def set_midi_timezero(self, t):
-		self.midi_timezero = t;
-
 	def set_finger_timezero(self, t):
 		self.finger_timezero = t;
 
@@ -247,12 +222,6 @@ class NthEventServer(Thread):
 	def set_finger_order(self, o):
 		self.finger_order = o
 
-	def set_midi_events(self, in_expr):
-		# Find the real names matched by the regular expression
-		for nm in self.inputs:
-			if re.search(in_expr, nm):
-				self.event_inputs[self.inputs[nm]] = 1
-
 	def set_fingertype(self, t):
 		if t == "fret":
 			self.do_frets = True
@@ -260,102 +229,6 @@ class NthEventServer(Thread):
 			self.do_frets = False
 		else:
 			print "Unrecognized value in fingertype: ", t
-
-	def open_outputs(self, midiout):
-		print "Opening MIDI outputs: ", midiout
-		for nm in self.midihardware.output_devices():
-			if re.search(midiout, nm):
-				print("Opening Output = " + nm)
-				o = self.midihardware.get_output(nm)
-				try:
-					o.open()
-					self.outputs[nm] = o
-				except:
-					NthServer.logerror("Error during open of output %s - %s" % (nm, format_exc()))
-					continue
-
-	def open_inputs(self, midiin):
-		print "Opening MIDI inputs: ", midiin
-		for nm in self.midihardware.input_devices():
-			if re.search(midiin, nm):
-				print("Opening Input = " + nm)
-				i = self.midihardware.get_input(nm)
-				try:
-					i.open()
-					self.inputs[nm] = i
-				except:
-					NthServer.logerror("Error during open of input %s - %s" % (nm, format_exc()))
-					continue
-
-	def get_midiout(self, out_expr):
-		for nm in self.outputs:
-			if re.search(out_expr, self.outputs[nm].name):
-				return self.outputs[nm]
-		return None
-
-	def set_midi_forward(self, in_expr, out_expr):
-
-		print "MIDI_FORWARD out_expr=", out_expr
-
-		# Find the real outputs matched by out_expr
-		outs = []
-		for nm in self.outputs:
-			print "MIDI_FORWARD looking at nm=", nm
-
-			if re.search(out_expr, nm):
-				outs.append(self.outputs[nm])
-
-		if len(outs) <= 0:
-			print "Hey, no outputs matched: ", out_expr
-			return
-
-		any = False
-		for nm in self.inputs:
-			# print "looking at nm=",nm," in_expr=",in_expr
-			if re.search(in_expr, nm):
-				any = True
-				self.forward_inputs[self.inputs[nm]] = outs
-
-		if not any:
-			print "Hey, no inputs matched: ", in_expr
-
-	def set_finger_forward(self, out_expr):
-		o = None
-		# Find the real name matched by the regular expression
-		for nm in self.outputs:
-			if re.search(out_expr, nm):
-				o = self.outputs[nm]
-				break
-		if o:
-			self.forward_finger = o
-
-
-	def _send_mapped_midi_osc_event(self, ev):
-		o = None
-		m = ev.midimsg
-		if isinstance(m, Controller):
-			if m.channel == 15 and m.controller >= 0 and m.controller < 4:
-				if m.value != 0:
-					b = 1
-				else:
-					b = 0
-				o = ("/nth/action/record", [m.controller, b])
-				print "o=", o
-
-			elif m.channel == 14 and m.controller >= 64 and m.controller < 68:
-				if m.value != 0:
-					b = 1
-				else:
-					b = 0
-				o = ("/nth/action/play", [m.controller - 64, b])
-			elif m.channel == 14 and m.controller >= 0 and m.controller < 4:
-				o = ("/nth/action/randframe", [m.controller])
-
-		if o != None:
-			print "o was set, sending it"
-			self.send_osc(o, "graphic")
-		else:
-			self._send_osc_event(ev)
 
 	def _push_event(self, ev):
 		self.dispenser.push_event(ev)
@@ -466,22 +339,6 @@ class PushedEventDispenser(Thread):
 		while len(events) > 0:
 			ev = events.pop(0)
 
-			# If the event is a MIDI controller, look through
-			# the other events we've received to see if there
-			# are any other events for the same controller
-			if isinstance(ev, MidiEvent) and isinstance(ev.midimsg, Controller):
-				i = 0
-				# print "CONTROLLER!  len=",len(events)
-				while i < len(events):
-					# print "  Loop top i=",i
-					e = events[i]
-					if isinstance(e, MidiEvent) and isinstance(e.midimsg, Controller) and e.midimsg.controller == ev.midimsg.controller:
-						# print "SAME CONTROLLER! removing i=",i
-						ev = e
-						events.pop(i)
-					else:
-						i += 1
-
 			if self.processor == None:
 				# print "_push_event with no processor, ev=",ev
 				pass
@@ -513,7 +370,7 @@ class NthEventMonitor(Thread):
 class NthServer (asyncore.dispatcher):
 
 	"""listens for connections"""
-	def __init__ (self, httpaddr, httpport, midiin, midiout, rootdir, fingertype, processor):
+	def __init__ (self, httpaddr, httpport, rootdir, fingertype, processor):
 		asyncore.dispatcher.__init__ (self)
 		self.ui = None
 		self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -525,19 +382,10 @@ class NthServer (asyncore.dispatcher):
 		self.connections = {}
 
 		print "NthServer start"
-		domidi = True
 		doosc = False
 		dofinger = False
 
-		if domidi:
-			Midi.startup()
-			self.midihardware = NthMidiHardware()
-		else:
-			self.midihardware = None
-
-		print "NthServer start midihardware=", self.midihardware
-
-		self.server = NthEventServer.server(self.midihardware)
+		self.server = NthEventServer.server()
 
 		if dofinger:
 			Finger.startup()
@@ -551,8 +399,6 @@ class NthServer (asyncore.dispatcher):
 
 		if dofinger:
 			self.server.set_fingertype(fingertype)
-		if domidi:
-			self.server.set_midi_timezero(Midi.time_now())
 		if dofinger:
 			self.server.set_finger_timezero(Finger.time_now())
 		if doosc and oscmon != None:
@@ -565,20 +411,10 @@ class NthServer (asyncore.dispatcher):
 
 		self.rootdir = rootdir
 
-		if domidi:
-			Midi.callback(NthEventServer.push_event, "")
 		if dofinger:
 			Finger.callback(NthEventServer.push_event, "")
 		if doosc and oscmon != None:
 			oscmon.setcallback(self.got_osc, "")
-
-		self.gridout = None
-		if midiout:
-			self.server.open_outputs(midiout)
-			self.gridout = self.server.get_midiout("Launchpad")
-			self.grid_reset()
-		if midiin:
-			self.server.open_inputs(midiin)
 
 	def got_osc(self, ev, data):
 		# print "GOT OSC! ev.time=",ev.time," time=", time.time()
@@ -601,24 +437,6 @@ class NthServer (asyncore.dispatcher):
 			# print "   end time=",time.time()
 
 
-	def grid_led(self, r, c, b):
-		if b:
-			v = 127
-		else:
-			v = 0
-		# The top row is special (controller msgs rather than notes)
-		if r == 8:
-			nt = Controller(channel=1, controller=(104 + c), value=v)
-		else:
-			nt = NoteOn(channel=1, pitch=(112 - 16 * r + c), velocity=v)
-		if self.gridout:
-			self.gridout.schedule(nt)
-
-	def grid_reset(self):
-		nt = Controller(channel=1, controller=0, value=0)
-		if self.gridout:
-			self.gridout.schedule(nt)
-
 	def set_processor(self, p):
 		print "AAAAAAA setting processor to p=", p
 		return self.server.set_processor(p)
@@ -638,12 +456,6 @@ class NthServer (asyncore.dispatcher):
 	def set_finger_order(self, fingerorder):
 		return self.server.set_finger_order(fingerorder)
 
-	def set_midi_events(self, midievents):
-		return self.server.set_midi_events(midievents)
-
-	def set_midi_forward(self, in_expr, out_expr):
-		return self.server.set_midi_forward(in_expr, out_expr)
-
 	def handle_accept (self):
 		self.count += 1
 		try:
@@ -656,8 +468,6 @@ class NthServer (asyncore.dispatcher):
 		print("NthServer error: " + msg);
 
 	def destroy (self):
-		Midi.shutdown()
-		time.sleep(0.1)
 		asyncore.socket_map.clear()
 		raise asyncore.ExitNow
 
@@ -665,8 +475,6 @@ class NthServer (asyncore.dispatcher):
 		self.destroy()
 
 	def shutdown_quick(self):
-		Midi.shutdown()
-		time.sleep(0.1)
 		sys.exit(0)
 
 class NthServerThread(Thread):
@@ -810,14 +618,9 @@ class NthResponder (asynchat.async_chat):
 			elif  doc.localName == "logout": self.handle_close()
 			elif  doc.localName == "quickshutdown": self.quickshutdown()
 			elif  doc.localName == "shutdown": self.safeshutdown()
-			elif  doc.localName == "list_devices": self.list_devices()
 			elif  doc.localName == "list_dir": self.list_dir(doc)
 			elif  doc.localName == "read_file": self.read_file(doc)
 			elif  doc.localName == "write_file": self.write_file(doc)
-			elif  doc.localName == "midi_playfile": self.midi_playfile(doc)
-			elif  doc.localName == "list_midi_inputs": self.list_midi_inputs()
-			elif  doc.localName == "list_midi_outputs": self.list_midi_outputs()
-			elif  doc.localName == "write_midi": self.write_midi(doc)
 			else:  self.send_error("No such method: " + doc.localName)
 		except:
 			e = "Error while handling '%s' : %s" % (doc.localName, format_exc())
@@ -838,23 +641,6 @@ class NthResponder (asynchat.async_chat):
 	def send_ok(self):
 		xml = ["<ok/>"]
 		self.send_response(string.join(xml, ''))
-
-	def midi_playfile (self, doc):
-		dirname = doc.getElementsByTagName("name")[0].childNodes[0].data
-		path = self.check_path(dirname)
-		if path == None:
-			return
-		print "midi_playfile, path=", path
-		p = Phrase.fromMidiFile(path)
-		print "path=", path, "  Length of Phrase is ", len(p.events)
-		outputs = self.eventserver.outputs
-		for m in p.events:
-			for nm in outputs:
-				# print "Sending m=",m," to output=",nm
-				o = outputs[nm]
-				o.schedule(m)
-
-		self.send_ok()
 
 	def list_dir(self, doc):
 		if self.rootdir == None:
@@ -927,67 +713,6 @@ class NthResponder (asynchat.async_chat):
 			self.send_error("Unexpected error while writing file.");
 			NthServer.logerror(format_exc())
 
-	def list_midi_inputs(self):
-		xml = ["<midi_inputs>"]
-		for nm in self.eventserver.inputs:
-			xml.append(self.eventserver.inputs[nm].to_xml());
-		xml.append("</midi_inputs>")
-		self.send_response(string.join(xml, ''))
-
-	def list_midi_outputs(self):
-		xml = ["<midi_outputs>"]
-		for nm in self.eventserver.outputs:
-			xml.append(self.eventserver.outputs[nm].to_xml());
-		xml.append("</midi_outputs>")
-		self.send_response(string.join(xml, ''))
-
-	def write_midi(self, doc):
-		for node in doc.childNodes:
-			if node.nodeType == Node.ELEMENT_NODE:
-				m = MidiMsg.from_xml(node)
-				attrs = node.attributes
-				a = attrs.get("devindex")
-				if a == None:
-					# if no explicit devindex,
-					# send it to all outputs
-					for nm in self.eventserver.outputs:
-						o = self.eventserver.outputs[nm]
-						o.schedule(m)
-				else:
-					devindex = int(a.nodeValue)
-					o = self.find_output_by_index(devindex)
-					o.schedule(m)
-		self.send_ok()
-
-	def find_output_by_index(self, i):
-		for nm in self.eventserver.outputs:
-			if self.eventserver.outputs[nm].index == i:
-				return self.eventserver.outputs[nm]
-		return None
-
-	def list_devices(self):
-
-		xml = ["<devices>"]
-
-		midihardware = self.eventserver.midihardware
-
-		devs = midihardware.input_devices() 
-		for nm in devs:
-			o = midihardware.get_input(nm)
-			xml.append(o.to_xml())
-
-		devs = midihardware.output_devices() 
-		for nm in devs:
-			o = midihardware.get_output(nm)
-			xml.append(o.to_xml())
-
-		for n in range(Finger.num_devices()):
-			o = FingerDevice(n)
-			xml.append(o.to_xml())
-
-		xml.append("</devices>")
-		self.send_response(string.join(xml, ''))
-
 	def next_event(self, doc):
 		"""Returns an xml document containing the next event"""
 		print "EVENT! doc=", doc, "\n"
@@ -1001,15 +726,6 @@ class NthResponder (asynchat.async_chat):
 					# When we're overloaded, ignore all
 					# FingerDrag events
 					continue
-				if isinstance(e, MidiEvent) and isinstance(e.midimsg, ChanMsg):
-					if e.midimsg.channel != 16:
-						# We're overloaded, so we
-						# ignore everything except
-						# the MIDI control channel.
-						# There should be an API
-						# for setting this rather than
-						# harcoding 16
-						continue
 				break
 			# print("OVERLOADED IS FINALLY RETURNING e=",e.to_xml())
 		else:
@@ -1173,12 +889,7 @@ def main():
 	fullscreen = False
 	httpaddr = "127.0.0.1"
 	httpport = 7777
-	midievents = ".*"
-	midiforward = None
-	fingerforward = None
 	fingerorder = "0123"
-	midiin = ".*Trigger.*"
-	midiout = None
 	rootdir = None 
 	fingertype = "raw"
 	processor = "NthEventProcessor"
@@ -1209,18 +920,8 @@ def main():
 		for i in range(argn, len	(sys.argv)):
 			a = sys.argv[i]
 			print("a = ", a)
-			if a.startswith("midievents:"):
-				midievents = a[11:]
-			elif a.startswith("midiforward:"):
-				midiforward = a[12:]
-			elif a.startswith("fingerforward:"):
-				fingerforward = a[14:]
-			elif a.startswith("fingerorder:"):
+			if a.startswith("fingerorder:"):
 				fingerorder = a[12:]
-			elif a.startswith("midiin:"):
-				midiin = a[7:]
-			elif a.startswith("midiout:"):
-				midiout = a[8:]
 			elif a.startswith("rootdir:"):
 				rootdir = abspath(a[8:])
 			elif a.startswith("httpaddr:"):
@@ -1236,28 +937,14 @@ def main():
 
 		server = NthServer(httpaddr=httpaddr,
 				httpport=httpport,
-				midiin=midiin,
-				midiout=midiout,
 				rootdir=rootdir,
 				fingertype=fingertype,
 				processor=processor)
-
-		# The syntax of a midiforward value is like ".*6>.*7"
-		if midiforward:
-			for i in midiforward.split(","):
-				k = i.split(">")
-				server.set_midi_forward(k[0], k[1])
-
-		if fingerforward:
-			server.set_finger_forward(fingerforward)
 
 		# The finger_order hack allows the caller
 		# of the server to adjust the devindex values
 		# returned for finger events
 		server.set_finger_order(fingerorder)
-
-		if midievents:
-			server.set_midi_events(midievents)
 
 		try:
 			t = NthServerThread()
@@ -1367,19 +1054,7 @@ def main():
 		doNthCommand(httpaddr, httpport,
 			"<write_file><name>" + fname + "</name><data>" + data + "</data></write_file>")
 
-	elif cmd == "midi_playfile":
-		fname = saxutils.escape(sys.argv[argn])
-		doNthCommand(httpaddr, httpport,
-			"<midi_playfile><name>" + fname + "</name></midi_playfile>")
-
-	elif cmd == "write_midi":
-		xx = sys.argv[argn]
-		doNthCommand(httpaddr, httpport, "<write_midi>" + xx + "</write_midi>")
-
-	elif cmd == "shutdown" or \
-		cmd == "list_midi_inputs" or \
-		cmd == "list_midi_outputs" or \
-		cmd == "list_devices":
+	elif cmd == "shutdown":
 
 		doNthCommand(httpaddr, httpport,
 			"<" + cmd + "/>")

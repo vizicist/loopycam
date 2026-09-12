@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LoopyCam Control</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">LOOPYCAM</p>
+      <h1>Live control</h1>
+    </div>
+    <div id="connection" class="connection offline"><span></span>Connecting</div>
+  </header>
+
+  <main>
+    <section class="status-card" aria-label="Looper status">
+      <div><span class="label">Selected loop</span><strong id="current-loop">1</strong></div>
+      <div><span class="label">Visible windows</span><strong id="window-count">1</strong></div>
+      <div><span class="label">Mode</span><strong id="mode">Live</strong></div>
+    </section>
+
+    <section aria-labelledby="performance-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">PERFORMANCE</p><h2 id="performance-title">Primary controls</h2></div>
+        <p>Hold Record or Overlay while capturing.</p>
+      </div>
+      <div class="primary-grid">
+        <button id="record" class="hold record"><span>●</span>Record</button>
+        <button id="overlay" class="hold overlay"><span>◎</span>Overlay</button>
+        <button data-action="allLive" class="live"><span>◉</span>All live</button>
+        <button id="blackout" class="blackout" data-toggle="blackout"><span>◼</span>Blackout</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="loops-title">
+      <div class="section-heading compact">
+        <div><p class="eyebrow">LOOPS</p><h2 id="loops-title">Select a loop</h2></div>
+      </div>
+      <div id="loops" class="loop-grid" aria-label="Loop selector"></div>
+    </section>
+
+    <section class="two-column">
+      <article aria-labelledby="layout-title">
+        <div class="section-heading compact"><div><p class="eyebrow">LAYOUT</p><h2 id="layout-title">Windows</h2></div></div>
+        <div class="stepper">
+          <button data-action="lessWindows" aria-label="Fewer windows">−</button>
+          <output id="window-output">1</output>
+          <button data-action="moreWindows" aria-label="More windows">+</button>
+        </div>
+        <div class="button-row">
+          <button data-action="fullDisplay">Full frame</button>
+          <button data-action="quadrantDisplay">Quadrants</button>
+        </div>
+      </article>
+
+      <article aria-labelledby="effects-title">
+        <div class="section-heading compact"><div><p class="eyebrow">IMAGE</p><h2 id="effects-title">Effects</h2></div></div>
+        <div class="toggle-grid">
+          <label><span>Auto next</span><input type="checkbox" data-toggle="autoNext"></label>
+          <label><span>Trails</span><input type="checkbox" data-toggle="trail"></label>
+          <label><span>XOR</span><input type="checkbox" data-toggle="xor"></label>
+          <label><span>Border</span><input type="checkbox" data-toggle="border"></label>
+          <label><span>Record border</span><input type="checkbox" data-toggle="recordBorder"></label>
+          <label><span>Smooth motion</span><input type="checkbox" data-toggle="smooth"></label>
+          <label><span>Interpolation</span><input type="checkbox" data-toggle="interpolate"></label>
+        </div>
+        <label class="range-row" for="trail-amount">
+          <span>Trail opacity <output id="trail-value">90%</output></span>
+          <input id="trail-amount" type="range" min="0" max="1" step="0.01" value="0.9">
+        </label>
+      </article>
+    </section>
+  </main>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

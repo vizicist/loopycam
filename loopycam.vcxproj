@@ -145,6 +145,11 @@
     <ClInclude Include="TCP_Socket\Socket.h" />
     <ClInclude Include="src\Timer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="web\app.css" />
+    <None Include="web\app.js" />
+    <None Include="web\index.html" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
