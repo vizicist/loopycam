@@ -63,11 +63,9 @@ DWORD last_connect_attempt = 0;
 DWORD last_status_render = 0;
 ULONG_PTR gdiplus_token = 0;
 std::string mode = "2";
-std::string sticky_mode = "2";
 int page = 6;
 bool key_states[KEY_COUNT] = { false };
 bool dial_states[DIAL_COUNT] = { false };
-bool enter_down = false;
 int option_index = 0;
 int preset_set_index = 0;
 int preset_index = 0;
@@ -479,7 +477,6 @@ std::vector<unsigned char> make_key_image(int index)
     const bool record_key = index == 7;
     const int mode_index = index >= 4 && index < 7 ? visible_mode_index(index - 4) : 0;
     const std::string logical_key = index < 4 ? ACTION_KEYS[index] : index < 7 ? MODE_KEYS[mode_index] : "Record";
-    std::string key = record_key ? "REC" : "";
     std::string label = record_key ? "Record" : index < 4 ? action_label(index) : MODE_LABELS[mode_index];
     Gdiplus::Color background;
     if (record_key)
@@ -497,12 +494,7 @@ std::vector<unsigned char> make_key_image(int index)
     Gdiplus::Graphics graphics(&bitmap);
     graphics.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
     graphics.Clear(background);
-    if (index < 7) {
-        draw_centered(graphics, widen(label), 12.0f, 96.0f, label.size() > 8 ? 19.0f : 24.0f, Gdiplus::Color(255, 255, 255, 255));
-    } else {
-        draw_centered(graphics, widen(key), 8.0f, 55.0f, key.size() > 2 ? 25.0f : 34.0f, Gdiplus::Color(255, 255, 255, 255));
-        draw_centered(graphics, widen(label), 67.0f, 37.0f, label.size() > 8 ? 14.0f : 17.0f, Gdiplus::Color(255, 240, 240, 240));
-    }
+    draw_centered(graphics, widen(label), 12.0f, 96.0f, label.size() > 8 ? 19.0f : 24.0f, Gdiplus::Color(255, 255, 255, 255));
     return jpeg_from_bitmap(bitmap);
 }
 
@@ -525,7 +517,7 @@ std::vector<unsigned char> make_touchscreen_image()
     page_text << L"SHIFT " << (page + 1) << L"/" << MODE_COUNT;
     graphics.DrawString(page_text.str().c_str(), -1, &side_font, Gdiplus::PointF(682.0f, 4.0f), &side_brush);
     graphics.DrawString(L"D1/D4: SHIFT", -1, &side_font, Gdiplus::PointF(682.0f, 31.0f), &side_brush);
-    graphics.DrawString(L"HOLD=STICKY", -1, &side_font, Gdiplus::PointF(682.0f, 58.0f), &side_brush);
+    graphics.DrawString(L"PRESS=SELECT", -1, &side_font, Gdiplus::PointF(682.0f, 58.0f), &side_brush);
     return jpeg_from_bitmap(bitmap, 84);
 }
 
@@ -546,7 +538,7 @@ std::string current_status_signature()
     std::string lines[4];
     status_lines(lines);
     std::ostringstream signature;
-    signature << page << '|' << mode << '|' << sticky_mode;
+    signature << page << '|' << mode;
     for (int n = 0; n < 4; ++n)
         signature << '|' << lines[n];
     return signature.str();
@@ -1066,7 +1058,6 @@ void handle_control(const std::string& key, bool pressed)
         return;
     }
     if (key == "Enter") {
-        enter_down = pressed;
         return;
     }
     if (key == "NL")
@@ -1074,12 +1065,6 @@ void handle_control(const std::string& key, bool pressed)
     if (is_mode_key(key)) {
         if (pressed) {
             mode = key;
-            render_keys();
-            render_touchscreen(true);
-        } else if (enter_down) {
-            sticky_mode = mode;
-        } else {
-            mode = sticky_mode;
             render_keys();
             render_touchscreen(true);
         }

@@ -27,11 +27,9 @@ The upper row of LCD keys contains the four action keys (`/`, `*`, `-`, and
 controls. The lower-right key is always a dedicated momentary Record key that
 matches the browser Record button. Each detent of the left or right dial shifts
 that list by one mode. The four upper keys display the active mode's action
-names from the touch strip. Hold the left dial while
-pressing a mode key to make that mode sticky, matching the number-pad Enter
-behavior. Rotating the second dial triggers `/` or `*`, and
-rotating the third triggers `-` or `+`. The right dial also switches pages; its
-push action is Num Lock. Tapping one of the four touch-strip quarters triggers
+names from the touch strip. Pressing a lower-row mode selects it until another
+lower-row mode is pressed. Rotating the second dial triggers `/` or `*`, and
+rotating the third triggers `-` or `+`. Tapping one of the four touch-strip quarters triggers
 the corresponding action key. The touch strip mirrors the four-line Pertelian
 LCD display. Preset selection, loading, saving, preset-set cycling, and random
 preset loading use the existing `presets_*` directories directly. The browser
