@@ -2,6 +2,9 @@ import sys
 import os
 import pygame
 import random
+import json
+import socket
+import subprocess
 import thread
 import threading
 # import string
@@ -1036,6 +1039,9 @@ class NthControlPanel(NthEventProcessor):
 		self.last_xy_action = {}
 		self.last_xy_time = 0.0
 		self.finger_zero = 0
+		self.streamdeck_socket = None
+		self.streamdeck_process = None
+		self.streamdeck_init()
 
 		self.presets = []
 		self.curr_preset = 0
@@ -1258,18 +1264,71 @@ class NthControlPanel(NthEventProcessor):
 		if lines[2] == None:
 			lns[2] = self.pad("")
 		else:
-			self.lcd_write(2, 0, self.pad(lines[2]))
+			lns[2] = self.pad(lines[2])
 			
 		if lines[3] == None:
 			lns[3] = self.pad("")
 		else:
-			self.lcd_write(3, 0, self.pad(lines[3]))
+			lns[3] = self.pad(lines[3])
 			
 		for i in range(4):
 			if self.lcdlines[i] != lns[i]:
 				self.lcdlines[i] = lns[i]
 				self.lcd_write(i, 0, lns[i])
+		self.streamdeck_send({"type":"state", "lines":lns, "mode":self.curr_mode, "sticky_mode":self.sticky_mode})
 		return
+
+	def streamdeck_init(self):
+		if os.getenv("LOOPYCAM_STREAMDECK", "1") == "0":
+			return
+		try:
+			self.streamdeck_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+			self.streamdeck_socket.bind(("127.0.0.1", 4457))
+			self.streamdeck_socket.setblocking(0)
+		except socket.error, err:
+			print "Unable to open Stream Deck panel socket:", err
+			self.streamdeck_socket = None
+			return
+
+		bridge = os.path.abspath(os.path.join(os.path.dirname(__file__), "streamdeck_bridge.py"))
+		try:
+			flags = getattr(subprocess, "CREATE_NO_WINDOW", 0x08000000)
+			self.streamdeck_process = subprocess.Popen(["py", "-3", bridge], creationflags=flags)
+		except Exception, err:
+			print "Unable to start Stream Deck + bridge:", err
+
+	def streamdeck_send(self, message):
+		if self.streamdeck_socket == None:
+			return
+		try:
+			self.streamdeck_socket.sendto(json.dumps(message), ("127.0.0.1", 4458))
+		except socket.error:
+			pass
+
+	def streamdeck_poll(self):
+		if self.streamdeck_socket == None:
+			return
+		while True:
+			try:
+				payload, address = self.streamdeck_socket.recvfrom(8192)
+			except socket.error:
+				break
+			try:
+				message = json.loads(payload)
+			except (TypeError, ValueError):
+				continue
+
+			if message.get("type") == "refresh":
+				self.lcd_refresh()
+			elif message.get("type") == "key":
+				key = str(message.get("key", ""))
+				pressed = bool(message.get("pressed", False))
+				if key not in self.key_is_down or self.key_is_down[key] == pressed:
+					continue
+				if pressed:
+					self.keydown(key)
+				else:
+					self.keyup(key)
 			
 	def set_status(self, msg):
 		self.lcd_status = msg
@@ -2148,6 +2207,10 @@ class NthControlPanel(NthEventProcessor):
 		self.running = False
 		self.lcd_clear()
 		self.lcd_write(1, 2, "LoopyCam Stopped")
+		self.streamdeck_send({"type":"shutdown"})
+		if self.streamdeck_socket != None:
+			self.streamdeck_socket.close()
+			self.streamdeck_socket = None
 
 	def start(self):
 		self.running = True
@@ -2168,6 +2231,7 @@ class NthControlPanel(NthEventProcessor):
 		return
 
 	def handleEvents(self):
+		self.streamdeck_poll()
 		for event in pygame.event.get():
 			# print "pygame event = ",event
 			if event.type == QUIT:
