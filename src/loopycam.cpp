@@ -10,6 +10,7 @@ LoopyOsc* LoopycamOsc;
 // #include "looper.h"
 #include "Timer.h"
 #include "ofxMSAShape3D.h"
+#include <process.h>
 
 int nffplugins;
 CFFPlugin *ffplugins[MAXPLUGINS];
@@ -35,6 +36,21 @@ int do_ffgl_plugin(FFGLPluginInstance* plugin1, int lastone);
 #include "cv.h"
 #include "highgui.h"
 CvCapture* capture;
+
+static const int CAMERA_FRAME_BUFFER_COUNT = 3;
+static HANDLE cameraThread = NULL;
+static CRITICAL_SECTION cameraFrameLock;
+static bool cameraFrameLockInitialized = false;
+static volatile LONG cameraStopRequested = 0;
+static IplImage* cameraFrames[CAMERA_FRAME_BUFFER_COUNT] = { NULL, NULL, NULL };
+static int cameraLatestFrame = -1;
+static int cameraReadingFrame = -1;
+static LONG cameraLatestSequence = 0;
+static LONG cameraRenderedSequence = 0;
+
+static IplImage* cameraInputImage = NULL;
+static IplImage* processingImage = NULL;
+static IplImage* outputImage = NULL;
 
 // int				mouseX, mouseY;
 // string			mouseButtonState;
@@ -86,6 +102,165 @@ float mouseX = 0.5;
 float mouseY = 0.5;
 int mouseB = 0;
 
+static unsigned __stdcall camera_capture_thread(void*)
+{
+    bool reportedFailure = false;
+
+    while (InterlockedCompareExchange(&cameraStopRequested, 0, 0) == 0) {
+        IplImage* captured = cvQueryFrame(capture);
+        if (captured == NULL) {
+            if (!reportedFailure) {
+                NS_debug("Camera capture returned no frame\n");
+                reportedFailure = true;
+            }
+            Sleep(10);
+            continue;
+        }
+        reportedFailure = false;
+
+        if (captured->width != camWidth || captured->height != camHeight ||
+                captured->depth != IPL_DEPTH_8U || captured->nChannels != 3) {
+            NS_debug("Camera frame format changed unexpectedly: %dx%d depth=%d channels=%d\n",
+                     captured->width, captured->height, captured->depth, captured->nChannels);
+            Sleep(10);
+            continue;
+        }
+
+        int writeFrame = -1;
+        EnterCriticalSection(&cameraFrameLock);
+        for (int n = 0; n < CAMERA_FRAME_BUFFER_COUNT; ++n) {
+            if (n != cameraLatestFrame && n != cameraReadingFrame) {
+                writeFrame = n;
+                break;
+            }
+        }
+        LeaveCriticalSection(&cameraFrameLock);
+
+        if (writeFrame < 0) {
+            Sleep(1);
+            continue;
+        }
+
+        cvCopy(captured, cameraFrames[writeFrame]);
+
+        EnterCriticalSection(&cameraFrameLock);
+        cameraLatestFrame = writeFrame;
+        ++cameraLatestSequence;
+        LeaveCriticalSection(&cameraFrameLock);
+    }
+
+    return 0;
+}
+
+static bool start_camera_capture(IplImage* initialFrame)
+{
+    if (initialFrame == NULL || initialFrame->depth != IPL_DEPTH_8U ||
+            initialFrame->nChannels != 3) {
+        NS_debug("Camera must provide 8-bit, three-channel video\n");
+        return false;
+    }
+
+    camWidth = initialFrame->width;
+    camHeight = initialFrame->height;
+
+    InitializeCriticalSection(&cameraFrameLock);
+    cameraFrameLockInitialized = true;
+
+    const CvSize cameraSize = cvSize(camWidth, camHeight);
+    for (int n = 0; n < CAMERA_FRAME_BUFFER_COUNT; ++n) {
+        cameraFrames[n] = cvCreateImage(cameraSize, IPL_DEPTH_8U, 3);
+        if (cameraFrames[n] == NULL)
+            return false;
+    }
+
+    cvCopy(initialFrame, cameraFrames[0]);
+    cameraLatestFrame = 0;
+    cameraLatestSequence = 1;
+    cameraRenderedSequence = 0;
+    InterlockedExchange(&cameraStopRequested, 0);
+
+    cameraThread = reinterpret_cast<HANDLE>(
+        _beginthreadex(NULL, 0, camera_capture_thread, NULL, 0, NULL));
+    if (cameraThread == NULL) {
+        NS_debug("Unable to start camera capture thread\n");
+        return false;
+    }
+
+    NS_debug("Camera capture thread started with %d latest-frame buffers\n",
+             CAMERA_FRAME_BUFFER_COUNT);
+    return true;
+}
+
+static bool acquire_latest_camera_frame(IplImage** image, int* frameIndex, LONG* sequence)
+{
+    bool available = false;
+    EnterCriticalSection(&cameraFrameLock);
+    if (cameraLatestFrame >= 0 && cameraLatestSequence != cameraRenderedSequence) {
+        cameraReadingFrame = cameraLatestFrame;
+        *image = cameraFrames[cameraReadingFrame];
+        *frameIndex = cameraReadingFrame;
+        *sequence = cameraLatestSequence;
+        available = true;
+    }
+    LeaveCriticalSection(&cameraFrameLock);
+    return available;
+}
+
+static void release_camera_frame(int frameIndex, LONG sequence)
+{
+    EnterCriticalSection(&cameraFrameLock);
+    if (cameraReadingFrame == frameIndex)
+        cameraReadingFrame = -1;
+    cameraRenderedSequence = sequence;
+    LeaveCriticalSection(&cameraFrameLock);
+}
+
+static void dispatch_windows_messages()
+{
+    MSG msg;
+    while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
+        if (msg.message == WM_QUIT || msg.message == WM_NULL)
+            break;
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+}
+
+static void shutdown_video_pipeline()
+{
+    if (cameraThread != NULL) {
+        InterlockedExchange(&cameraStopRequested, 1);
+        const DWORD waitResult = WaitForSingleObject(cameraThread, 3000);
+        if (waitResult != WAIT_OBJECT_0) {
+            NS_debug("Camera capture thread did not stop before shutdown\n");
+            CloseHandle(cameraThread);
+            cameraThread = NULL;
+            return;
+        }
+        CloseHandle(cameraThread);
+        cameraThread = NULL;
+    }
+
+    if (capture != NULL)
+        cvReleaseCapture(&capture);
+
+    for (int n = 0; n < CAMERA_FRAME_BUFFER_COUNT; ++n) {
+        if (cameraFrames[n] != NULL)
+            cvReleaseImage(&cameraFrames[n]);
+    }
+    if (cameraFrameLockInitialized) {
+        DeleteCriticalSection(&cameraFrameLock);
+        cameraFrameLockInitialized = false;
+    }
+
+    if (cameraInputImage != NULL)
+        cvReleaseImageHeader(&cameraInputImage);
+    if (processingImage != NULL)
+        cvReleaseImage(&processingImage);
+    if (outputImage != NULL)
+        cvReleaseImage(&outputImage);
+}
+
 void non_of_init(int x, int y, int w, int h) {
 
 	// int ncams = cvGetCamerasCount();
@@ -106,6 +281,16 @@ void non_of_init(int x, int y, int w, int h) {
     camWidth = (int)fwidth;
     camHeight = (int)fheight;
 
+    IplImage* initialFrame = cvQueryFrame(capture);
+    if (initialFrame == NULL) {
+        NS_debug("Unable to retrieve the first camera frame\n");
+        exit(1);
+    }
+    if (!start_camera_capture(initialFrame)) {
+        NS_debug("Unable to initialize threaded camera capture\n");
+        exit(1);
+    }
+
     char curdir[MAX_PATH];
     int r = GetCurrentDirectory(MAX_PATH, curdir);
     if ( r == 0 ) {
@@ -117,6 +302,15 @@ void non_of_init(int x, int y, int w, int h) {
 
     FFGLinit(x,y,w,h);
     FFGLinit2();
+
+    cameraInputImage = cvCreateImageHeader(cvSize(camWidth, camHeight),
+                                           IPL_DEPTH_8U, 3);
+    processingImage = cvCreateImage(cvSize(ffWidth, ffHeight), IPL_DEPTH_8U, 3);
+    outputImage = cvCreateImage(cvSize(fboWidth, fboHeight), IPL_DEPTH_8U, 3);
+    if (cameraInputImage == NULL || processingImage == NULL || outputImage == NULL) {
+        NS_debug("Unable to initialize reusable camera processing images\n");
+        exit(1);
+    }
 
     mouseX = 0;
     mouseY = 0;
@@ -375,6 +569,7 @@ void non_of_loop() {
             break;
         }
     }
+    shutdown_video_pipeline();
 }
 
 const char *ffglplugin_fname(const char *fn)
@@ -749,8 +944,6 @@ int FFGLinit2()
 
 double lasttime = -1.0;
 int framessincelast = 0;
-IplImage* frame = 0;
-
 int loopyloop()
 {
 
@@ -764,6 +957,15 @@ int loopyloop()
 
     if ( g_hwnd==NULL || g_glrc==NULL ) {
         return 0;
+    }
+
+    IplImage* capturedFrame = NULL;
+    int capturedFrameIndex = -1;
+    LONG capturedSequence = 0;
+    if (!acquire_latest_camera_frame(&capturedFrame, &capturedFrameIndex, &capturedSequence)) {
+        dispatch_windows_messages();
+        Sleep(1);
+        return 1;
     }
 
     //get the window's display context
@@ -791,43 +993,22 @@ int loopyloop()
     //the video frame size is probably smaller than the
     //size of the texture on the gpu hardware
 
-    int isnew = 0;
     unsigned char * pixels;
     unsigned char *newpixels;
 
-    // Use OpenCV camera stuff
-    frame = cvQueryFrame(capture);
-    if ( !frame ) {
-        NS_debug("cvQueryFrame returned NULL\n");
-    } else {
-        isnew = 1;
-    }
-    pixels = (unsigned char *)(frame->imageData);
-
-    IplImage* img1;
-    IplImage* img2;
-    IplImage* img3;
-
-    CvSize camsz = cvSize(camWidth,camHeight);
-    CvSize ffsz = cvSize(ffWidth,ffHeight);
-    CvSize fbosz = cvSize(fboWidth,fboHeight);
-
-	img1 = cvCreateImageHeader(camsz, IPL_DEPTH_8U, 3);
-    cvSetImageData(img1,pixels,camWidth*3);
-
-    img2 = cvCreateImage(ffsz, IPL_DEPTH_8U, 3);
-    img3 = cvCreateImage(fbosz, IPL_DEPTH_8U, 3);
+    cvSetImageData(cameraInputImage, capturedFrame->imageData, capturedFrame->widthStep);
 
 	int interp = CV_INTER_LINEAR;  // or CV_INTER_NN
 	interp = CV_INTER_NN;  // This produces some artifacts compared to CV_INTER_LINEAR, but is faster
 
-    cvResize(img1, img2, interp);
+    cvResize(cameraInputImage, processingImage, interp);
+    release_camera_frame(capturedFrameIndex, capturedSequence);
 
     unsigned char *resizedpixels;
-    cvGetImageRawData( img2, &resizedpixels, NULL, NULL );
+    cvGetImageRawData( processingImage, &resizedpixels, NULL, NULL );
     pixels = resizedpixels;
 
-    if (isnew!= 0 && pixels != 0) {
+    if (pixels != 0) {
         for ( int n=0; n<NPREPLUGINS; n++ ) {
             CFFPlugin* p = preplugins[n];
             if ( p != NULL ) {
@@ -846,9 +1027,9 @@ int loopyloop()
         }
     }
 
-    cvResize(img2, img3, interp);
+    cvResize(processingImage, outputImage, interp);
     unsigned char *img3pixels;
-    cvGetImageRawData( img3, &img3pixels, NULL, NULL );
+    cvGetImageRawData( outputImage, &img3pixels, NULL, NULL );
 
     glTexSubImage2D(GL_TEXTURE_2D, 0,
                     0, 0,
@@ -912,10 +1093,6 @@ int loopyloop()
 
     }
 
-	cvReleaseImageHeader(&img1);
-	cvReleaseImage(&img2);
-	cvReleaseImage(&img3);
-
     //swapbuffers tells opengl to finish all of the pending
     //drawing instructions (which are to the "back" buffer)
     //and copy/swap them to the front buffer
@@ -943,20 +1120,7 @@ int loopyloop()
     ReleaseDC(g_hwnd, hdc);
 
     //dispatch any pending windows msgs
-    MSG msg;
-    while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
-    {
-        if (msg.message != WM_QUIT &&
-                msg.message != WM_NULL)
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-        else
-        {
-            break;
-        }
-    }
+    dispatch_windows_messages();
 
     return(1);
 
