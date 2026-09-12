@@ -16,7 +16,7 @@ LoopyOsc* LoopycamOsc;
 #include <devpkey.h>
 #include <usbioctl.h>
 #include <usbiodef.h>
-#include <videoInput.h>
+#include "orbbec_camera.h"
 #include <vector>
 
 #pragma comment(lib, "Cfgmgr32.lib")
@@ -45,10 +45,8 @@ int do_ffgl_plugin(FFGLPluginInstance* plugin1, int lastone);
 
 #include "cv.h"
 #include "highgui.h"
-static videoInput cameraCapture;
-static int cameraDeviceIndex = -1;
+static OrbbecCameraCapture cameraCapture;
 static bool cameraDeviceStarted = false;
-static std::vector<unsigned char> cameraPixelBuffer;
 
 static const int CAMERA_FRAME_BUFFER_COUNT = 3;
 static HANDLE cameraThread = NULL;
@@ -317,10 +315,28 @@ static unsigned __stdcall camera_capture_thread(void*)
     int fpsFrameCount = 0;
 
     while (InterlockedCompareExchange(&cameraStopRequested, 0, 0) == 0) {
-        const DWORD now = GetTickCount();
-		if (!cameraCapture.getPixels(cameraDeviceIndex, &cameraPixelBuffer[0], false, true)) {
+        int writeFrame = -1;
+        EnterCriticalSection(&cameraFrameLock);
+        for (int n = 0; n < CAMERA_FRAME_BUFFER_COUNT; ++n) {
+            if (n != cameraLatestFrame && n != cameraReadingFrame) {
+                writeFrame = n;
+                break;
+            }
+        }
+        LeaveCriticalSection(&cameraFrameLock);
+
+        if (writeFrame < 0) {
+            Sleep(1);
+            continue;
+        }
+
+        std::string captureError;
+		if (!cameraCapture.readBgr(
+                reinterpret_cast<unsigned char*>(cameraFrames[writeFrame]->imageData),
+                cameraFrames[writeFrame]->widthStep, 1000, &captureError)) {
             if (!reportedFailure) {
-                NS_debug("Camera capture returned no frame\n");
+				NS_debug("Orbbec camera capture returned no frame%s%s\n",
+                    captureError.empty() ? "" : ": ", captureError.c_str());
                 reportedFailure = true;
             }
             Sleep(10);
@@ -328,30 +344,13 @@ static unsigned __stdcall camera_capture_thread(void*)
             reportedFailure = false;
             ++fpsFrameCount;
 
-            int writeFrame = -1;
             EnterCriticalSection(&cameraFrameLock);
-            for (int n = 0; n < CAMERA_FRAME_BUFFER_COUNT; ++n) {
-                if (n != cameraLatestFrame && n != cameraReadingFrame) {
-                    writeFrame = n;
-                    break;
-                }
-            }
+            cameraLatestFrame = writeFrame;
+            ++cameraLatestSequence;
             LeaveCriticalSection(&cameraFrameLock);
-
-            if (writeFrame >= 0) {
-				const int rowBytes = camWidth * 3;
-				for (int y = 0; y < camHeight; ++y) {
-					memcpy(cameraFrames[writeFrame]->imageData + y * cameraFrames[writeFrame]->widthStep,
-						&cameraPixelBuffer[y * rowBytes], rowBytes);
-				}
-
-                EnterCriticalSection(&cameraFrameLock);
-                cameraLatestFrame = writeFrame;
-                ++cameraLatestSequence;
-                LeaveCriticalSection(&cameraFrameLock);
-            }
         }
 
+        const DWORD now = GetTickCount();
         const DWORD elapsed = now - fpsWindowStart;
         if (elapsed >= 1000) {
             const LONG fpsTenths = static_cast<LONG>(
@@ -471,7 +470,7 @@ static void shutdown_video_pipeline()
     }
 
     if (cameraDeviceStarted) {
-		cameraCapture.stopDevice(cameraDeviceIndex);
+		cameraCapture.close();
 		cameraDeviceStarted = false;
 	}
 
@@ -494,43 +493,34 @@ static void shutdown_video_pipeline()
 
 void non_of_init(int x, int y, int w, int h, int cameraWidth, int cameraHeight) {
 
-	// int ncams = cvGetCamerasCount();
-    // NS_debug("There are %d cameras!\n",ncams);
-    cameraDeviceIndex = camera_index;
-	cameraCapture.setRequestedMediaSubType(VI_MEDIASUBTYPE_MJPG);
-	if (!cameraCapture.setupDevice(cameraDeviceIndex, cameraWidth, cameraHeight)) {
-		NS_debug("Unable to initialize %dx%d capture from camera index=%d\n",
-			cameraWidth, cameraHeight, cameraDeviceIndex);
+	std::string cameraError;
+	if (!cameraCapture.open(camera_index, cameraWidth, cameraHeight, 30, &cameraError)) {
+		NS_debug("Unable to initialize %dx%d Orbbec capture from camera index=%d: %s\n",
+			cameraWidth, cameraHeight, camera_index, cameraError.c_str());
         exit(1);
     }
 	cameraDeviceStarted = true;
 
-	camWidth = cameraCapture.getWidth(cameraDeviceIndex);
-	camHeight = cameraCapture.getHeight(cameraDeviceIndex);
+	camWidth = cameraCapture.width();
+	camHeight = cameraCapture.height();
+	camera_name = cameraCapture.name();
 	if (camWidth != cameraWidth || camHeight != cameraHeight) {
 		NS_debug("Camera could not provide requested resolution %dx%d; using %dx%d\n",
 			cameraWidth, cameraHeight, camWidth, camHeight);
 	}
-	cameraPixelBuffer.resize(camWidth * camHeight * 3);
+	NS_debug("Orbbec SDK color stream: %s (serial %s), %dx%d at %d FPS\n",
+		cameraCapture.name().c_str(), cameraCapture.serialNumber().c_str(),
+		camWidth, camHeight, cameraCapture.fps());
 
 	IplImage* initialFrame = cvCreateImage(cvSize(camWidth, camHeight), IPL_DEPTH_8U, 3);
-	bool haveInitialFrame = false;
-	const DWORD firstFrameStart = GetTickCount();
-	while (!haveInitialFrame && GetTickCount() - firstFrameStart < 5000) {
-		haveInitialFrame = cameraCapture.getPixels(
-			cameraDeviceIndex, &cameraPixelBuffer[0], false, true);
-		if (!haveInitialFrame)
-			Sleep(10);
-	}
+	const bool haveInitialFrame = initialFrame != NULL && cameraCapture.readBgr(
+		reinterpret_cast<unsigned char*>(initialFrame->imageData),
+		initialFrame->widthStep, 5000, &cameraError);
 	if (initialFrame == NULL || !haveInitialFrame) {
-        NS_debug("Unable to retrieve the first camera frame\n");
+		NS_debug("Unable to retrieve the first Orbbec camera frame%s%s\n",
+			cameraError.empty() ? "" : ": ", cameraError.c_str());
         exit(1);
     }
-	const int initialRowBytes = camWidth * 3;
-	for (int y = 0; y < camHeight; ++y) {
-		memcpy(initialFrame->imageData + y * initialFrame->widthStep,
-			&cameraPixelBuffer[y * initialRowBytes], initialRowBytes);
-	}
     if (!start_camera_capture(initialFrame)) {
         NS_debug("Unable to initialize threaded camera capture\n");
         exit(1);

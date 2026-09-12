@@ -4,15 +4,15 @@ LoopyCam visual looping instrument.
 
 ## Camera selection
 
-LoopyCam can select a DirectShow camera by its Windows device name. The bundled
-launch scripts default to `Orbbec Gemini 335 RGB Camera` when
+LoopyCam captures its color stream through Orbbec SDK v2. The bundled launch
+scripts default to `Gemini 335` when
 `LOOPYCAM_CAMERA` is not already set.
 
-Run `loopycam.exe --list-cameras` to print the available camera names and
-indices. Select a camera with either `--camera "camera name"` (or `-c`) or the
-`LOOPYCAM_CAMERA` environment variable. Names are matched without regard to
-case and may be shortened to an unambiguous substring. A numeric value selects
-that DirectShow index.
+Run `loopycam.exe --list-cameras` to print connected Orbbec camera names,
+serial numbers, and SDK indices. Select a camera with `--camera NAME`,
+`--camera SERIAL` (or `-c`), or the `LOOPYCAM_CAMERA` environment variable.
+Names are matched without regard to case and may be shortened to an
+unambiguous substring. A numeric value selects that SDK index.
 
 Camera capture defaults to 1280x720. Use `--resolution WIDTHxHEIGHT` (or `-r`)
 to request another resolution, for example:
@@ -21,9 +21,17 @@ to request another resolution, for example:
 loopycam.exe --resolution 640x480
 ```
 
-The camera driver may select its closest supported mode when the exact requested
+The SDK may select its closest supported color mode when the exact requested
 resolution is unavailable; LoopyCam reports the delivered resolution in the web
-interface and on the Stream Deck strip.
+interface and on the Stream Deck strip. RGB color is the first stream migrated
+to the SDK. The capture layer retains the Orbbec device and pipeline so depth,
+infrared, alignment, and camera controls can be added without replacing the
+camera backend again.
+
+The repository includes the Win32 Orbbec SDK v2.9.3 runtime and import library.
+LoopyCam remains a 32-bit executable so its existing FreeFrame plugins continue
+to load. See [orbbecsdk/README.md](orbbecsdk/README.md) for SDK provenance and
+build details.
 
 ## Stream Deck + control
 

@@ -3,6 +3,7 @@
 *.obj
 *.tlog
 *.log
+**/Log/
 data/nsdebug.txt
 *.pyc
 *.pch

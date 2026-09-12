@@ -10,72 +10,24 @@
 // #include "ofAppGlutWindow.h"
 #include "FFPlugin.h"
 #include "highgui.h"
-#include "videoInput.h"
+#include "orbbec_camera.h"
 
 extern LoopyOsc* LoopycamOsc;
 #include "ip/NetworkingUtils.h"
 
 #include <errno.h>
+#include <string>
+#include <vector>
 
-static bool containsIgnoreCase(const char *value, const char *search)
+static void printCameras(const std::vector<OrbbecCameraDevice>& cameras)
 {
-	if (!value || !search || !search[0]) {
-		return false;
+	printf("Orbbec cameras:\n");
+	for (size_t n = 0; n < cameras.size(); ++n) {
+		printf("  %u: %s", static_cast<unsigned int>(n), cameras[n].name.c_str());
+		if (!cameras[n].serialNumber.empty())
+			printf(" (serial %s)", cameras[n].serialNumber.c_str());
+		printf("\n");
 	}
-
-	size_t searchLength = strlen(search);
-	for (const char *p = value; *p; ++p) {
-		if (_strnicmp(p, search, searchLength) == 0) {
-			return true;
-		}
-	}
-	return false;
-}
-
-static int listCameras(const char *cameraName, bool printDevices)
-{
-	int cameraCount = videoInput::listDevices(true);
-	int partialMatch = -1;
-	bool partialMatchIsAmbiguous = false;
-
-	if (printDevices) {
-		printf("DirectShow cameras:\n");
-	}
-
-	for (int n = 0; n < cameraCount; ++n) {
-		const char *deviceName = videoInput::getDeviceName(n);
-		if (!deviceName) {
-			deviceName = "(unknown)";
-		}
-
-		if (printDevices) {
-			printf("  %d: %s\n", n, deviceName);
-		}
-
-		if (cameraName && _stricmp(deviceName, cameraName) == 0) {
-			return n;
-		}
-		if (cameraName && containsIgnoreCase(deviceName, cameraName)) {
-			if (partialMatch < 0) {
-				partialMatch = n;
-			} else {
-				partialMatchIsAmbiguous = true;
-			}
-		}
-	}
-
-	return partialMatchIsAmbiguous ? -2 : partialMatch;
-}
-
-static bool parseCameraIndex(const char *value, int *cameraIndex)
-{
-	char *end = NULL;
-	long index = strtol(value, &end, 10);
-	if (!value[0] || !end || *end != 0 || index < 0) {
-		return false;
-	}
-	*cameraIndex = (int)index;
-	return true;
 }
 
 static bool parseResolution(const char *value, int *width, int *height)
@@ -96,9 +48,9 @@ static bool parseResolution(const char *value, int *width, int *height)
 static void printUsage(const char *program)
 {
 	printf("Usage: %s [options]\n", program);
-	printf("  -c, --camera NAME|INDEX       Select a DirectShow camera\n");
+	printf("  -c, --camera NAME|SERIAL|INDEX Select an Orbbec camera\n");
 	printf("  -r, --resolution WIDTHxHEIGHT Set camera resolution (default: 1280x720)\n");
-	printf("      --list-cameras            List available DirectShow cameras\n");
+	printf("      --list-cameras            List connected Orbbec cameras\n");
 	printf("  -w X,Y,WIDTH,HEIGHT           Set the output window geometry\n");
 }
 
@@ -276,9 +228,19 @@ int main(int argc, char **argv ) {
 		}
 	}
 
+	std::vector<OrbbecCameraDevice> cameras;
+	std::string cameraQueryError;
+	if (!list_orbbec_cameras(&cameras, &cameraQueryError)) {
+		fprintf(stderr, "Unable to query Orbbec cameras: %s\n", cameraQueryError.c_str());
+		return 1;
+	}
 	if (list_cameras) {
-		listCameras(NULL, true);
+		printCameras(cameras);
 		return 0;
+	}
+	if (cameras.empty()) {
+		fprintf(stderr, "No Orbbec cameras are connected.\n");
+		return 1;
 	}
 
 	int ret = getenv_s(&requiredSize, DataDir, sizeof(DataDir), "LOOPYCAM_DATADIR");
@@ -300,33 +262,23 @@ int main(int argc, char **argv ) {
 		}
 	}
 
-	if (cameraSelector) {
-		int selectedIndex;
-		if (parseCameraIndex(cameraSelector, &selectedIndex)) {
-			camera_index = selectedIndex;
-			NS_debug("Using DirectShow camera index %d\n", selectedIndex);
-		} else {
-			selectedIndex = listCameras(cameraSelector, false);
-			if (selectedIndex < 0) {
-				if (selectedIndex == -2) {
-					NS_debug("Camera name '%s' matches more than one device. Available cameras:\n", cameraSelector);
-				} else {
-					NS_debug("Unable to find camera matching '%s'. Available cameras:\n", cameraSelector);
-				}
-				listCameras(NULL, true);
-				exit(1);
-			}
-			camera_index = selectedIndex;
-			NS_debug("Using camera '%s' at DirectShow index %d\n", cameraSelector, selectedIndex);
-		}
-	} else {
-		NS_debug("No camera selected; using camera index %d\n", camera_index);
+	bool cameraSelectorAmbiguous = false;
+	const int selectedIndex = find_orbbec_camera(
+		cameras, cameraSelector, &cameraSelectorAmbiguous);
+	if (selectedIndex < 0) {
+		if (cameraSelectorAmbiguous)
+			NS_debug("Camera selector '%s' matches more than one Orbbec device.\n", cameraSelector);
+		else if (cameraSelector)
+			NS_debug("Unable to find an Orbbec camera matching '%s'.\n", cameraSelector);
+		else
+			NS_debug("Unable to select an Orbbec camera.\n");
+		printCameras(cameras);
+		exit(1);
 	}
-	int resolvedCameraIndex = camera_index;
-	videoInput::listDevices(false);
-	const char *resolvedCameraName = videoInput::getDeviceName(resolvedCameraIndex);
-	if (resolvedCameraName)
-		camera_name = resolvedCameraName;
+	camera_index = selectedIndex;
+	camera_name = cameras[selectedIndex].name;
+	NS_debug("Using Orbbec camera %d: %s (serial %s)\n", selectedIndex,
+		camera_name.c_str(), cameras[selectedIndex].serialNumber.c_str());
 	NS_debug("Output window is %d,%d,%d,%d; requested camera resolution is %dx%d\n",
 		argv_x, argv_y, argv_w, argv_h, argv_camera_width, argv_camera_height);
 

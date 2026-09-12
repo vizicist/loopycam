@@ -46,6 +46,9 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\orbbec_camera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="oscpack\ip\win32\NetworkingUtils.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -82,9 +85,6 @@
     <ClCompile Include="src\WinTimer.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\videoInput.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\FFPlugin.h">
@@ -97,6 +97,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\nsutil.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\orbbec_camera.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\vframe.h">
