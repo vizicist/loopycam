@@ -62,6 +62,8 @@ extern std::string camera_name;
 double camera_fps();
 const char* camera_usb_link();
 double camera_usb_mbps();
+void set_output_brightness_percent(int percent);
+int output_brightness_percent();
 extern int		ffWidth;
 extern int		ffHeight;
 extern int		CV_interp;

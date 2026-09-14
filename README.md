@@ -41,19 +41,23 @@ required. The device connects during startup and is checked every two seconds
 after a disconnect, so unplugging and reconnecting it does not require a
 LoopyCam restart.
 
-The upper row of LCD keys contains the four action keys (`/`, `*`, `-`, and
-`+`). The first three keys on the lower row form a circular list of mode
-controls. The lower-right key is always a dedicated momentary Record key that
-matches the browser Record button. Each detent of the left or right dial shifts
-that list by one mode. The four upper keys display the active mode's action
-names from the touch strip. Pressing a lower-row mode selects it until another
-lower-row mode is pressed. Rotating the second dial triggers `/` or `*`, and
-rotating the third triggers `-` or `+`. Tapping one of the four touch-strip quarters triggers
-the corresponding action key. The touch strip mirrors the four-line Pertelian
-LCD display and reports the camera's delivered resolution and frame rate plus
-its negotiated USB link speed. Preset selection, loading, saving, preset-set cycling, and random
-preset loading use the existing `presets_*` directories directly. The browser
-control panel also follows the mode selected on the Stream Deck.
+The upper row contains four action keys whose labels and behavior follow the
+current category. Each of the first three lower-row keys has its own category.
+Pressing a lower key makes it current; the current category is orange and
+supplies the four upper action keys. Turn the left dial to change the category
+assigned to whichever lower key is current. The two middle dials are currently
+disabled. Categories are ordered
+alphabetically when traversed with a dial. The three button assignments are
+saved in `data/streamdeck_categories.ini` and restored on the next launch. The
+lower-right key remains a dedicated momentary Record key
+that matches the browser Record button. The rightmost dial adjusts final video
+output brightness from 0% to 100% in 5% steps. The touch strip always reports
+the current brightness and number of visible windows. Tapping one of the four touch-strip quarters triggers the
+corresponding upper action key. The strip also reports the camera's delivered
+resolution and frame rate plus its negotiated USB link speed. Preset selection,
+loading, saving, preset-set cycling, and random preset loading use the existing
+`presets_*` directories directly. The browser control panel follows the current
+Stream Deck category.
 
 Set `LOOPYCAM_STREAMDECK=0` to disable native Stream Deck support.
 

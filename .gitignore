@@ -5,6 +5,7 @@
 *.log
 **/Log/
 data/nsdebug.txt
+data/streamdeck_categories.ini
 *.pyc
 *.pch
 *.recipe

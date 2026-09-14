@@ -17,6 +17,7 @@ LoopyOsc* LoopycamOsc;
 #include <usbioctl.h>
 #include <usbiodef.h>
 #include "orbbec_camera.h"
+#include <algorithm>
 #include <vector>
 
 #pragma comment(lib, "Cfgmgr32.lib")
@@ -67,6 +68,7 @@ static const GUID LOOPYCAM_USB_HUB_INTERFACE =
 static IplImage* cameraInputImage = NULL;
 static IplImage* processingImage = NULL;
 static IplImage* outputImage = NULL;
+static int outputBrightnessPercent = 100;
 
 // int				mouseX, mouseY;
 // string			mouseButtonState;
@@ -417,6 +419,30 @@ const char* camera_usb_link()
 double camera_usb_mbps()
 {
     return cameraUsbMbps;
+}
+
+void set_output_brightness_percent(int percent)
+{
+    outputBrightnessPercent = std::max(0, std::min(100, percent));
+}
+
+int output_brightness_percent()
+{
+    return outputBrightnessPercent;
+}
+
+static void apply_output_brightness(IplImage* image)
+{
+    const int percent = output_brightness_percent();
+    if (image == NULL || percent == 100)
+        return;
+
+    const int rowBytes = image->width * image->nChannels;
+    for (int y = 0; y < image->height; ++y) {
+        unsigned char* row = reinterpret_cast<unsigned char*>(image->imageData + y * image->widthStep);
+        for (int x = 0; x < rowBytes; ++x)
+            row[x] = static_cast<unsigned char>(std::min(255, (row[x] * percent + 50) / 100));
+    }
 }
 
 static bool acquire_latest_camera_frame(IplImage** image, int* frameIndex, LONG* sequence)
@@ -1264,6 +1290,7 @@ int loopyloop()
         }
     }
 
+    apply_output_brightness(processingImage);
     cvResize(processingImage, outputImage, interp);
     unsigned char *img3pixels;
     cvGetImageRawData( outputImage, &img3pixels, NULL, NULL );

@@ -36,12 +36,12 @@ const int KEY_PACKET_HEADER = 8;
 const int LCD_PACKET_HEADER = 16;
 
 const char* MODE_KEYS[] = {
-    "7", "4", "1", "0", "9", "6", "8", "5", "000", "3", "."
+    "000", "1", "5", "8", "7", "3", "0", "9", ".", "6", "4"
 };
 
 const char* MODE_LABELS[] = {
-    "Plugins", "Trail", "Layout", "Random", "Reset", "Speed",
-    "Option", "Movement", "Common", "Preset", "Restart"
+    "Common", "Layout", "Movement", "Option", "Plugins", "Preset",
+    "Random", "Reset", "Restart", "Speed", "Trail"
 };
 const int MODE_COUNT = sizeof(MODE_KEYS) / sizeof(MODE_KEYS[0]);
 
@@ -62,8 +62,9 @@ bool enabled = true;
 DWORD last_connect_attempt = 0;
 DWORD last_status_render = 0;
 ULONG_PTR gdiplus_token = 0;
-std::string mode = "2";
-int page = 6;
+int category_mode_indices[3] = { 3, 2, 0 };
+int current_category_slot = 2;
+std::string mode = MODE_KEYS[0];
 bool key_states[KEY_COUNT] = { false };
 bool dial_states[DIAL_COUNT] = { false };
 int option_index = 0;
@@ -72,9 +73,9 @@ int preset_index = 0;
 std::vector<std::string> preset_names;
 std::string last_status_signature;
 
-int visible_mode_index(int column)
+int category_mode_index(int column)
 {
-    return (page + column) % MODE_COUNT;
+    return category_mode_indices[column];
 }
 
 void close_device();
@@ -106,6 +107,64 @@ std::string preset_directory(const std::string& set_name)
 std::string preset_path(const std::string& set_name, const std::string& preset_name)
 {
     return preset_directory(set_name) + "\\" + preset_name + ".lpy";
+}
+
+std::string category_mapping_path()
+{
+    std::string directory = data_directory();
+    if (!directory.empty() && directory[directory.size() - 1] != '\\' && directory[directory.size() - 1] != '/')
+        directory += "\\";
+    return directory + "streamdeck_categories.ini";
+}
+
+int category_index_from_name(const std::string& name)
+{
+    for (int n = 0; n < MODE_COUNT; ++n)
+        if (_stricmp(name.c_str(), MODE_LABELS[n]) == 0)
+            return n;
+    return -1;
+}
+
+void load_category_mapping()
+{
+    std::ifstream input(category_mapping_path().c_str());
+    if (!input)
+        return;
+
+    std::string line;
+    while (std::getline(input, line)) {
+        if (!line.empty() && line[line.size() - 1] == '\r')
+            line.erase(line.size() - 1);
+        const size_t separator = line.find('=');
+        if (separator == std::string::npos)
+            continue;
+        const std::string key = line.substr(0, separator);
+        const int column = key.size() == 7 && _strnicmp(key.c_str(), "button", 6) == 0
+            ? key[6] - '1' : -1;
+        const int category = category_index_from_name(line.substr(separator + 1));
+        if (column >= 0 && column < 3 && category >= 0)
+            category_mode_indices[column] = category;
+    }
+    mode = MODE_KEYS[category_mode_indices[current_category_slot]];
+}
+
+void save_category_mapping()
+{
+    const std::string path = category_mapping_path();
+    const std::string temporary = path + ".tmp";
+    std::ofstream output(temporary.c_str(), std::ios::out | std::ios::trunc);
+    if (!output) {
+        NS_debug("Unable to save Stream Deck category mapping to %s\n", temporary.c_str());
+        return;
+    }
+    for (int n = 0; n < 3; ++n)
+        output << "button" << (n + 1) << '=' << MODE_LABELS[category_mode_indices[n]] << "\n";
+    output.close();
+    if (!output || !MoveFileExA(temporary.c_str(), path.c_str(),
+                                MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)) {
+        NS_debug("Unable to finish saving Stream Deck category mapping to %s\n", path.c_str());
+        DeleteFileA(temporary.c_str());
+    }
 }
 
 std::string current_preset_set()
@@ -454,15 +513,14 @@ std::string action_label(int index)
 std::vector<unsigned char> make_key_image(int index)
 {
     const bool record_key = index == 7;
-    const int mode_index = index >= 4 && index < 7 ? visible_mode_index(index - 4) : 0;
-    const std::string logical_key = index < 4 ? ACTION_KEYS[index] : index < 7 ? MODE_KEYS[mode_index] : "Record";
+    const int mode_index = index >= 4 && index < 7 ? category_mode_index(index - 4) : 0;
     std::string label = record_key ? "Record" : index < 4 ? action_label(index) : MODE_LABELS[mode_index];
     Gdiplus::Color background;
     if (record_key)
         background = key_states[index] ? Gdiplus::Color(255, 190, 35, 52) : Gdiplus::Color(255, 35, 132, 76);
     else if (key_states[index])
         background = Gdiplus::Color(255, 157, 37, 54);
-    else if (!record_key && logical_key == mode)
+    else if (index >= 4 && index < 7 && index - 4 == current_category_slot)
         background = Gdiplus::Color(255, 181, 104, 24);
     else if (index < 4)
         background = Gdiplus::Color(255, 81, 48, 96);
@@ -492,11 +550,13 @@ std::vector<unsigned char> make_touchscreen_image()
     Gdiplus::SolidBrush side_brush(Gdiplus::Color(255, 141, 169, 196));
     for (int row = 0; row < 4; ++row)
         graphics.DrawString(widen(lines[row]).c_str(), -1, &font, Gdiplus::PointF(12.0f, static_cast<float>(row * 23)), &main_brush);
-    std::wostringstream page_text;
-    page_text << L"SHIFT " << (page + 1) << L"/" << MODE_COUNT;
-    graphics.DrawString(page_text.str().c_str(), -1, &side_font, Gdiplus::PointF(682.0f, 4.0f), &side_brush);
-    graphics.DrawString(L"D1/D4: SHIFT", -1, &side_font, Gdiplus::PointF(682.0f, 31.0f), &side_brush);
-    graphics.DrawString(L"PRESS=SELECT", -1, &side_font, Gdiplus::PointF(682.0f, 58.0f), &side_brush);
+    std::wostringstream brightness_text;
+    brightness_text << L"OUTPUT " << output_brightness_percent() << L"%";
+    graphics.DrawString(brightness_text.str().c_str(), -1, &side_font, Gdiplus::PointF(665.0f, 4.0f), &side_brush);
+    std::wostringstream windows_text;
+    windows_text << L"WINDOWS " << (looper == NULL ? 0 : looper->num_showing());
+    graphics.DrawString(windows_text.str().c_str(), -1, &side_font, Gdiplus::PointF(665.0f, 31.0f), &side_brush);
+    graphics.DrawString(L"D1 CAT   D4 BRT", -1, &side_font, Gdiplus::PointF(665.0f, 58.0f), &side_brush);
     return jpeg_from_bitmap(bitmap, 84);
 }
 
@@ -517,7 +577,10 @@ std::string current_status_signature()
     std::string lines[4];
     status_lines(lines);
     std::ostringstream signature;
-    signature << page << '|' << mode;
+    signature << current_category_slot << '|' << mode << '|'
+              << category_mode_indices[0] << '|' << category_mode_indices[1] << '|'
+              << category_mode_indices[2] << '|' << output_brightness_percent() << '|'
+              << (looper == NULL ? 0 : looper->num_showing());
     for (int n = 0; n < 4; ++n)
         signature << '|' << lines[n];
     return signature.str();
@@ -535,7 +598,7 @@ void render_touchscreen(bool force)
     last_status_render = GetTickCount();
 }
 
-void set_brightness(int percent)
+void set_streamdeck_brightness(int percent)
 {
     unsigned char feature[32] = { 0 };
     feature[0] = 0x03;
@@ -673,7 +736,7 @@ bool connect_device()
     reset_device();
     if (write_handle == INVALID_HANDLE_VALUE)
         return false;
-    set_brightness(65);
+    set_streamdeck_brightness(65);
     if (write_handle == INVALID_HANDLE_VALUE)
         return false;
     render_keys();
@@ -683,10 +746,43 @@ bool connect_device()
     return true;
 }
 
-void set_page(int delta)
+void adjust_current_category(int delta)
 {
-    page = (page + (delta > 0 ? MODE_COUNT - 1 : 1)) % MODE_COUNT;
-    render_keys();
+    if (delta == 0)
+        return;
+    const int direction = delta > 0 ? 1 : -1;
+    int next = (category_mode_indices[current_category_slot] + direction * abs(delta)) % MODE_COUNT;
+    if (next < 0)
+        next += MODE_COUNT;
+    category_mode_indices[current_category_slot] = next;
+    save_category_mapping();
+    mode = MODE_KEYS[next];
+    render_key(4 + current_category_slot);
+    for (int n = 0; n < 4; ++n)
+        render_key(n);
+    render_touchscreen(true);
+}
+
+void select_category(int column)
+{
+    if (column < 0 || column >= 3)
+        return;
+    const int previous = current_category_slot;
+    current_category_slot = column;
+    mode = MODE_KEYS[category_mode_indices[column]];
+    render_key(4 + previous);
+    if (column != previous)
+        render_key(4 + column);
+    for (int n = 0; n < 4; ++n)
+        render_key(n);
+    render_touchscreen(true);
+}
+
+void adjust_output_brightness(int delta)
+{
+    if (delta == 0)
+        return;
+    set_output_brightness_percent(output_brightness_percent() + delta * 5);
     render_touchscreen(true);
 }
 
@@ -1018,35 +1114,12 @@ void perform_action(const std::string& key, bool pressed)
     render_touchscreen(true);
 }
 
-bool is_mode_key(const std::string& key)
-{
-    if (key.empty())
-        return false;
-    for (int n = 0; n < MODE_COUNT; ++n)
-        if (key == MODE_KEYS[n])
-            return true;
-    return false;
-}
-
 void handle_control(const std::string& key, bool pressed)
 {
     if (key == "Record") {
         if (looper != NULL)
             looper->_setRecord(pressed ? 1 : 0);
         render_touchscreen(true);
-        return;
-    }
-    if (key == "Enter") {
-        return;
-    }
-    if (key == "NL")
-        return;
-    if (is_mode_key(key)) {
-        if (pressed) {
-            mode = key;
-            render_keys();
-            render_touchscreen(true);
-        }
         return;
     }
     perform_action(key, pressed);
@@ -1061,10 +1134,16 @@ void handle_input_report(const unsigned char* report, DWORD length)
             const bool pressed = report[4 + n] != 0;
             if (pressed != key_states[n]) {
                 key_states[n] = pressed;
-                const std::string key = n == 7 ? "Record"
-                                      : n < 4 ? ACTION_KEYS[n] : MODE_KEYS[visible_mode_index(n - 4)];
-                handle_control(key, pressed);
-                render_key(n);
+                if (n >= 4 && n < 7) {
+                    if (pressed)
+                        select_category(n - 4);
+                    else
+                        render_key(n);
+                } else {
+                    const std::string key = n == 7 ? "Record" : ACTION_KEYS[n];
+                    handle_control(key, pressed);
+                    render_key(n);
+                }
             }
         }
     } else if (report[1] == 0x03 && length >= 9) {
@@ -1074,24 +1153,16 @@ void handle_input_report(const unsigned char* report, DWORD length)
                 const int value = raw < 0x80 ? raw : -(0x100 - raw);
                 if (value == 0)
                     continue;
-                if (n == 0 || n == 3) set_page(value);
-                else {
-                    const std::string negative = n == 1 ? "/" : "-";
-                    const std::string positive = n == 1 ? "*" : "+";
-                    for (int step = 0; step < abs(value); ++step) {
-                        handle_control(value > 0 ? positive : negative, true);
-                        handle_control(value > 0 ? positive : negative, false);
-                    }
-                }
+                if (n == 0)
+                    adjust_current_category(value);
+                else if (n == 3)
+                    adjust_output_brightness(value);
             }
         } else if (report[4] == 0x00) {
-            const char* dial_keys[DIAL_COUNT] = { "Enter", "/", "*", "NL" };
             for (int n = 0; n < DIAL_COUNT; ++n) {
                 const bool pressed = report[5 + n] != 0;
-                if (pressed != dial_states[n]) {
+                if (pressed != dial_states[n])
                     dial_states[n] = pressed;
-                    handle_control(dial_keys[n], pressed);
-                }
             }
         }
     } else if (report[1] == 0x02 && length >= 9 && (report[4] == 1 || report[4] == 2)) {
@@ -1114,6 +1185,7 @@ void streamdeck_init()
         return;
     }
     reload_presets();
+    load_category_mapping();
     Gdiplus::GdiplusStartupInput input;
     if (Gdiplus::GdiplusStartup(&gdiplus_token, &input, NULL) != Gdiplus::Ok) {
         gdiplus_token = 0;
