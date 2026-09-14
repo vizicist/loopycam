@@ -34,6 +34,8 @@ const int DIAL_COUNT = 4;
 const int IMAGE_PACKET_LENGTH = 1024;
 const int KEY_PACKET_HEADER = 8;
 const int LCD_PACKET_HEADER = 16;
+const DWORD PARAMETER_MORPH_DURATION_MS = 2000;
+const float PARAMETER_MORPH_DIAL_STEP = 0.05f;
 
 const char* MODE_KEYS[] = {
     "000", "1", "5", "8", "7", "3", "0", "9", ".", "6", "4"
@@ -72,6 +74,26 @@ int preset_set_index = 0;
 int preset_index = 0;
 std::vector<std::string> preset_names;
 std::string last_status_signature;
+
+struct ParameterMorph {
+    CFFPlugin* ff;
+    FFGLPluginInstance* ffgl;
+    int parameter;
+    float original;
+    float target;
+};
+
+std::vector<ParameterMorph> parameter_morphs;
+float parameter_morph_position = 0.0f;
+bool parameter_morph_running = false;
+DWORD parameter_morph_started = 0;
+DWORD parameter_morph_last_update = 0;
+
+int parameter_morph_percent()
+{
+    return parameter_morphs.empty() ? -1
+         : static_cast<int>(parameter_morph_position * 100.0f + 0.5f);
+}
 
 int category_mode_index(int column)
 {
@@ -556,7 +578,13 @@ std::vector<unsigned char> make_touchscreen_image()
     std::wostringstream windows_text;
     windows_text << L"WINDOWS " << (looper == NULL ? 0 : looper->num_showing());
     graphics.DrawString(windows_text.str().c_str(), -1, &side_font, Gdiplus::PointF(665.0f, 31.0f), &side_brush);
-    graphics.DrawString(L"D1 CAT   D4 BRT", -1, &side_font, Gdiplus::PointF(665.0f, 58.0f), &side_brush);
+    std::wostringstream morph_text;
+    morph_text << L"MORPH ";
+    if (parameter_morph_percent() < 0)
+        morph_text << L"--";
+    else
+        morph_text << parameter_morph_percent() << L"%";
+    graphics.DrawString(morph_text.str().c_str(), -1, &side_font, Gdiplus::PointF(665.0f, 58.0f), &side_brush);
     return jpeg_from_bitmap(bitmap, 84);
 }
 
@@ -580,7 +608,8 @@ std::string current_status_signature()
     signature << current_category_slot << '|' << mode << '|'
               << category_mode_indices[0] << '|' << category_mode_indices[1] << '|'
               << category_mode_indices[2] << '|' << output_brightness_percent() << '|'
-              << (looper == NULL ? 0 : looper->num_showing());
+              << (looper == NULL ? 0 : looper->num_showing()) << '|'
+              << parameter_morph_percent();
     for (int n = 0; n < 4; ++n)
         signature << '|' << lines[n];
     return signature.str();
@@ -786,24 +815,96 @@ void adjust_output_brightness(int delta)
     render_touchscreen(true);
 }
 
-void randomize_params(CFFPlugin* plugin)
+bool has_parameter_morph(CFFPlugin* plugin, int parameter)
+{
+    for (size_t n = 0; n < parameter_morphs.size(); ++n)
+        if (parameter_morphs[n].ff == plugin && parameter_morphs[n].parameter == parameter)
+            return true;
+    return false;
+}
+
+bool has_parameter_morph(FFGLPluginInstance* plugin, int parameter)
+{
+    for (size_t n = 0; n < parameter_morphs.size(); ++n)
+        if (parameter_morphs[n].ffgl == plugin && parameter_morphs[n].parameter == parameter)
+            return true;
+    return false;
+}
+
+void add_parameter_morphs(CFFPlugin* plugin)
 {
     if (plugin == NULL)
         return;
     for (int n = 0; n < plugin->m_numparams; ++n) {
-        CFFParameterStruct* param = &plugin->m_params[n];
-        if (param->type != FF_TYPE_TEXT)
-            plugin->setparam(param->name, static_cast<float>(rand()) / RAND_MAX);
+        CFFParameterStruct* parameter = &plugin->m_params[n];
+        if (parameter->type == FF_TYPE_TEXT || has_parameter_morph(plugin, n))
+            continue;
+        ParameterMorph morph = { plugin, NULL, n, parameter->current_float_val,
+                                 static_cast<float>(rand()) / static_cast<float>(RAND_MAX) };
+        parameter_morphs.push_back(morph);
     }
 }
 
-void randomize_params(FFGLPluginInstance* plugin)
+void add_parameter_morphs(FFGLPluginInstance* plugin)
 {
     if (plugin == NULL)
         return;
-    for (int n = 0; n < plugin->m_numParameters; ++n)
-        if (plugin->m_params[n].type != FF_TYPE_TEXT)
-            plugin->SetFloatParameter(n, static_cast<float>(rand()) / RAND_MAX);
+    for (int n = 0; n < plugin->m_numParameters; ++n) {
+        if (plugin->m_params[n].type == FF_TYPE_TEXT || has_parameter_morph(plugin, n))
+            continue;
+        ParameterMorph morph = { NULL, plugin, n, plugin->GetFloatParameter(n),
+                                 static_cast<float>(rand()) / static_cast<float>(RAND_MAX) };
+        parameter_morphs.push_back(morph);
+    }
+}
+
+void apply_parameter_morph(float position)
+{
+    parameter_morph_position = std::max(0.0f, std::min(1.0f, position));
+    for (size_t n = 0; n < parameter_morphs.size(); ++n) {
+        ParameterMorph& morph = parameter_morphs[n];
+        const float value = morph.original + (morph.target - morph.original) * parameter_morph_position;
+        if (morph.ff != NULL)
+            morph.ff->setparam(morph.ff->m_params[morph.parameter].name, value);
+        else if (morph.ffgl != NULL)
+            morph.ffgl->SetFloatParameter(morph.parameter, value);
+    }
+}
+
+void begin_random_parameter_morph()
+{
+    parameter_morphs.clear();
+    for (int n = 0; n < NPREPLUGINS; ++n) add_parameter_morphs(preplugins[n]);
+    for (int n = 0; n < NPOSTPLUGINS; ++n) add_parameter_morphs(postplugins[n]);
+    for (int n = 0; n < NPOST2VISIBLEPLUGINS; ++n) add_parameter_morphs(post2plugins[n]);
+    parameter_morph_position = 0.0f;
+    parameter_morph_started = GetTickCount();
+    parameter_morph_last_update = 0;
+    parameter_morph_running = !parameter_morphs.empty();
+}
+
+void update_parameter_morph()
+{
+    if (!parameter_morph_running)
+        return;
+    const DWORD now = GetTickCount();
+    if (parameter_morph_last_update != 0 && now - parameter_morph_last_update < 10)
+        return;
+    parameter_morph_last_update = now;
+    const float position = static_cast<float>(now - parameter_morph_started) /
+                           static_cast<float>(PARAMETER_MORPH_DURATION_MS);
+    apply_parameter_morph(position);
+    if (position >= 1.0f)
+        parameter_morph_running = false;
+}
+
+void adjust_parameter_morph(int delta)
+{
+    if (delta == 0 || parameter_morphs.empty())
+        return;
+    parameter_morph_running = false;
+    apply_parameter_morph(parameter_morph_position + delta * PARAMETER_MORPH_DIAL_STEP);
+    render_touchscreen(true);
 }
 
 void one_random_plugin(const std::string& type)
@@ -1063,9 +1164,7 @@ void perform_action(const std::string& key, bool pressed)
         else if (key == "+") { one_random_plugin("pre"); one_random_plugin("post"); one_random_plugin("ffgl"); }
     } else if (mode == "0") {
         if (key == "/") {
-            for (int n = 0; n < NPREPLUGINS; ++n) randomize_params(preplugins[n]);
-            for (int n = 0; n < NPOSTPLUGINS; ++n) randomize_params(postplugins[n]);
-            for (int n = 0; n < NPOST2VISIBLEPLUGINS; ++n) randomize_params(post2plugins[n]);
+            begin_random_parameter_morph();
         } else if (key == "*") {
             load_random_preset();
         } else if (key == "-") {
@@ -1155,6 +1254,8 @@ void handle_input_report(const unsigned char* report, DWORD length)
                     continue;
                 if (n == 0)
                     adjust_current_category(value);
+                else if (n == 1)
+                    adjust_parameter_morph(value);
                 else if (n == 3)
                     adjust_output_brightness(value);
             }
@@ -1200,6 +1301,7 @@ void streamdeck_init()
 
 void streamdeck_check()
 {
+    update_parameter_morph();
     if (!enabled)
         return;
     const DWORD now = GetTickCount();

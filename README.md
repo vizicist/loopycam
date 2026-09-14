@@ -45,14 +45,19 @@ The upper row contains four action keys whose labels and behavior follow the
 current category. Each of the first three lower-row keys has its own category.
 Pressing a lower key makes it current; the current category is orange and
 supplies the four upper action keys. Turn the left dial to change the category
-assigned to whichever lower key is current. The two middle dials are currently
+assigned to whichever lower key is current. Random Params morphs all active
+plugin parameters from their current values to new random values over two
+seconds. After a random morph has been created, turn the second dial
+counter-clockwise to morph back toward the original values or clockwise to
+morph toward the random values in 5% steps. The third dial is currently
 disabled. Categories are ordered
 alphabetically when traversed with a dial. The three button assignments are
 saved in `data/streamdeck_categories.ini` and restored on the next launch. The
 lower-right key remains a dedicated momentary Record key
 that matches the browser Record button. The rightmost dial adjusts final video
 output brightness from 0% to 100% in 5% steps. The touch strip always reports
-the current brightness and number of visible windows. Tapping one of the four touch-strip quarters triggers the
+the current brightness, number of visible windows, and parameter morph position.
+Tapping one of the four touch-strip quarters triggers the
 corresponding upper action key. The strip also reports the camera's delivered
 resolution and frame rate plus its negotiated USB link speed. Preset selection,
 loading, saving, preset-set cycling, and random preset loading use the existing
